@@ -51,11 +51,10 @@ def isWordGuessed(secretWord, lettersGuessed):
       False otherwise
     '''
     #split the secretWord string into a list of letters
-    secretWord = list(secretWord)
-    print (secretWord)
+    secretWord_list = list(secretWord)
 
     #for each letter in the the secretWord list
-    for letter in secretWord:
+    for letter in secretWord_list:
 
         #check if the letter hasn't been guessed
         if not letter in lettersGuessed:
@@ -64,7 +63,7 @@ def isWordGuessed(secretWord, lettersGuessed):
     #if all the letters have been guessed, return True for isWordGuessed()
     return True
 
-isWordGuessed('apple', ['a', 'b', 'e', 'p', 'l'])
+#isWordGuessed('apple', ['a', 'b', 'e', 'p', 'l'])
 
 def getGuessedWord(secretWord, lettersGuessed):
     '''
@@ -73,9 +72,21 @@ def getGuessedWord(secretWord, lettersGuessed):
     returns: string, comprised of letters and underscores that represents
       what letters in secretWord have been guessed so far.
     '''
-    # FILL IN YOUR CODE HERE...
+    #split the secretWord string into a list of letters
+    secretWord_list = list(secretWord)
 
+    #instantiate the string that will show user the word with correct letters
+    word = ""
 
+    for letter in secretWord_list:
+        if letter in lettersGuessed:
+            word += (letter + " ")
+        else:
+            word += '_ '
+
+    print (word)
+
+getGuessedWord('apple', ['a', 'b', 'l'])
 
 def getAvailableLetters(lettersGuessed):
     '''
