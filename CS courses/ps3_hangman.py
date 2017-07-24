@@ -51,7 +51,8 @@ def isWordGuessed(secretWord, lettersGuessed):
       False otherwise
     '''
     #split the secretWord string into a list of letters
-    secretWord = secretWord.split()
+    secretWord = list(secretWord)
+    print (secretWord)
 
     #for each letter in the the secretWord list
     for letter in secretWord:
@@ -63,7 +64,7 @@ def isWordGuessed(secretWord, lettersGuessed):
     #if all the letters have been guessed, return True for isWordGuessed()
     return True
 
-
+isWordGuessed('apple', ['a', 'b', 'e', 'p', 'l'])
 
 def getGuessedWord(secretWord, lettersGuessed):
     '''
