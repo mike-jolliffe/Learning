@@ -7,6 +7,7 @@ VOWELS = 'aeiou'
 CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
 HAND_SIZE = 7
 
+
 SCRABBLE_LETTER_VALUES = {
     'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
 }
@@ -239,35 +240,50 @@ def playHand(hand, wordList, n):
       n: integer (HAND_SIZE; i.e., hand size required for additional points)
 
     """
-    # BEGIN PSEUDOCODE <-- Remove this comment when you code this function; do your coding within the pseudocode (leaving those comments in-place!)
+
     # Keep track of the total score
+    hand_score = 0
+
 
     # As long as there are still letters left in the hand:
+    while calculateHandlen(hand) > 0:
 
         # Display the hand
+        print("Current hand: ", end="")
+        displayHand(hand)
 
         # Ask user for input
+        user_word = input('Enter word, or a "." to indicate that you are finished: ')
 
         # If the input is a single period:
+        if user_word == '.':
 
             # End the game (break out of the loop)
-
+            break
 
         # Otherwise (the input is not a single period):
-
+        else:
             # If the word is not valid:
-
+            if isValidWord(user_word, hand, wordList) == False:
                 # Reject invalid word (print a message followed by a blank line)
+                print("Invalid word, please try again.")
+                print()
 
             # Otherwise (the word is valid):
-
+            else:
+                # Update total score
+                hand_score += getWordScore(user_word, n)
                 # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
-
+                print('"{}" earned {} points. Total: {} points.'.format(user_word, getWordScore(user_word, n), hand_score))
+                print()
                 # Update the hand
-
+                hand = updateHand(hand, user_word)
 
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
-
+    if user_word == ".":
+        print("Goodbye! Total score: {} points.".format(hand_score))
+    else:
+        print("Run out of letters. Total score: {} points.".format(hand_score))
 
 #
 # Problem #5: Playing a game
