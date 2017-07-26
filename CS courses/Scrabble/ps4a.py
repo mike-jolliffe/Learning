@@ -178,7 +178,24 @@ def isValidWord(word, hand, wordList):
     hand: dictionary (string -> int)
     wordList: list of lowercase strings
     """
-    # TO DO ... <-- Remove this comment when you code this function
+    #First, check to make sure word is in wordList (valid word)
+    if word in wordList:
+
+        #create a copy for mutation, so original is unchanged
+        temp_hand = hand.copy()
+
+        for letter in word:
+
+            #subtract letter from total count of that letter. If no letters, set to 0 then decrement
+            temp_hand[letter] = temp_hand.get(letter,0) - 1
+
+            #if count is negative for letter (meaning letter wasn't available)
+            if temp_hand[letter] < 0:
+                return False
+        return True
+    else:
+        #where word is not in wordList
+        return False
 
 
 #
