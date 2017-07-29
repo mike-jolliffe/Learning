@@ -9,11 +9,14 @@ def striped_words(string):
                 'V', 'W', 'X', 'Z'])
 
   # break the string into individual words by whitespace
-  words = string.upper().split()
+  words = ""
+  for char in string:
+    if char == " " or char.isalpha():
+        words += char
+    else:
+        words += " "
+  words = words.upper().split()
   print (words)
-
-  # TODO figure out how to break apart by punctuation
-
   # initialize a counter
   striped = 0
   striped_word = []
@@ -45,4 +48,4 @@ def striped_words(string):
 #striped_words("My name is ...") # should be 3
 #striped_words("Hello world") # 0
 striped_words("A quantity of striped words.") # 1
-#striped_words("Dog,cat,mouse,bird.Human.") # 3
+striped_words("Dog,cat,mouse,bird.Human.") # 3
