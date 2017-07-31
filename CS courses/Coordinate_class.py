@@ -15,17 +15,19 @@ class Coordinate(object):
     def __str__(self):
         return '<' + str(self.getX()) + ',' + str(self.getY()) + '>'
 
-    def __eq__(self):
+    def __eq__(self, other):
         # Checks to see if x and y coordinate are the same
-        if self.x == self.x and self.y == self.y:
+        if self.x == other.x and self.y == other.y:
             return True
         else:
             return False
 
     def __repr__(self):
         # Returns a string representation of __eq__ method
-        return str(self.x == self.y)
+        return 'Coordinate(' + str(self.x) + ',' + str(self.y) + ')'
 
 c1 = Coordinate(1,1)
-c2 = Coordinate(2,2)
+c2 = Coordinate(1,1)
 print(c1)
+print(repr(c1))
+print(c1 == c2)
