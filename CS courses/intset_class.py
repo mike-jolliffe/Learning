@@ -28,14 +28,16 @@ class intSet(object):
     def intersect(self, other):
         '''Returns a new intSet of integers appearing in both self and other.
         Returns empty set if no intersection'''
-        intersect = set()
+        intersect = []
 
         for val in self.vals:
             if val in other.vals:
-                intersect.add(val)
-        if len(intersect) == 0:
-            return {}
-        return intersect
+                intersect.append(val)
+        self.vals = intersect
+        return '{' + ','.join([str(e) for e in self.vals]) + '}'
+
+    def __len__(self):
+        return len(self.vals)
 
     def __str__(self):
         """Returns a string representation of self"""
