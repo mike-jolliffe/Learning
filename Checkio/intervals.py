@@ -4,24 +4,28 @@ def intervals(nums):
 
   # initialize a list to collect interval tuples
   interval = []
+
+  # sort the given nums in ascending order
   nums.sort()
+
+  # set a start index
+  current_index = 0
   interval_start = 0
 
-  # for a given pair in nums, if interval between them > 1
-  for i in range(len(nums)-1):
-    interval_start = nums[i]
-    for j in range(i:len(nums)):
-      # set an intermediate place-holder
-      interval_continue = interval_start
-      # if distance between adjacent nums > 1
-      if nums[j] - nums[i] > 1:
-        # capture the interval
-        interval.append((interval_start, nums[j]))
-      else:
+  # while the index is less than length of nums, zero-indexed
+  while current_index < len(nums) - 1:
+    # if the distance between the two adjacent numbers is greater than one
+    if nums[current_index + 1] - nums[current_index] > 1:
+      # create an interval from interval_start to current index (before gap)
+      interval.append((nums[interval_start], nums[current_index]))
+      # increment the current index and use it to reset the interval start
+      current_index += 1
+      interval_start = current_index
 
-      # break the loop
-      break
+    else:
+      # otherwise, update current index, moving one farther from index start
+      current_index += 1
+  interval.append((nums[interval_start], nums[current_index]))
+  return interval
 
-  # otherwise, append that item into an interval
-
-  # for the interval, sort ascending and convert to a tuple of max, min
+print(intervals([1,2,3,5,6,7,9,10,11]))
