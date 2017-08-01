@@ -106,10 +106,13 @@ class Message(object):
         shift_dict = {}
 
         # create a reference string of starting letters
-        ref_string = "abcdefghijklmnopqrstuvwxyz"
+        ref_string_lower = "abcdefghijklmnopqrstuvwxyz"
+        ref_string_upper = ref_string_lower.upper()
 
-        for i in range(len(ref_string)):
-            shift_dict[ref_string[i]] = ref_string[(i + shift) % 25]
+        for i in range(len(ref_string_lower)):
+            shift_dict[ref_string_lower[i]] = ref_string_lower[(i + shift) % 25]
+        for i in range(len(ref_string_upper)):
+            shift_dict[ref_string_upper[i]] = ref_string_upper[(i + shift) % 25]
 
         return shift_dict
 
