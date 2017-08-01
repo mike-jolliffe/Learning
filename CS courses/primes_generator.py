@@ -3,8 +3,8 @@ def genPrimes():
   its next() method'''
 
   # set initial prime value
-  p1 = [2]
-  next = 2
+  p1 = []
+  next = 1
 
   while True:
 
