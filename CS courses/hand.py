@@ -83,12 +83,19 @@ class Hand(object):
         returns: Boolean (if the word was or was not made)
         """
         # for each letter in the word
+        for letter in word:
             # if that letter is not in the hand
-                # break the loop, return False
-            # otherwise update the hand by decrementing the vals in the hand dictionary
-        raise NotImplementedError()
+            if letter not in self.hand:
+                # break the loop by returning False
+                return False
+        # otherwise update the hand by decrementing the vals in the hand dictionary
+        for letter in word:
+            self.hand[letter] -= 1
+        return True
 
-    
+
+
+
 myHand = Hand(7)
 print(myHand)
 print(myHand.calculateLen())
