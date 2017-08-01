@@ -109,11 +109,13 @@ class Message(object):
         ref_string_lower = "abcdefghijklmnopqrstuvwxyz"
         ref_string_upper = ref_string_lower.upper()
 
-        # TODO deal with cipher output being off by one in some cases
+        # for index in the ref_strings
         for i in range(len(ref_string_lower)):
-            shift_dict[ref_string_lower[i]] = ref_string_lower[(i + shift) % 25]
+            # key is string letter, shifted value is remainder of index plus
+            #shift modulo length of the alphabet
+            shift_dict[ref_string_lower[i]] = ref_string_lower[(i + shift) % 26]
         for i in range(len(ref_string_upper)):
-            shift_dict[ref_string_upper[i]] = ref_string_upper[(i + shift) % 25]
+            shift_dict[ref_string_upper[i]] = ref_string_upper[(i + shift) % 26]
 
         return shift_dict
 
