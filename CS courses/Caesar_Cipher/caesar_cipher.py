@@ -109,6 +109,7 @@ class Message(object):
         ref_string_lower = "abcdefghijklmnopqrstuvwxyz"
         ref_string_upper = ref_string_lower.upper()
 
+        # TODO deal with cipher output being off by one in some cases
         for i in range(len(ref_string_lower)):
             shift_dict[ref_string_lower[i]] = ref_string_lower[(i + shift) % 25]
         for i in range(len(ref_string_upper)):
@@ -128,7 +129,23 @@ class Message(object):
         Returns: the message text (string) in which every character is shifted
              down the alphabet by the input shift
         '''
-        pass #delete this line and replace with your code here
+
+        # create a placeholder for message
+        message = ""
+
+        shift_dict = self.build_shift_dict(shift)
+
+        for elmnt in self.get_message_text():
+            # if the element isn't in the dictionary
+            if not elmnt in shift_dict:
+                # don't cipher it, it's whitespace or punctuation
+                message += elmnt
+            else:
+                # if it's in the dictionary, it's a letter, so shift it
+                message += shift_dict[elmnt]
+
+        return message
+
 
 class PlaintextMessage(Message):
     def __init__(self, text, shift):
