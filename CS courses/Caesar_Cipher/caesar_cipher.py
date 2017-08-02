@@ -186,7 +186,7 @@ class PlaintextMessage(Message):
         '''
         shift = PlaintextMessage.get_shift(self)
         self.encrypting_dict = Message.build_shift_dict(self, shift)
-        return self.encrypting_dict
+        return self.encrypting_dict.copy()
 
     def get_message_text_encrypted(self):
         '''
