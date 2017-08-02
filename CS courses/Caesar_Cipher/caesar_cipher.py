@@ -225,7 +225,10 @@ class CiphertextMessage(Message):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        pass #delete this line and replace with your code here
+        # The initialization need only take everything from Message initialization
+        # in order to get self.message_text and self.valid_words
+
+        Message.__init__(self, text)
 
     def decrypt_message(self):
         '''
@@ -243,7 +246,25 @@ class CiphertextMessage(Message):
         Returns: a tuple of the best shift value used to decrypt the message
         and the decrypted message text using that shift value
         '''
-        pass #delete this line and replace with your code here
+        # create a counter to count valid words
+        max_valid_words = 0
+
+        # create a counter to track max number of valid words
+        best_shift = 0
+
+        for shift_amt in range(26):
+            # apply a shift by the shift_amt
+            self.new_message_text = Message.apply_shift(self, shift_amt)
+            # set a counter for counting valid words in each shift
+            counter = 0
+            # following the shift, count each valid word and compare to best
+            for word in self.new_message_text.split():
+                if is_word(self.valid_words, word) == True:
+                    counter += 1
+            if counter > max_valid_words:
+                max_valid_words = counter
+                best_shift = shift_amt
+        return (best_shift, Message.apply_shift(self, best_shift))
 
 #Example test case (PlaintextMessage)
 plaintext = PlaintextMessage('hello', 2)
