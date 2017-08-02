@@ -266,12 +266,16 @@ class CiphertextMessage(Message):
                 best_shift = shift_amt
         return (best_shift, Message.apply_shift(self, best_shift))
 
-#Example test case (PlaintextMessage)
-plaintext = PlaintextMessage('hello', 2)
-print('Expected Output: jgnnq')
-print('Actual Output:', plaintext.get_message_text_encrypted())
 
-#Example test case (CiphertextMessage)
-ciphertext = CiphertextMessage('jgnnq')
-print('Expected Output:', (24, 'hello'))
-print('Actual Output:', ciphertext.decrypt_message())
+def decrypt_story():
+    '''This function returns a decrypted story'''
+
+    # define the story, given by get_story_string() function
+    story = get_story_string()
+    # create a CiphertextMessage object
+    encrypted = CiphertextMessage(story)
+
+    # call decrypt_message() method on that object
+    decrypted = encrypted.decrypt_message()
+
+    return decrypted
