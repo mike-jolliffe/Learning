@@ -8,30 +8,27 @@ def brackets_checker(string):
   # isolate only the bracket types
   all_bracks = [char for char in string if char in brack_types.keys() or char in brack_types.values()]
   print(all_bracks)
+
   # check if length of all brackets list is even (i.e. number of opens and closes equal)
-  if len(all_bracks) % 2 == 0:
-    # if it is, divide list in half, flip left half so can start from inside out
-    left_half = all_bracks[:int(len(all_bracks) / 2)]
-    left_half = left_half[::-1]
-    right_half = all_bracks[int(len(all_bracks) / 2):]
-    print (left_half)
-    print (right_half)
-    exit()
-  else:
+  if not len(all_bracks) % 2 == 0:
     return False
-  # compare elements pair-wise
-  for i in range(len(right_half)):
-      # if the left_half element is a key in the dictionary
-      if left_half[i] in brack_types.keys():
-          # compare the associated dictionary value at that key to the right hand element
-          if not brack_types[left_half[i]] == right_half[i]:
-              return False
-      # if the left_half element is a value in the dictionary
-      elif left_half[i] in brack_types.values():
-          # compare the associated dictionary key at that value to the right hand element
-          if not brack_types[right_half[i]] == left_half[i]:
-              return False
-  return True
+
+  # find the first closing bracket
+  for brack in all_bracks:
+    if brack in brack_types.keys():
+      # try stepping back one element
+      try:
+
+      except:
+        # if you can't, return False
+        return False
+        
+    # if the element is an opening type
+        # it must be the same type as the close, or return False
+    # if the element is another closing type
+        # repeat the above by stepping back an element and checking against new closing type
+    # find the next closing bracket in the sequence
+
 
 print(brackets_checker("Hello {( world )}[]")) # even, should return True
 print(brackets_checker("Hello {( world }[")) # even, should return False
