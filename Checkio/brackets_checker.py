@@ -13,23 +13,33 @@ def brackets_checker(string):
   if not len(all_bracks) % 2 == 0:
     return False
 
-  # find the first closing bracket
-  for brack in all_bracks:
-    if brack in brack_types.keys():
-      # try stepping back one element
-      try:
+  # set a value for stepping back
+  steps_back = 1
 
-      except:
-        # if you can't, return False
+  # find the first closing bracket
+  for i in range(len(all_bracks)):
+    # can't have the first bracket be a closing type
+    if all_bracks[i] in brack_types.values() and i == 0:
         return False
-        
-    # if the element is an opening type
+    # if the first found closing bracket is after index zero
+    elif all_bracks[i] in brack_types.values():
+      if i - steps_back < 0:
+          
+      #step back one element and check if element is opening type
+      elif all_bracks[i-steps_back] in brack_types.keys():
         # it must be the same type as the close, or return False
-    # if the element is another closing type
+        if not brack_types[all_bracks[i-steps_back]] == all_bracks[i]:
+          return False
+      # if the element is another closing type
+      else:
         # repeat the above by stepping back an element and checking against new closing type
-    # find the next closing bracket in the sequence
+        steps_back += 1
+  return True
+
+
 
 
 print(brackets_checker("Hello {( world )}[]")) # even, should return True
 print(brackets_checker("Hello {( world }[")) # even, should return False
 print(brackets_checker("Hello {( world }")) # odd, should return False
+print(brackets_checker("Hello ] (world )")) # even, triggers False in Except
