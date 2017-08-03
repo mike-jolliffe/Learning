@@ -2,19 +2,37 @@ def brackets_checker(string):
   '''Returns a boolean when given an expression as a string. Checks to make sure
   brackets, parentheses, and braces are closed properly'''
 
-  # initialize counters for all types of brackets
-  opens = ['[', '{', '(']
-  closes = [']', '}', ')']
-  brackets = 0
+  # create dict of opening and closing bracket types
+  brack_types = {'[': ']', '{': '}', '(': ')'}
 
-  # if the character is an opener, increment by one, if closer, decrement by one
-  for char in string:
-      if char in opens:
-          brackets += 1
-      elif char in closes:
-          brackets -= 1
-
-  if brackets == 0:
-      return True
+  # isolate only the bracket types
+  all_bracks = [char for char in string if char in brack_types.keys() or char in brack_types.values()]
+  print(all_bracks)
+  # check if length of all brackets list is even (i.e. number of opens and closes equal)
+  if len(all_bracks) % 2 == 0:
+    # if it is, divide list in half, flip left half so can start from inside out
+    left_half = all_bracks[:int(len(all_bracks) / 2)]
+    left_half = left_half[::-1]
+    right_half = all_bracks[int(len(all_bracks) / 2):]
+    print (left_half)
+    print (right_half)
+    exit()
   else:
-      return False
+    return False
+  # compare elements pair-wise
+  for i in range(len(right_half)):
+      # if the left_half element is a key in the dictionary
+      if left_half[i] in brack_types.keys():
+          # compare the associated dictionary value at that key to the right hand element
+          if not brack_types[left_half[i]] == right_half[i]:
+              return False
+      # if the left_half element is a value in the dictionary
+      elif left_half[i] in brack_types.values():
+          # compare the associated dictionary key at that value to the right hand element
+          if not brack_types[right_half[i]] == left_half[i]:
+              return False
+  return True
+
+print(brackets_checker("Hello {( world )}[]")) # even, should return True
+print(brackets_checker("Hello {( world }[")) # even, should return False
+print(brackets_checker("Hello {( world }")) # odd, should return False
