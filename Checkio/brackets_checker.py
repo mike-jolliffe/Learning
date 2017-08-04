@@ -7,39 +7,58 @@ def brackets_checker(string):
 
   # isolate only the bracket types
   all_bracks = [char for char in string if char in brack_types.keys() or char in brack_types.values()]
-  print(all_bracks)
+
+  # if no brackets, no issues, return True
+  if len(all_bracks) == 0:
+      return True
 
   # check if length of all brackets list is even (i.e. number of opens and closes equal)
-  if not len(all_bracks) % 2 == 0:
+  if not (len(all_bracks)) % 2 == 0:
     return False
 
-  # set a value for stepping back
-  steps_back = 1
+  # set a value for starting bracket
+  starting_bracket = ""
 
-  # find the first closing bracket
-  for i in range(len(all_bracks)):
-    # can't have the first bracket be a closing type
-    if all_bracks[i] in brack_types.values() and i == 0:
-        return False
-    # if the first found closing bracket is after index zero
-    elif all_bracks[i] in brack_types.values():
-      if i - steps_back < 0:
-          
-      #step back one element and check if element is opening type
-      elif all_bracks[i-steps_back] in brack_types.keys():
-        # it must be the same type as the close, or return False
-        if not brack_types[all_bracks[i-steps_back]] == all_bracks[i]:
-          return False
-      # if the element is another closing type
-      else:
-        # repeat the above by stepping back an element and checking against new closing type
-        steps_back += 1
-  return True
+  while True:
+      print(len(all_bracks))
+      # for each bracket in the list of brackets
+      for i in range(len(all_bracks)):
+          # if the starting bracket is in the dictionary keys
+          if starting_bracket in brack_types:
+              # if the all_bracks bracket is a closer that complements the starting bracket
+              if brack_types[starting_bracket] == all_bracks[i]:
+                  # remove the pair of brackets from the list and start over
+                  all_bracks.remove(all_bracks[i])
+                  all_bracks.remove(starting_bracket)
+                  if len(all_bracks) == 0:
+                      return True
+                  break
+              # if the bracket is an opener, set it as the new starting bracket
+              elif all_bracks[i] in brack_types.keys():
+                  starting_bracket = all_bracks[i]
+              else:
+                  print ("False 1")
+                  return False
+          # if the starting_bracket isn't in the dictionary keys but is empty
+          elif starting_bracket == "":
+              # assign its first value
+              starting_bracket = all_bracks[i]
+          # the starting bracket is a closer
+          else:
+              print("False 2")
+              return False
 
 
 
 
-print(brackets_checker("Hello {( world )}[]")) # even, should return True
-print(brackets_checker("Hello {( world }[")) # even, should return False
-print(brackets_checker("Hello {( world }")) # odd, should return False
-print(brackets_checker("Hello ] (world )")) # even, triggers False in Except
+
+print(brackets_checker("{{{[[[[[((((({[{{{{[[[[[[(((((((([[[[[]]]]]))))))))]]]]]]}}}}]})))))]]]]]}}}")) # even, should return True
+#print(brackets_checker("Hello {( world }[")) # even, should return False
+#print(brackets_checker("Hello {( world }")) # odd, should return False
+#print(brackets_checker("Hello ] (world )")) # even, triggers False in Except
+#assert brackets_checker("((5+3)*2+1)") == True, "Simple"
+#assert brackets_checker("{[(3+1)+2]+}") == True, "Different types"
+#assert brackets_checker("(3+{1-1)}") == False, ") is alone inside {}"
+#assert brackets_checker("[1+1]+(2*2)-{3/3}") == True, "Different operators"
+#assert brackets_checker("(({[(((1)-2)+3)-3]/3}-3)") == False, "One is redundant"
+#assert brackets_checker("2+3") == True, "No brackets, no problem"
