@@ -16,36 +16,40 @@ def brackets_checker(string):
   if not (len(all_bracks)) % 2 == 0:
     return False
 
-  # set a value for starting bracket
-  starting_bracket = ""
-
   while True:
-      print(len(all_bracks))
+      # set a variable to control the outer loop
+      is_looping = True
+
       # for each bracket in the list of brackets
       for i in range(len(all_bracks)):
-          # if the starting bracket is in the dictionary keys
-          if starting_bracket in brack_types:
-              # if the all_bracks bracket is a closer that complements the starting bracket
-              if brack_types[starting_bracket] == all_bracks[i]:
-                  # remove the pair of brackets from the list and start over
-                  all_bracks.remove(all_bracks[i])
-                  all_bracks.remove(starting_bracket)
-                  if len(all_bracks) == 0:
-                      return True
+          # if the starting bracket is an opener
+          if all_bracks[i] in brack_types:
+              # move through from there to next bracket
+              for j in range(i+1, (len(all_bracks))):
+                  # if the next bracket is also an opener
+                  if all_bracks[j] in brack_types:
+                      # break inner loop, move forward in outer loop
+                      break
+                  # otherwise if it's the correct closer
+                  elif brack_types[all_bracks[i]] == all_bracks[j]:
+                      # grab the indexes of the bracket pair
+                      exclude = [i, j]
+                      # create a new list from the old, excluding the pair indexes
+                      all_bracks = [all_bracks[c] for c in range(len(all_bracks)) if c not in exclude]
+                      # if all brackets successfully paired and removed, return True
+                      if len(all_bracks) == 0:
+                          return True
+                      #in the case of successful pair removal, break both loops, start over
+                      is_looping = False
+                      break
+                  # otherwise, it's the wrong kind of closer
+                  else:
+                      return False
+              # if inner loop broken b/c of pair match, break outer loop too
+              if not is_looping:
                   break
-              # if the bracket is an opener, set it as the new starting bracket
-              elif all_bracks[i] in brack_types.keys():
-                  starting_bracket = all_bracks[i]
-              else:
-                  print ("False 1")
-                  return False
-          # if the starting_bracket isn't in the dictionary keys but is empty
-          elif starting_bracket == "":
-              # assign its first value
-              starting_bracket = all_bracks[i]
           # the starting bracket is a closer
           else:
-              print("False 2")
               return False
 
 
