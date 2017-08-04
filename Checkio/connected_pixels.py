@@ -12,22 +12,29 @@ def connected_pixels(list_of_ij):
 
   # create a holder for storing connected desireds
   connections = []
+  unconnected = []
   # for each of the desired pixels, grab its connections
   for i in range(len(ones)-1):
       for j in range(i+1, len(ones)):
           if abs(ones[i][0]-ones[j][0]) < 2 and abs(ones[i][1] - ones[j][1]) < 2:
               connections.append((ones[i], ones[j]))
           else:
-              connections.extend([(ones[i]), (ones[j])])
-  print (connections)
+              unconnected.extend([(ones[i]), (ones[j])])
 
-  # TODO fix the following code so it returns unioned sets or stand-alones
+  # TODO clean up the unconnected so it's only truly unconnected from the pair
+  print (connections)
+  print (list(set(unconnected)))
+
+  # TODO return unioned sets or stand-alones
   final = []
-  # create unions from the individual connections so not double counting
+
+  def union(A, B):
+      return list(set(A) | set(B))
+
   for i in range(len(connections)):
       for j in range(i+1, len(connections)):
           if connections[j][0] in connections[i] or connections[j][1] in connections[i]:
-              final.append(list(set(connections[j]) | set(connections[i])))
+              final.append(union(connections[j], connections[i]))
 
   print (final)
 
