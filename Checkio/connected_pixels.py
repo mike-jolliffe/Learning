@@ -11,7 +11,6 @@ def connected_pixels(list_of_ij):
               ones.append((i,j))
 
   # for each of the desired pixels, grab its connections
-  # TODO clean up the unconnected so it's only truly unconnected from the pair
   connections = []
   unconnected = []
   for i in range(len(ones)-1):
@@ -20,22 +19,39 @@ def connected_pixels(list_of_ij):
               connections.append((ones[i], ones[j]))
           else:
               unconnected.extend([(ones[i]), (ones[j])])
-  print (connections)
-  #print (list(set(unconnected)))
+  #print (connections)
 
-  # # TODO return unioned sets or stand-alones
-  # final = []
-  #
-  # def union(A, B):
-  #     if any(i in B for i in A):
-  #         return list(set(A) | set(B))
-  #
-  #
-  # for i in range(len(connections)):
-  #     for j in range(i+1, len(connections)):
-  #         final.append(union(connections[j], connections[i]))
-  #
-  # print (final)
+
+  # return unioned sets of connected pixels
+  # TODO figure out how to reduce final to single occurrences of values
+  unions = []
+
+  def union(A, B):
+      if any(i in B for i in A):
+          return list(set(A) | set(B))
+
+
+  for i in range(len(connections)):
+      for j in range(i+1, len(connections)):
+          unions.append(union(connections[j], connections[i]))
+
+  final = []
+  for elmnt in unions:
+      if not elmnt in final and elmnt != None:
+          final.append(elmnt)
+  #print (final)
+
+  # clean up unconnected 
+  # TODO clean up the unconnected so it's only truly unconnected from the pair
+  final_unconnected = []
+  for u in unconnected:
+      for c in final:
+          if u not in c and u not in final_unconnected:
+              print (u,c)
+              final_unconnected.append(u)
+              break
+  #print (final_unconnected)
+  # for each element in the list, get its length and append it to a counts list
 
 connected_pixels([
     [0, 0, 0, 0, 0],
