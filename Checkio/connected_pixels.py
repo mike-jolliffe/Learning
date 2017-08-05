@@ -39,10 +39,9 @@ def connected_pixels(list_of_ij):
   for elmnt in unions:
       if not elmnt in final and elmnt != None:
           final.append(elmnt)
-  #print (final)
+  print (final)
 
-  # clean up unconnected 
-  # TODO clean up the unconnected so it's only truly unconnected from the pair
+  # clean up unconnected
   final_unconnected = []
   for u in unconnected:
       for c in final:
