@@ -19,38 +19,47 @@ def connected_pixels(list_of_ij):
               connections.append((ones[i], ones[j]))
           else:
               unconnected.extend([(ones[i]), (ones[j])])
-  #print (connections)
-
+  print ("CONNECTED: {}".format(connections))
 
   # return unioned sets of connected pixels
-  # TODO figure out how to reduce final to single occurrences of values
-  unions = []
-
   def union(A, B):
+      print ("A: {}, B: {}".format(A,B))
       if any(i in B for i in A):
           return list(set(A) | set(B))
+      else:
+          return -1
 
-
+  unions = []
   for i in range(len(connections)):
-      for j in range(i+1, len(connections)):
-          unions.append(union(connections[j], connections[i]))
-
-  final = []
-  for elmnt in unions:
-      if not elmnt in final and elmnt != None:
-          final.append(elmnt)
-  print (final)
+      full_set = connections[i]
+      for j in range(len(connections)):
+          new_set = union(connections[j], full_set)
+          if new_set != -1:
+              full_set = new_set
+      if not full_set in unions:
+          unions.append(full_set)
+  print("FULL SET: {}".format(full_set))
 
   # clean up unconnected
   final_unconnected = []
   for u in unconnected:
-      for c in final:
-          if u not in c and u not in final_unconnected:
-              print (u,c)
-              final_unconnected.append(u)
-              break
-  #print (final_unconnected)
+      if not u in full_set and not u in final_unconnected:
+          final_unconnected.append(u)
+  #print ("final_unconnected: {}".format(final_unconnected))
+
+  # merge unioned and unconnected into a final list
+  final_set = []
+  final_set.append(full_set)
+  final_set.append(final_unconnected)
+  print ("FINAL SET: {}".format(final_set))
+
   # for each element in the list, get its length and append it to a counts list
+  count = []
+  for sub_list in final_set:
+      if len(sub_list) > 0:
+          count.append(len(sub_list))
+  print (sorted(count))
+
 
 connected_pixels([
     [0, 0, 0, 0, 0],
@@ -58,8 +67,16 @@ connected_pixels([
     [0, 0, 0, 1, 0],  # should be [[1,2],[1,3],[2,3],[3,1]]
     [0, 1, 0, 0, 0],
     [0, 0, 0, 0, 0]])
+# connected_pixels([
+#     [0, 0, 0, 0, 0],
+#     [0, 0, 1, 1, 0],  # should be [[1,2],[1,3],[2,3][3,1],[3,2]]
+#     [0, 0, 0, 1, 0],
+#     [0, 1, 1, 0, 0]])
 connected_pixels([
-    [0, 0, 0, 0, 0],
-    [0, 0, 1, 1, 0],  # should be [[1,2],[1,3],[2,3][3,1],[3,2]]
-    [0, 0, 0, 1, 0],
-    [0, 1, 1, 0, 0]])
+    [0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0],
+    [0, 0, 1, 1, 1, 0],
+    [0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 1, 0],
+    [0, 0, 0, 0, 0, 0]])
