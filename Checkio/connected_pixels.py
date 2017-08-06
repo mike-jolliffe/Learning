@@ -25,10 +25,13 @@ def connected_pixels(list_of_ij):
   def union(A, B):
       print ("A: {}, B: {}".format(A,B))
       if any(i in B for i in A):
-          return list(set(A) | set(B))
+          combo = list(set(A) | set(B))
+          print ("UNION? {}".format(combo))
+          return combo
       else:
           return -1
 
+  # TODO resolve dupes issue
   unions = []
   for i in range(len(connections)):
       full_set = connections[i]
@@ -38,14 +41,15 @@ def connected_pixels(list_of_ij):
               full_set = new_set
       if not full_set in unions:
           unions.append(full_set)
-  print("FULL SET: {}".format(full_set))
+  print("FULL SET: {}".format(unions))
 
   # clean up unconnected
+  #TODO figure out why this code doesn't exclude stuff that's in Full set
   final_unconnected = []
   for u in unconnected:
       if not u in full_set and not u in final_unconnected:
           final_unconnected.append(u)
-  #print ("final_unconnected: {}".format(final_unconnected))
+  print ("final_unconnected: {}".format(final_unconnected))
 
   # merge unioned and unconnected into a final list
   final_set = []
@@ -61,12 +65,12 @@ def connected_pixels(list_of_ij):
   print (sorted(count))
 
 
-connected_pixels([
-    [0, 0, 0, 0, 0],
-    [0, 0, 1, 1, 0],
-    [0, 0, 0, 1, 0],  # should be [[1,2],[1,3],[2,3],[3,1]]
-    [0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0]])
+# connected_pixels([
+#     [0, 0, 0, 0, 0],
+#     [0, 0, 1, 1, 0],
+#     [0, 0, 0, 1, 0],  # should be [[1,2],[1,3],[2,3],[3,1]]
+#     [0, 1, 0, 0, 0],
+#     [0, 0, 0, 0, 0]])
 # connected_pixels([
 #     [0, 0, 0, 0, 0],
 #     [0, 0, 1, 1, 0],  # should be [[1,2],[1,3],[2,3][3,1],[3,2]]
