@@ -14,9 +14,12 @@ def cipher(map_from, map_to, code):
     for i in range(len(map_from)):
         key_code[map_from[i]] = map_to[i]
 
-    return key_code
     # Create variable, decoded, to which cipher dict is applied
+    decoded = ""
+    for char in code:
+        # get the value associated with the key of char, concat to decoded string
+        decoded += key_code[char]
 
     # Return key_code and decoded string
-
-print(cipher("abcd", "dcba", "dab")) 
+    return (key_code, decoded)
+print(cipher("abcd", "dcba", "dab"))
