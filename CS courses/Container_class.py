@@ -23,9 +23,15 @@ class Bag(Container):
         """ assumes e is hashable
             If e occurs one or more times in self, reduces the number of
             times it occurs in self by 1. Otherwise does nothing. """
-        # write code here
+
+        if e in self.vals:
+            self.vals[e] -= 1
 
     def count(self, e):
         """ assumes e is hashable
             Returns the number of times e occurs in self. """
-        # write code here
+
+        if e in self.vals:
+            return self.vals[e]
+        else:
+            return 0
