@@ -23,15 +23,29 @@ class Bag(Container):
         """ assumes e is hashable
             If e occurs one or more times in self, reduces the number of
             times it occurs in self by 1. Otherwise does nothing. """
-
         if e in self.vals:
             self.vals[e] -= 1
 
     def count(self, e):
         """ assumes e is hashable
             Returns the number of times e occurs in self. """
-
         if e in self.vals:
             return self.vals[e]
         else:
             return 0
+
+    def __add__(self,other):
+        """ returns the sum of dict values for same keys across instances"""
+        combo = {}
+        for val in self.vals:
+            if val in combo:
+                combo[val] += self.vals[val]
+            else:
+                combo[val] = self.vals[val]
+        for val in other.vals:
+            if val in combo:
+                combo[val] += other.vals[val]
+            else:
+                combo[val] = other.vals[val]
+        self.vals = combo
+        return Container.__str__(self)
