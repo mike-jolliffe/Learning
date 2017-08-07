@@ -25,30 +25,42 @@ class Campus(object):
     def __str__(self):
         return str(self.center_loc)
 
-        class MITCampus(Campus):
-            """ A MITCampus is a Campus that contains tents """
-            def __init__(self, center_loc, tent_loc = Location(0,0)):
-                """ Assumes center_loc and tent_loc are Location objects
-                Initializes a new Campus centered at location center_loc
-                with a tent at location tent_loc """
-                # Your code here
+class MITCampus(Campus):
+    """ A MITCampus is a Campus that contains tents """
+    def __init__(self, center_loc, tent_loc = Location(0,0)):
+        """ Assumes center_loc and tent_loc are Location objects
+        Initializes a new Campus centered at location center_loc
+        with a tent at location tent_loc """
 
-            def add_tent(self, new_tent_loc):
-                """ Assumes new_tent_loc is a Location
-                Adds new_tent_loc to the campus only if the tent is at least 0.5 distance
-                away from all other tents already there. Campus is unchanged otherwise.
-                Returns True if it could add the tent, False otherwise. """
-                # Your code here
+        self.center_loc = center_loc
+        self.tent_loc = [tent_loc]
 
-            def remove_tent(self, tent_loc):
-                """ Assumes tent_loc is a Location
-                Removes tent_loc from the campus.
-                Raises a ValueError if there is not a tent at tent_loc.
-                Does not return anything """
-                # Your code here
 
-            def get_tents(self):
-                """ Returns a list of all tents on the campus. The list should contain
-                the string representation of the Location of a tent. The list should
-                be sorted by the x coordinate of the location. """
-                # Your code here
+    def add_tent(self, new_tent_loc):
+        """ Assumes new_tent_loc is a Location
+        Adds new_tent_loc to the campus only if the tent is at least 0.5 distance
+        away from all other tents already there. Campus is unchanged otherwise.
+        Returns True if it could add the tent, False otherwise. """
+
+        for location in self.tent_loc:
+            if not new_tent_loc.dist_from(location) >= 0.5:
+                return False
+        self.tent_loc.append(new_tent_loc)
+        return True
+
+    def remove_tent(self, tent_loc):
+        """ Assumes tent_loc is a Location
+        Removes tent_loc from the campus.
+        Raises a ValueError if there is not a tent at tent_loc.
+        Does not return anything """
+        # Your code here
+
+    def get_tents(self):
+        """ Returns a list of all tents on the campus. The list should contain
+        the string representation of the Location of a tent. The list should
+        be sorted by the x coordinate of the location. """
+
+        all_tents = []
+        for tent in self.tent_loc:
+            all_tents.append(Location.__str__(tent))
+        return all_tents
