@@ -49,3 +49,16 @@ class Bag(Container):
                 combo[val] = other.vals[val]
         self.vals = combo
         return Container.__str__(self)
+
+class ASet(Container):
+    def remove(self, e):
+        """assumes e is hashable
+           removes e from self"""
+        if e in self.vals:
+            self.vals.pop(e)
+
+    def is_in(self, e):
+        """assumes e is hashable
+           returns True if e has been inserted in self and
+           not subsequently removed, and False otherwise."""
+        return True if e in self.vals else False
