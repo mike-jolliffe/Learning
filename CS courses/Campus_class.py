@@ -1,3 +1,5 @@
+from operator import attrgetter
+
 ### Do not change the Location or Campus classes. ###
 ### Location class is the same as in lecture.     ###
 class Location(object):
@@ -53,7 +55,11 @@ class MITCampus(Campus):
         Removes tent_loc from the campus.
         Raises a ValueError if there is not a tent at tent_loc.
         Does not return anything """
-        # Your code here
+
+        if tent_loc in self.tent_loc:
+            self.tent_loc.remove(tent_loc)
+        else:
+            raise ValueError
 
     def get_tents(self):
         """ Returns a list of all tents on the campus. The list should contain
@@ -61,6 +67,12 @@ class MITCampus(Campus):
         be sorted by the x coordinate of the location. """
 
         all_tents = []
+        tent_string = []
+
         for tent in self.tent_loc:
-            all_tents.append(Location.__str__(tent))
-        return all_tents
+            all_tents.append(tent)
+        all_tents = sorted(all_tents, key=attrgetter('x'))
+
+        for tent in all_tents:
+            tent_string.append(Location.__str__(tent))
+        return tent_string
