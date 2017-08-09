@@ -12,17 +12,17 @@ public class FibFor {
 		for (int i = 0; i < 19; i++) {
 			
 			if (i == 0) { 
-				System.out.println(i);
+				System.out.println(i + ":\t" + fib_run_even);
 			}
 			
 			else if (i % 2 == 0) {
 				fib_run_odd = fib_run_odd + fib_run_even;
-				System.out.println(fib_run_odd);
+				System.out.println(i + ":\t" + fib_run_odd);
 			}
 			
 			else {
 				fib_run_even = fib_run_even + fib_run_odd;
-				System.out.println(fib_run_even);
+				System.out.println(i + ":\t" + fib_run_even);
 			}
 			
 		}
