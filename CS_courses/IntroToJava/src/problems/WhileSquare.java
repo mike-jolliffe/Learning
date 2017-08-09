@@ -7,7 +7,11 @@ public class WhileSquare {
 		int i = 0;
 		while (i < 9) {
 			int sqrd = i * i;
-			System.out.println(i + " squared is " + sqrd);
+			int cubed = sqrd * i;
+			if (cubed % 2 == 0) {
+				System.out.println(cubed);
+			}
+			
 			i++;
 		}
 
