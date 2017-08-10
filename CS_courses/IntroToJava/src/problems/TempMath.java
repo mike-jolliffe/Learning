@@ -7,13 +7,15 @@ public class TempMath {
 		
 		float temp_F = 100F;
 		
-		// call toCelsius and print to console
+		// call toCelsius
 		float C = toCelsius(temp_F);
-		System.out.println(C);
 		
-		// call toFahrenheit and print to console
+		// call toFahrenheit
 		float F = toFahr(C);
-		System.out.println(F);
+		
+		// print a nice, formatted string of results to console
+		System.out.println(F + " degrees Fahrenheit is " 
+		                   + C + " degrees Celsius.");
 		
 	}
 	
@@ -25,6 +27,11 @@ public class TempMath {
 	public static float toFahr(float temp) {
 		// method converting C to F
 		return (float)(temp * 9.0F / 5.0F + 32F);
+	}
+	
+	public static String pformat(float C, float F) {
+		// method that prints formatted C and F vals to console
+		return F + " degrees Fahrenheit is " + C + " degrees Celsius.";
 	}
 
 }
