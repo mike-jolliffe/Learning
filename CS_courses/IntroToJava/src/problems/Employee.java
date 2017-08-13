@@ -7,6 +7,16 @@ public class Employee {
 	private double salary;
 	private int employeeId;
 	
+	public Employee(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
+	public Employee() {
+		this.firstName = "John";
+		this.lastName = "Doe";
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}
