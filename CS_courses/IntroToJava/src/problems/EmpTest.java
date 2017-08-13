@@ -6,10 +6,10 @@ public class EmpTest {
 		// TODO Auto-generated method stub
 
 		Employee emp1 = new Employee();
-		emp1.firstName = "Johnny";
-		emp1.lastName = "Appleseed";
-		emp1.salary = 25000.00;
-		emp1.employeeId = 1;
+		emp1.setFirstName("Johnny");
+		emp1.setLastName("Appleseed");
+		emp1.setSalary(25000.00);
+		emp1.setEmployeeId(1);
 		
 		emp1.showEmp();
 	}
