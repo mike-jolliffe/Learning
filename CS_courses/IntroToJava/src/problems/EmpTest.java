@@ -17,6 +17,7 @@ public class EmpTest {
 		
 		
 		System.out.println(emp1.toString());
+		System.out.println(emp1.equals(emp2));
 	}
 	
 }
