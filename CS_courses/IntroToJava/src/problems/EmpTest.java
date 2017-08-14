@@ -18,6 +18,11 @@ public class EmpTest {
 		
 		System.out.println(emp1.toString());
 		System.out.println(emp1.equals(emp2));
+		
+		//print formatted string of salary
+		String fs = "Name: " + emp1.getFirstName() + " " + emp1.getLastName()
+		            + "\n" + "Salary: " + "$ %1$.2f";
+		System.out.printf(fs, emp1.getSalary());
 	}
 	
 }
