@@ -3,7 +3,7 @@ package problems;
 public class EmpTest {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		// Create instance of Employee() class
 
 		Employee emp1 = new Employee("Johnny", "Appleseed");
 		
@@ -12,8 +12,11 @@ public class EmpTest {
 		
 		Employee emp2 = new Employee();
 		
-		emp1.showEmp();
-		emp2.showEmp();
+		//emp1.showEmp();
+		//emp2.showEmp();
+		
+		
+		System.out.println(emp1.toString());
 	}
-
+	
 }

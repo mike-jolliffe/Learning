@@ -17,6 +17,11 @@ public class Employee {
 		this.lastName = "Doe";
 	}
 	
+	public String toString() {
+		return "Employee [firstName=" + firstName + ", lastName=" + lastName + ", salary=" + salary + ", employeeId="
+				+ employeeId + "]";
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
