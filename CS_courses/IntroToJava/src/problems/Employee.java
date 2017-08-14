@@ -4,12 +4,14 @@ public class Employee {
 
 	private String firstName;
 	private String lastName;
+	private Role role;
 	private double salary;
 	private int employeeId;
 	
-	public Employee(String firstName, String lastName) {
+	public Employee(String firstName, String lastName, Role role) {
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.role = role;
 	}
 
 	public Employee() {
@@ -23,6 +25,7 @@ public class Employee {
 		result = prime * result + employeeId;
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(salary);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -49,14 +52,26 @@ public class Employee {
 				return false;
 		} else if (!lastName.equals(other.lastName))
 			return false;
+		if (role != other.role)
+			return false;
 		if (Double.doubleToLongBits(salary) != Double.doubleToLongBits(other.salary))
 			return false;
 		return true;
 	}
-
+	
+	
 	public String toString() {
-		return "Employee [firstName=" + firstName + ", lastName=" + lastName + ", salary=" + salary + ", employeeId="
-				+ employeeId + "]";
+		String formattedSalary = String.format("%.2f", salary);
+		return "Employee [firstName=" + firstName + ", lastName=" + lastName + ", role=" + role + ", salary=" + salary
+				+ ", employeeId=" + employeeId + "]";
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public String getFirstName() {

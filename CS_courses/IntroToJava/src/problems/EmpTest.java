@@ -5,7 +5,7 @@ public class EmpTest {
 	public static void main(String[] args) {
 		// Create instance of Employee() class
 
-		Employee emp1 = new Employee("Johnny", "Appleseed");
+		Employee emp1 = new Employee("Johnny", "Appleseed", Role.CEO);
 		
 		emp1.setSalary(25000.00);
 		emp1.setEmployeeId(1);
