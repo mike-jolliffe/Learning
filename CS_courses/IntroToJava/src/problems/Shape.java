@@ -45,7 +45,7 @@ public abstract class Shape {
 	}
 	
 	// methods
-	public abstract void getArea();
+	public abstract float getArea();
 	
 	
 	
