@@ -13,7 +13,7 @@ public class Rectangle extends Shape {
 
 	// Getters and setters for height and width
 	public Rectangle(float x, float y, Color shapeColor, float width, float height) {
-		super(0,0,Color.GREEN);
+		super((int)x, (int)y, shapeColor);
 		this.width = width;
 		this.height = height;
 	}
