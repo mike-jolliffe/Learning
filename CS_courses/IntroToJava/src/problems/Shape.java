@@ -1,6 +1,6 @@
 package problems;
 
-public abstract class Shape {
+public abstract class Shape implements Drawable {
 	
 	// fields for x, y location and color
 	private int x;
@@ -18,7 +18,7 @@ public abstract class Shape {
 		this.y = y;
 		this.shapeColor = shapeColor;
 	}
-
+	
 	// getters and setters
 	public int getX() {
 		return x;
@@ -46,6 +46,12 @@ public abstract class Shape {
 	
 	// methods
 	public abstract float getArea();
+
+	@Override
+	public void draw() {
+		System.out.println("Object type: Shape" + " x: " + x + " y: " + y);
+	}
+	
 	
 	
 	
