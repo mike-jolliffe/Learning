@@ -13,11 +13,12 @@ public class ShapeTester {
 			System.out.println("Area for this shape: " + shape.getArea());
 		}
 		
-		Drawable[] drawn = new Drawable[3];
+		Drawable[] drawn = new Drawable[4];
 		
 		drawn[0] = new Rectangle();
 		drawn[1] = new Rectangle(1.5F, 5.0F, Color.RED, 2.3F, 6.7F);
 		drawn[2] = new Circle();
+		drawn[3] = new Text("Here's some text");
 		
 		for (Drawable drawable : drawn) {
 			drawable.draw();
