@@ -29,6 +29,12 @@ public class Circle extends Shape {
 		return (float)(Math.PI * Math.pow(radius, 2.0F));
 		
 	}
+
+	@Override
+	public void draw() {
+		System.out.println("Object type: Circle" + ", Radius: " + radius);
+	}
+	
 	
 	
 }

@@ -1,6 +1,6 @@
 package problems;
 
-public class Rectangle extends Shape {
+public class Rectangle extends Shape implements Drawable {
 	// Rectangle fields
 	private float width;
 	private float height;
@@ -41,5 +41,11 @@ public class Rectangle extends Shape {
 		
 	}
 
+	@Override
+	public void draw() {
+		System.out.println("Object Type: Rectangle" + ", Width: " + width + ", Height: " + height);;
+	}
+	
+	
 	
 }
