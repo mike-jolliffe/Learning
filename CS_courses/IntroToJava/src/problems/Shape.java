@@ -1,6 +1,6 @@
 package problems;
 
-public abstract class Shape implements Drawable {
+public abstract class Shape implements Drawable, Comparable<Shape> {
 	
 	// fields for x, y location and color
 	private int x;
@@ -52,6 +52,20 @@ public abstract class Shape implements Drawable {
 		System.out.println("Object type: Shape" + " x: " + x + " y: " + y);
 	}
 	
+	
+	public int compareTo(Shape other) {
+		if (this.getArea() > other.getArea()) {
+			return 1;
+		}
+		
+		else if (this.getArea() < other.getArea()) {
+			return -1;
+		}
+		
+		else {
+			return 0;
+		}
+	}
 	
 	
 	

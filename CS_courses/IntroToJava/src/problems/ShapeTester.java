@@ -3,6 +3,7 @@ package problems;
 public class ShapeTester {
 	public static void main(String[] args) {
 		
+		// create and print an array of different Rect/Circ objects
 		Shape[] shapes = new Shape[3];
 		
 		shapes[0] = new Rectangle();
@@ -13,6 +14,7 @@ public class ShapeTester {
 			System.out.println("Area for this shape: " + shape.getArea());
 		}
 		
+		// create and print an array of drawables
 		Drawable[] drawn = new Drawable[4];
 		
 		drawn[0] = new Rectangle();
@@ -23,5 +25,9 @@ public class ShapeTester {
 		for (Drawable drawable : drawn) {
 			drawable.draw();
 		}
+		
+		// test a Comparable
+		
+		
 	}
 }

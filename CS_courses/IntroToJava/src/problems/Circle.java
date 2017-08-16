@@ -1,6 +1,6 @@
 package problems;
 
-public class Circle extends Shape {
+public class Circle extends Shape implements Drawable {
 	// circle radius field
 	float radius;
 	
