@@ -1,27 +1,40 @@
-<!doctype html>
-<html lang="en">
+nav {background: aliceblue;
+             width: 16em;
+             margin-left: -13em;
+             padding-left: 15px;
+             margin-bottom: 30px;
+}
 
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="recipeStyle.css">
-</head>
+nav:hover {margin-left: -10px;}
 
-<body>
-<h1>My Favorite Recipes</h1>
-    <nav>
-        <ol>
-            <li><a href="#dan">Dan Dan Noodles</a></li>
-            <li><a href="#potatacos">Potato Tacos</a></li>
-            <!--TODO: Asian Noodles
-                      Lemon Parm Salad-->
-            
-        </ol>
-    </nav>
+img {width: 35em;}
 
-<article>
-    <h2 id="dan">Dan Dan Noodles</h2>
-    <img src="images/dandan.jpg" alt="My favorite dish, dan dan noodles" title="Dan Dan Noodles" width=500>
-    <p><a href="http://thewoksoflife.com/2014/11/dan-dan-noodles/">This recipe</a> is my favorite.</p>    
+nav li {padding-left: 15px;}
+
+article {margin-left: 25px;}
+
+h1  {background: cadetblue;
+     color: floralwhite;
+     width: 550px;
+     margin: -10px;
+     padding-left: 40px;
+}
+
+h2 {margin-top: 60px;}
+
+h4 {margin-bottom: 10px;
+    margin-top: 40px;
+}
+
+table, th, td   {text-align: center;
+                 border: 1px solid black;
+                 border-collapse: collapse;
+                 padding: 2px;
+}
+
+table {margin-left: 2em;}
+
+th {background-color:aliceblue}">This recipe</a> is my favorite.</p>    
     <ul>
         <li><a href="#Ingredients">Ingredients</a></li>
         <li><a href="#Oil">Make the Chili Oil</a></li>
@@ -165,6 +178,16 @@
     
 <h4 id="Sauce">Step Three: The Sauce</h4>
 <ul>
+    <li></li>
+</ul>
+    
+<h4 id="Noodles">Step Four: The Noodles, and Final Assembly</h4>
+<ul>
+    <li></li>
+</ul>
+</article>
+</body>
+</html>>
     <li></li>
 </ul>
     
