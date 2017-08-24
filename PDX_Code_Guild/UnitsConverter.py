@@ -8,10 +8,10 @@ class UnitsConverter():
                   'milli':10**-3, 'micro':10**-6, 'nano':10**-9, 'pico':10**-12,
                   'femto':10**-15, 'atto':10**-18}
 
-    # Create volume to liters specific conversion dict
+    # Create volume dict that translates input unit key into to liters equiv
     vol_dict = {'gallons': 3.78541, 'liters': 1}
 
-    # Create in/mi to meters distance conversion
+    # Create dist dict that translates all input units into meters value equiv
     dist_dict = {'inches': 0.0254, 'miles':1609.34, 'meters':1}
 
     def __init__(self, value, input_units, output_units):
@@ -23,7 +23,7 @@ class UnitsConverter():
 
     # create a function that converts input value and units to value in base units of meters/liters
     def convert_to_base(self):
-        '''Returns a conversion of distance or volume into base units'''
+        '''Returns a conversion of distance or volume into base meters/liters units'''
         converter = self.input_check()
         # Get the base value in meters or liters
         meters_liters = self.value * converter[0][0]
@@ -59,7 +59,9 @@ class UnitsConverter():
 
     # create a function to screen user input and call conversion functions
     def input_check(self):
-        # Check whether either of the units are in dist_dict or vol_dict
+        '''Checks user input to ensure no conversion between dist and vol. Returns
+        values from input dist/vol dicts'''
+        # Check whether given input units are in dist_dict or vol_dict
         distance_in = {key:value for (key,value) in self.dist_dict.items() if key in self.input_units}
         distance_out = {key:value for (key,value) in self.dist_dict.items() if key in self.output_units}
         volume_in = {key:value for (key,value) in self.vol_dict.items() if key in self.input_units}
@@ -70,17 +72,15 @@ class UnitsConverter():
             raise ValueError("Cannot convert between distances and volumes.")
         # grab the value required for conversion
         if len(distance_in) > 0:
-            # meters for that unit
+            # meters for the input and output units
             return ([values for values in distance_in.values()],
                     [values for values in distance_out.values()])
         elif len(volume_in) > 0:
-            # liters for that unit
+            # liters for the input and output units
             return ([values for values in volume_in.values()],
                     [values for values in volume_out.values()])
         else:
             print("Invalid distance/volume units.")
-
-
 
 
 if __name__ == "__main__":
