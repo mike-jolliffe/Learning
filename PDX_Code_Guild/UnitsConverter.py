@@ -25,21 +25,19 @@ class UnitsConverter():
     def convert_to_base(self):
         '''Returns a conversion of distance or volume into base units'''
         converter = self.input_check()
-        print("Converter: {}".format(converter))
         # Get the base value in meters or liters
-        in_base = self.value * converter[0][0]
+        meters_liters = self.value * converter[0][0]
         out_base = converter[1][0]
-        print("In base {}, out base {}".format(in_base, out_base))
         # Modify the base value according to prefix in metprefix dictionary
-        prefix_mod_in = [value for (key,value) in self.metprefix_dict.items() if key in self.input_units]
+        meters_liters_prefix = [value for (key,value) in self.metprefix_dict.items() if key in self.input_units]
 
         # If the user input units have any prefixes in front of meters/liters
-        if prefix_mod_in:
+        if meters_liters_prefix:
             # Modify the base value accordingly
-            return [in_base * prefix_mod_in[0], out_base]
+            return [meters_liters * meters_liters_prefix[0], out_base]
         else:
             # Otherwise, just return the base value
-            return [in_base, out_base]
+            return [meters_liters, out_base]
 
     # create a function that converts base unit to target units
     def base_to_target(self):
@@ -48,11 +46,13 @@ class UnitsConverter():
         # Check for prefix mod on output_units
         prefix_mod_out = [value for (key,value) in self.metprefix_dict.items() if key in self.output_units]
         base_values = self.convert_to_base()
-        in_base_value = base_values[0]
-        out_base_value = in_base_value * base_values[1]
+
+        in_base_value = base_values[0] # this should be total meters/liters of in
+        out_base_value = in_base_value / base_values[1]
+        print("meters/liters of input: {}, base units of output: {}".format(in_base_value, out_base_value))
 
         if prefix_mod_out:
-            target_val = out_base_value / prefix_mod_out[0]
+            target_val = in_base_value / prefix_mod_out[0]
         else:
             target_val = out_base_value
         print("{} {} converts to {} {}.".format(self.value, self.input_units, target_val, self.output_units))
