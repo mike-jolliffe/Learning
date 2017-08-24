@@ -42,6 +42,7 @@ class UnitsConverter():
     # create a function that converts base unit to target units
     def base_to_target(self):
         '''Returns a conversion from base units into target units'''
+        # TODO fix to convert from metric into gallons/miles
         # Check for prefix mod on output_units
         prefix_mod_out = [value for (key,value) in self.metprefix_dict.items() if key in self.output_units]
         base_value = self.convert_to_base()
