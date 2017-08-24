@@ -44,7 +44,7 @@ class UnitsConverter():
     # create a function that converts base unit to target units
     def base_to_target(self):
         '''Returns a conversion from base units into target units'''
-        # TODO fix mult/divide based on prefix. Centi and giga are different
+        # TODO fix cm to miles conversion
         # Check for prefix mod on output_units
         prefix_mod_out = [value for (key,value) in self.metprefix_dict.items() if key in self.output_units]
         base_values = self.convert_to_base()
@@ -52,7 +52,7 @@ class UnitsConverter():
         out_base_value = in_base_value * base_values[1]
 
         if prefix_mod_out:
-            target_val = prefix_mod_out[0] * out_base_value
+            target_val = out_base_value / prefix_mod_out[0]
         else:
             target_val = out_base_value
         print("{} {} converts to {} {}.".format(self.value, self.input_units, target_val, self.output_units))
