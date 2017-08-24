@@ -21,35 +21,40 @@ class UnitsConverter():
         self.input_units = input_units
         self.output_units = output_units
 
-    # create a function that converts input value and units to value in base units
+    # create a function that converts input value and units to value in base units of meters/liters
     def convert_to_base(self):
         '''Returns a conversion of distance or volume into base units'''
         converter = self.input_check()
         print("Converter: {}".format(converter))
         # Get the base value in meters or liters
-        base = self.value * converter[0]
+        in_base = self.value * converter[0][0]
+        out_base = converter[1][0]
+        print("In base {}, out base {}".format(in_base, out_base))
         # Modify the base value according to prefix in metprefix dictionary
         prefix_mod_in = [value for (key,value) in self.metprefix_dict.items() if key in self.input_units]
 
         # If the user input units have any prefixes in front of meters/liters
         if prefix_mod_in:
             # Modify the base value accordingly
-            return base * prefix_mod_in[0]
+            return [in_base * prefix_mod_in[0], out_base]
         else:
             # Otherwise, just return the base value
-            return base
+            return [in_base, out_base]
 
     # create a function that converts base unit to target units
     def base_to_target(self):
         '''Returns a conversion from base units into target units'''
-        # TODO fix to convert from metric into gallons/miles
+        # TODO fix mult/divide based on prefix. Centi and giga are different
         # Check for prefix mod on output_units
         prefix_mod_out = [value for (key,value) in self.metprefix_dict.items() if key in self.output_units]
-        base_value = self.convert_to_base()
+        base_values = self.convert_to_base()
+        in_base_value = base_values[0]
+        out_base_value = in_base_value * base_values[1]
+
         if prefix_mod_out:
-            target_val = prefix_mod_out[0] * base_value
+            target_val = prefix_mod_out[0] * out_base_value
         else:
-            target_val = base_value
+            target_val = out_base_value
         print("{} {} converts to {} {}.".format(self.value, self.input_units, target_val, self.output_units))
 
     # create a function to screen user input and call conversion functions
@@ -66,10 +71,12 @@ class UnitsConverter():
         # grab the value required for conversion
         if len(distance_in) > 0:
             # meters for that unit
-            return [values for values in distance_in.values()]
+            return ([values for values in distance_in.values()],
+                    [values for values in distance_out.values()])
         elif len(volume_in) > 0:
             # liters for that unit
-            return [values for values in volume_in.values()]
+            return ([values for values in volume_in.values()],
+                    [values for values in volume_out.values()])
         else:
             print("Invalid distance/volume units.")
 
