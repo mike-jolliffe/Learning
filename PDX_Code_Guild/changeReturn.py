@@ -2,7 +2,8 @@ class ChangeBot():
     '''ChangeBot will keep track of how many coins are on hand, returning the fewest
     coins required to give customer exact change'''
 
-    coins_used = 0
+    coins_used_dict = {'quarters': 0, 'dimes': 0, 'nickles': 0, 'pennies': 0}
+    coin_count = 0
 
     def __init__(self, register, change):
         self.register = register
@@ -15,9 +16,11 @@ class ChangeBot():
         coin_value = [value[1] for (key, value) in register.items() if key == self.coinage]
 
         while self.change > 0:
-            if coins_available[0] > 0:
+            if coins_available[0] > 0 and coin_value[0] <= self.change:
                 self.change -= coin_value[0]
-                self.coins_used += 1
+                self.coins_used_dict[self.coinage] += 1
+                self.coin_count += 1
+                coins_available[0] -= 1
                 self.register[coinage] = coins_available
             else:
                 break
@@ -27,7 +30,15 @@ class ChangeBot():
         self.coins_back("dimes")
         self.coins_back("nickles")
         self.coins_back("pennies")
-        return self.coins_used
+
+        if self.change > 0:
+            print ("Can't make exact change")
+
+        return f'''The minimum number of coins to make change is {self.coin_count},
+        consisting of {self.coins_used_dict["quarters"]} quarters,
+                      {self.coins_used_dict["dimes"]} dimes,
+                      {self.coins_used_dict["nickles"]} nickles, and
+                      {self.coins_used_dict["pennies"]} pennies.'''
 
 if __name__ == "__main__":
     quarters, dimes, nickles, pennies = input("How many quarters, dimes, nickles, and pennies are in the register? ").split(", ")
@@ -36,23 +47,3 @@ if __name__ == "__main__":
     change = input("How much change in total cents is required? ")
     Change_Bot = ChangeBot(register, change)
     print(Change_Bot.run())
-
-
-# Write a python script that figures out how to divvy up an amount of change into
-# the _fewest_ quarters, dimes, nickels, and pennies.
-#
-#
-# *   Calculate the number of quarters necessary first.
-#
-# *   Then calculate the number of dimes, nickels, and pennies.
-#     If you do it in that order, you will minimize the number of coins.
-#
-# This is easiest done by updating a _running total_ of number of cents left to be put into coins.
-#
-# Also remember that the `//` operator divides and removes any remainder.
-#
-# * Expand this problem to work on an amount of cents greater than 100 and include bills.
-# * Print out the total number of coins and bills dispensed.
-#
-# * Store how many of each coin is in the cash register, then allow the change
-# algorithm to deal with when you don't have enough coins to optimally give change.
