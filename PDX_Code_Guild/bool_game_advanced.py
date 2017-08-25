@@ -61,7 +61,7 @@ class BasicGame():
 
             if player_answer == str(question[1]):
                 print("********** That is correct! **********")
-                #TODO resolve the following statement that's commented out
+                # Deal with which random_question() got called
                 if len(question) == 2:
                     self.bools.pop(question[0])
                 else:
