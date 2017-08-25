@@ -14,19 +14,22 @@ class PhoneBook():
     def __init__(self, infile):
         try:
             # if a phonebook file already exists, open and decode the JSON object
-            self.infile = open(infile, 'w')
-            self.phonebook = json.load(self.infile)
+            self.infile = infile
+            with open(self.infile, 'w') as for_json:
+                self.phonebook = json.load(for_json)
+            print("opened existing file")
         except OSError:
             # if the phonebook file doesn't exist, initialize a new dictionary
+            print ("couldn't open existing file")
             self.phonebook = {}
 
     def getStatus(self):
-        print (self.phonebook)
+        return self.phonebook
 
     def search(self, searchword):
         '''Allow search functionality'''
         if searchword in self.phonebook:
-            return f"{searchword}, {phonebook[searchword]}"
+            return f"{self.phonebook[searchword]}"
 
     def addEntry(self, namesplit, phone):
         '''Allow insertion of new entry into dict'''
@@ -57,11 +60,11 @@ class PhoneBook():
         self.keyword = keyword
 
         if self.keyword == 'status':
-            return self.getStatus()
+            print(self.getStatus())
 
         elif self.keyword in ['s', 'search', 'Search']:
             searchword = input("what would you like to search for? ")
-            print(self.search(searchword))
+            print(self.search(searchword.replace(" ", "")))
 
         elif self.keyword in ['a', 'add', 'Add']:
             name = input("Who would you like to add? ")
