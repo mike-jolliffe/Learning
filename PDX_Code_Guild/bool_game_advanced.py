@@ -3,7 +3,9 @@ PDX Code Guild Curriculum. Boolean Game.
 """
 
 import random
+
 class BasicGame():
+    '''Create class for running a basic game of simple boolean expressions'''
     bools = {
             'not False': not False,
             'not True': not True,
@@ -33,10 +35,6 @@ class BasicGame():
             '0 == 0': 0 == 0,
             }
 
-    bools_connector = ["and", "or"]
-
-    def __init__(self):
-        pass
 
     def random_question(self):
         question = random.choice(list(self.bools.keys()))
@@ -64,12 +62,20 @@ class BasicGame():
             if player_answer == str(question[1]):
                 print("********** That is correct! **********")
                 #TODO resolve the following statement that's commented out
-                #del self.bools[question[0]]
+                if len(question) == 2:
+                    self.bools.pop(question[0])
+                else:
+                    self.bools.pop(question[2])
                 score += 1
             else:
                 print("Sorry, that is not correct.")
 
 class AdvancedGame(BasicGame):
+    '''Build a class that inherits from BasicGame, but concatenates two of the
+    BasicGame questions into a single, more complicated boolean expression'''
+
+    bools_connector = ["and", "or"]
+
     def __init__(self):
         BasicGame.__init__(self)
 
@@ -82,13 +88,12 @@ class AdvancedGame(BasicGame):
 
         connector = random.choice(self.bools_connector)
         advanced_ans = f"{answer} {connector} {answer2}"
-        print(eval(advanced_ans))
-        return (f"{question1} {connector} {question2}", eval(advanced_ans))
+        return f"{question1} {connector} {question2}", eval(advanced_ans), question1
 
-
-difficulty = input("Pick a difficulty: Beginner or Advanced? ")
-if difficulty in ["B", "Beginner", "b", "beginner"]:
-    game = BasicGame()
-else:
-    game = AdvancedGame()
-game.run()
+if __name__ == "__main__":
+    difficulty = input("Pick a difficulty: Beginner or Advanced? ")
+    if difficulty in ["B", "Beginner", "b", "beginner"]:
+        game = BasicGame()
+    else:
+        game = AdvancedGame()
+    game.run()
