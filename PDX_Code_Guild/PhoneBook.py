@@ -15,7 +15,7 @@ class PhoneBook():
         try:
             # if a phonebook file already exists, open and decode the JSON object
             self.infile = infile
-            with open(self.infile, 'w') as for_json:
+            with open(self.infile) as for_json:
                 self.phonebook = json.load(for_json)
             print("opened existing file")
         except OSError:
@@ -51,12 +51,13 @@ class PhoneBook():
 
     def leaveProgram(self):
         '''Exit program'''
-        json.dump(self.phonebook, self.infile)
-        self.infile.close()
+        print(self.phonebook)
+        with open(self.infile, 'w') as data_file:
+            json.dump(self.phonebook, data_file)
         exit()
 
     def run(self, keyword):
-
+        '''Calls correct function associated with a user inputted keyword'''
         self.keyword = keyword
 
         if self.keyword == 'status':
