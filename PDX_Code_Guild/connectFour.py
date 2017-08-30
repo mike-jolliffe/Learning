@@ -90,8 +90,16 @@ class GameBoard():
 
     def playGame(self, player):
         print("WELCOME TO CONNECT FOUR")
-        play = int(input(f"Player {player}, pick a column: "))
-        self.addPiece(player, play)
+        valid_input = False
+        while not valid_input:
+            try:
+                play = int(input(f"Player {player}, pick a column: "))
+                self.addPiece(player, play)
+                valid_input = True
+            except:
+                print("Please enter a number 1 through 7")
+                print()
+                continue
         self.printBoard()
         if self.checkWin(player):
             print(f"Player {player} wins!!!")
