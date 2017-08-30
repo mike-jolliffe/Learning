@@ -1,26 +1,8 @@
 import string
-import codecs
-#open it with utf-8 encoding
-#f=codecs.open("myfile.txt","r",encoding='utf-8')
-#read the file to unicode string
-#sfile=f.read()
-
-#check the encoding type
-#print type(file) #it's unicode
-
-#unicode should be encoded to standard string to display it properly
-#print sfile.encode('utf-8')
-#check the type of encoded string
-
-#print type(sfile.encode('utf-8'))
+import sys
 
 class TextAnalyzer():
     '''
-    
-    Count how often each unique pair of words is used, then print the most frequent top 10 out with their counts.
-
-    Make a command line tool with the `sys.argv`.Allow the the user to pass in the filename to a `.txt` file when execiting your program.Use the
-    `sys.argv` to parse the filename to use for the analysis.
 
     Allow the user to enter a word and get the most likely words to follow the given word. Store the pair counts as a dict
     of dicts, where the first key is the first word in the pair and the second key is the second word.
@@ -36,8 +18,14 @@ class TextAnalyzer():
 
     def __init__(self, input_file):
         self.input_file = (open(input_file)).read()
+
+        # for getting all individual words and storing their occurrence frequency
         self.words_array = []
         self.count = {}
+
+        # for getting all word pairs and storing their occurrence frequency
+        self.pairs_array = []
+        self.pairs_count = {}
 
     def loadWords(self):
         '''returns an array of words with capitalization, punctuation, and non-printables removed'''
@@ -62,12 +50,36 @@ class TextAnalyzer():
         return self.count
 
     def most_common(self):
+        '''returns the top ten single word-occurrence tuples'''
         most_freq = [(k, self.count[k]) for k in sorted(self.count, key=self.count.get, reverse=True)]
         return most_freq[:11]
 
+    def get_pairs(self):
+        '''returns all adjacent word pairs in the document'''
+        for i in range(len(self.words_array)-1):
+            for j in range(i+1, i+2):
+                self.pairs_array.append((self.words_array[i],self.words_array[j]))
+        return self.pairs_array
 
+    def pairs_frequency(self):
+        '''builds a frequency dictionary for word pairs'''
+        for pair in self.pairs_array:
+            if not pair in self.pairs_count:
+                self.pairs_count[pair] = 1
+            else:
+                self.pairs_count[pair] += 1
+        return self.pairs_count
 
-translator = TextAnalyzer("alice2.txt")
-translator.loadWords()
-translator.word_count()
-print(translator.most_common())
+    def pairs_most_common(self):
+        '''returns the top ten word-pair occurrence tuples'''
+        most_freq = [(k, self.pairs_count[k]) for k in sorted(self.pairs_count, key=self.pairs_count.get, reverse=True)]
+        return most_freq[:11]
+
+if __name__ == '__main__':
+    translator = TextAnalyzer(sys.argv[1])
+    translator.loadWords()
+    translator.word_count()
+    #print(translator.most_common())
+    translator.get_pairs()
+    translator.pairs_frequency()
+    print(translator.pairs_most_common())
