@@ -114,5 +114,7 @@ if __name__ == '__main__':
     translator.pairs_frequency()
     translator.prediction_dict()
     print(translator.pre_dict[sys.argv[2]])
+    print()
     print(f"The most likely word to follow '{sys.argv[2]}' is '{translator.predict_word(sys.argv[2])[0]}'")
-    print(translator.make_sentence(sys.argv[2], 50))
+    print()
+    print(translator.make_sentence(sys.argv[2], 60))
