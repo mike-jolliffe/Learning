@@ -84,14 +84,22 @@ class TextAnalyzer():
 
     def predict_word(self, word):
         '''returns prediction based on most frequent occurrences following a given word'''
-        best_guess = max(self.pre_dict[word], key=self.pre_dict[word].get)
+
+        # build an array next word guesses, with most frequent first
+        best_guess = [k for k in sorted(self.pre_dict[word], key=self.pre_dict[word].get, reverse=True)]
         return best_guess
 
     def make_sentence(self, word, length):
-        '''This returns a generated sentence'''
+        '''This returns a generated sentence of given length by using a given word as the first word and picking most
+        likely next words from there'''
         sentence = [word]
+        counter = 0
         while len(sentence) < int(length):
-            word = self.predict_word(word)
+            word = self.predict_word(word)[counter]
+            if word in sentence:
+                counter += 1
+            else:
+                counter = 0
             sentence.append(word)
         return ' '.join(sentence)
 
@@ -105,6 +113,6 @@ if __name__ == '__main__':
     translator.get_pairs()
     translator.pairs_frequency()
     translator.prediction_dict()
-    #print(translator.pre_dict[sys.argv[2]])
-    #print(f"The most likely word to follow '{sys.argv[2]}' is '{translator.predict_word(sys.argv[2])}'")
-    print(translator.make_sentence(sys.argv[2], 10))
+    print(translator.pre_dict[sys.argv[2]])
+    print(f"The most likely word to follow '{sys.argv[2]}' is '{translator.predict_word(sys.argv[2])[0]}'")
+    print(translator.make_sentence(sys.argv[2], 50))
