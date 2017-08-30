@@ -21,11 +21,22 @@ class GameBoard():
             return f'sorry, that column is full!'
 
     def printBoard(self):
-        [print(x) for x in self.board.values()]
+        row_num = 6
+        while row_num >= 0:
+            row = []
+            for index in range(1,8):
+                try:
+                    row.append("[" + self.board[index][row_num] + "]")
+                except:
+                    row.append("[ ]")
+            print(' '.join(row))
+            row_num -= 1
 
     def checkWin(self):
-        horiz_i = 1
-        horiz_j = 0
+        horiz_r_i = 1
+        horiz_r_j = 0
+        horiz_l_i = -1
+        horiz_l_j = 0
         vert_i = 0
         vert_j = -1
         diag_l_i = -1
@@ -34,7 +45,13 @@ class GameBoard():
         diag_r_j = -1
 
 
-        self.WinDir(self.last_i, self.last_j, horiz_i, horiz_j, 1)
+        self.WinDir(self.last_i, self.last_j, horiz_r_i, horiz_r_j, 1)
+        if self.connections == 4:
+            return True
+        else:
+            self.connections = 0
+
+        self.WinDir(self.last_i, self.last_j, horiz_l_i, horiz_l_j, 1)
         if self.connections == 4:
             return True
         else:
@@ -76,6 +93,8 @@ while new_game.connections < 4:
      P1 = input("Pick a location: ")
      new_game.addPiece(1, int(P1))
      new_game.printBoard()
+     print()
+     print()
      print(new_game.last_i, new_game.last_j)
      print(new_game.checkWin())
 
