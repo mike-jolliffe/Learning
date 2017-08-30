@@ -4,16 +4,6 @@ import sys
 class TextAnalyzer():
     '''
 
-    Allow the user to enter a word and get the most likely words to follow the given word. Store the pair counts as a dict
-    of dicts, where the first key is the first word in the pair and the second key is the second word.
-
-    EX: Enter Query Word > Mr.
-        The most likely bi - gram pair starting
-        with "Mr." is "Mr. Darcy".
-
-
-    Redo the pair counts: normalize the probabilities in the inner dict by the count of pairs that start with the first word.
-
     Chain together that ability to generate random sentences, one word at a time, from a given starting word.'''
 
     def __init__(self, input_file):
@@ -23,9 +13,10 @@ class TextAnalyzer():
         self.words_array = []
         self.count = {}
 
-        # for getting all word pairs and storing their occurrence frequency
+        # for getting all word pairs and storing their occurrences
         self.pairs_array = []
         self.pairs_count = {}
+        self.pre_dict = {}
 
     def loadWords(self):
         '''returns an array of words with capitalization, punctuation, and non-printables removed'''
@@ -75,6 +66,37 @@ class TextAnalyzer():
         most_freq = [(k, self.pairs_count[k]) for k in sorted(self.pairs_count, key=self.pairs_count.get, reverse=True)]
         return most_freq[:11]
 
+    def prediction_dict(self):
+        '''returns a dictionary to be used for predicting next word given a first word'''
+        # build occurrence dictionary
+        for wordpair, value in self.pairs_count.items():
+            if not wordpair[0] in self.pre_dict:
+                self.pre_dict[wordpair[0]] = {wordpair[1]:value}
+            else:
+                self.pre_dict[wordpair[0]].update({wordpair[1]:value})
+
+        # overwrite occurrences with probabilities of second word based on total of all second words
+        for word_one in self.pre_dict:
+            total_count = sum(self.pre_dict[word_one].values())
+            for word_two in self.pre_dict[word_one]:
+                self.pre_dict[word_one][word_two] = self.pre_dict[word_one][word_two] / total_count
+        return self.pre_dict
+
+    def predict_word(self, word):
+        '''returns prediction based on most frequent occurrences following a given word'''
+        best_guess = max(self.pre_dict[word], key=self.pre_dict[word].get)
+        return best_guess
+
+    def make_sentence(self, word, length):
+        '''This returns a generated sentence'''
+        sentence = [word]
+        while len(sentence) < int(length):
+            word = self.predict_word(word)
+            sentence.append(word)
+        return ' '.join(sentence)
+
+
+
 if __name__ == '__main__':
     translator = TextAnalyzer(sys.argv[1])
     translator.loadWords()
@@ -82,4 +104,7 @@ if __name__ == '__main__':
     #print(translator.most_common())
     translator.get_pairs()
     translator.pairs_frequency()
-    print(translator.pairs_most_common())
+    translator.prediction_dict()
+    #print(translator.pre_dict[sys.argv[2]])
+    #print(f"The most likely word to follow '{sys.argv[2]}' is '{translator.predict_word(sys.argv[2])}'")
+    print(translator.make_sentence(sys.argv[2], 10))
