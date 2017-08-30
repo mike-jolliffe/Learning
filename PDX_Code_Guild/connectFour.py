@@ -32,7 +32,7 @@ class GameBoard():
             print(' '.join(row))
             row_num -= 1
 
-    def checkWin(self):
+    def checkWin(self, player):
         horiz_r_i = 1
         horiz_r_j = 0
         horiz_l_i = -1
@@ -45,31 +45,31 @@ class GameBoard():
         diag_r_j = -1
 
 
-        self.WinDir(self.last_i, self.last_j, horiz_r_i, horiz_r_j, 1)
+        self.WinDir(self.last_i, self.last_j, horiz_r_i, horiz_r_j, player)
         if self.connections == 4:
             return True
         else:
             self.connections = 0
 
-        self.WinDir(self.last_i, self.last_j, horiz_l_i, horiz_l_j, 1)
+        self.WinDir(self.last_i, self.last_j, horiz_l_i, horiz_l_j, player)
         if self.connections == 4:
             return True
         else:
             self.connections = 0
 
-        self.WinDir(self.last_i, self.last_j, vert_i, vert_j, 1)
+        self.WinDir(self.last_i, self.last_j, vert_i, vert_j, player)
         if self.connections == 4:
             return True
         else:
             self.connections = 0
 
-        self.WinDir(self.last_i, self.last_j, diag_l_i, diag_l_j, 1)
+        self.WinDir(self.last_i, self.last_j, diag_l_i, diag_l_j, player)
         if self.connections == 4:
             return True
         else:
             self.connections = 0
 
-        self.WinDir(self.last_i, self.last_j, diag_r_i, diag_r_j, 1)
+        self.WinDir(self.last_i, self.last_j, diag_r_i, diag_r_j, player)
         if self.connections == 4:
             return True
         else:
@@ -88,20 +88,23 @@ class GameBoard():
         except:
             return self.connections
 
-new_game = GameBoard()
-while new_game.connections < 4:
-     P1 = input("Pick a location: ")
-     new_game.addPiece(1, int(P1))
-     new_game.printBoard()
-     print()
-     print()
-     print(new_game.last_i, new_game.last_j)
-     print(new_game.checkWin())
+    def playGame(self, player):
+        print("WELCOME TO CONNECT FOUR")
+        play = int(input(f"Player {player}, pick a column: "))
+        self.addPiece(player, play)
+        self.printBoard()
+        if self.checkWin(player):
+            print(f"Player {player} wins!!!")
+            exit()
 
-#     if new_game.checkWin():
-#         print ("winner!")
-#         exit()
 
-# # read sample moves file
-# file = open('connect-four-moves.txt', 'r')
-# print (file.read())
+if __name__=='__main__':
+    connect_four = GameBoard()
+    plays = 0
+    while plays < 43:
+        plays += 1
+        connect_four.playGame(1)
+        connect_four.playGame(2)
+    print(f"Scratch game. Nobody wins!")
+
+
