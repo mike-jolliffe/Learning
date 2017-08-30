@@ -34,12 +34,29 @@ class GameBoard():
         diag_r_j = -1
 
 
-        if (self.WinDir(self.last_i, self.last_j, horiz_i, horiz_j, 1) == 4 or
-           self.WinDir(self.last_i, self.last_j, vert_i, vert_j, 1) == 4 or
-           self.WinDir(self.last_i, self.last_j, diag_l_i, diag_l_j, 1) == 4 or
-           self.WinDir(self.last_i, self.last_j, diag_r_i, diag_r_j, 1) == 4):
-           return True
+        self.WinDir(self.last_i, self.last_j, horiz_i, horiz_j, 1)
+        if self.connections == 4:
+            return True
         else:
+            self.connections = 0
+
+        self.WinDir(self.last_i, self.last_j, vert_i, vert_j, 1)
+        if self.connections == 4:
+            return True
+        else:
+            self.connections = 0
+
+        self.WinDir(self.last_i, self.last_j, diag_l_i, diag_l_j, 1)
+        if self.connections == 4:
+            return True
+        else:
+            self.connections = 0
+
+        self.WinDir(self.last_i, self.last_j, diag_r_i, diag_r_j, 1)
+        if self.connections == 4:
+            return True
+        else:
+            self.connections = 0
             return False
 
     def WinDir(self, i, j, i_dir, j_dir, player):
@@ -47,16 +64,12 @@ class GameBoard():
         try:
             while i >= 0 and j >= 0:
                 if self.board[i][j] != self.players[player]:
-                    conns = self.connections
-                    self.connections = 0
-                    return conns
+                    return self.connections
                 else:
                     self.connections += 1
                     return self.WinDir(i+i_dir, j+j_dir, i_dir, j_dir, player)
         except:
-            conns = self.connections
-            self.connections = 0
-            return conns
+            return self.connections
 
 new_game = GameBoard()
 while new_game.connections < 4:
