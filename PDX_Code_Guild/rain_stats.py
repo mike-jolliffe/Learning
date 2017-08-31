@@ -1,6 +1,5 @@
 '''
 * URL open the [main listing website](http://or.water.usgs.gov/non-usgs/bes/).
-  1. Use BeautifulSoup to parse the main site making hyperlinks for all the rain table pages.
   2. Allow user to select from a list of current/available rain gages
   3. Given user's args, send requests for those gages via associated hyperlinks
   4. Ask for future date, if user wants a prediction
@@ -24,11 +23,27 @@ class RainReport():
         self.base_url = "http://or.water.usgs.gov/non-usgs/bes/"
         self.table_data = ""
         self.gage_dictionary = {}
+        self.gage_locations = {}
 
-    def get_table_locs(self):
-        '''Parses a base_url for all anchor tags to rain gage tables. Returns those url snippets.'''
+    def scrape_home(self):
+        '''Scrapes html from the base url location'''
         resp = requests.get(self.base_url)
         soup = BeautifulSoup(resp.content, 'html.parser')
+        return soup
+
+    def get_gage_locs(self, soup):
+        '''Returns a dictionary of all gage locations with an integer as key'''
+        gage_index = 1
+        gage_tags = soup.find_all('td')
+        gages = [gage.contents for gage in gage_tags]
+        for gage in gages:
+            if not soup.strong in gage and soup.br in gage:
+                self.gage_locations[gage_index] = gage[0]
+                gage_index += 1
+        return self.gage_locations
+
+    def get_table_locs(self, soup):
+        '''Parses a base_url for all anchor tags to rain gage tables. Returns those url snippets.'''
         hrefs = [anchor['href'] for anchor in soup.find_all('a', href=True) if ".rain" in anchor['href']]
         return hrefs
 
@@ -57,7 +72,7 @@ class RainReport():
         #check=[(print('-' in day)) for day in obs_values]
 
 
-        # zip those total and hourly obervations into a dictionary
+        # Zip those total and hourly obervations into a dictionary
         daily_obs = [dict(zip(obs_keys, day)) for day in obs_values]
         # zip each daily observation pair as a value into its own date dictionary
         date_obs = dict(zip(date_keys, daily_obs))
@@ -70,7 +85,10 @@ class RainReport():
 
 if __name__ == '__main__':
     report = RainReport()
-    report.get_table_locs()
-    report.get_table('astor.rain')
-    report.parse_to_dict()
+    soup = report.scrape_home()
+    report.get_gage_locs(soup)
+    hrefs = report.get_table_locs(soup)
+    
+    #report.get_table('astor.rain')
+    #report.parse_to_dict()
 
