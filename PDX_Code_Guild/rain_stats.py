@@ -88,7 +88,7 @@ if __name__ == '__main__':
     soup = report.scrape_home()
     report.get_gage_locs(soup)
     hrefs = report.get_table_locs(soup)
-    
+
     #report.get_table('astor.rain')
     #report.parse_to_dict()
 
