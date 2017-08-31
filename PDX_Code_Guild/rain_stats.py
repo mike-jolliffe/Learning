@@ -9,12 +9,68 @@
         * The year with the most rain.
         * Find and print the day of the year with the most rain on average.
           E.g. December 30th has 1" of rain on average.
-        * Predicted amount of rain for a given date
+        * Predicted amount of rain for a given date'''
+
+from bs4 import BeautifulSoup
+from datetime import datetime
+import requests
 
 
+class RainReport():
+    '''Creates an object that scrapes rain gage data, returns descriptive stats about rainfall at various
+    locations in Oregon'''
+
+    def __init__(self):
+        self.base_url = "http://or.water.usgs.gov/non-usgs/bes/"
+        self.table_data = ""
+        self.gage_dictionary = {}
+
+    def get_table_locs(self):
+        '''Parses a base_url for all anchor tags to rain gage tables. Returns those url snippets.'''
+        resp = requests.get(self.base_url)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        hrefs = [anchor['href'] for anchor in soup.find_all('a', href=True) if ".rain" in anchor['href']]
+        return hrefs
+
+    def get_table(self, href):
+        '''Returns a single text table of rain data associated with a given gage'''
+        table_data = requests.get(self.base_url+href)
+        self.table_data = table_data.text
+        return self.table_data
+
+    def parse_to_dict(self):
+        # Initialize a location dictionary
+        location_dict = {}
+        # Grab the raw table data that was scraped
+        days = self.table_data.splitlines()
+
+        # Convert years, months, days strings into tuples for later statistical use
+        date_keys = [elmnt.split()[0] for elmnt in days[11:]]
+        date_keys = [datetime.strptime(elmnt, '%d-%b-%Y').date() for elmnt in date_keys]
+        date_keys = [(date.year, date.month, date.day) for date in date_keys]
+
+        # Grab total and hourly precip observations for a given day
+        obs_keys = days[9].split()[1:]
+        obs_values = [elmnt.split()[1:] for elmnt in days[11:]]
+        print('-' in obs_values)
+        obs_values = [[int(val) if val.isdigit() else val for val in day] for day in obs_values]
+        #check=[(print('-' in day)) for day in obs_values]
 
 
+        # zip those total and hourly obervations into a dictionary
+        daily_obs = [dict(zip(obs_keys, day)) for day in obs_values]
+        # zip each daily observation pair as a value into its own date dictionary
+        date_obs = dict(zip(date_keys, daily_obs))
 
+        # Get gage location for the table and link all date keys as values into that location
+        location_key = days[0]
+        location_dict[location_key] = date_obs
 
+        print(location_dict)
 
-'''
+if __name__ == '__main__':
+    report = RainReport()
+    report.get_table_locs()
+    report.get_table('astor.rain')
+    report.parse_to_dict()
+
