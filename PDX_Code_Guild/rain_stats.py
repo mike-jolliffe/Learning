@@ -67,7 +67,7 @@ class RainReport():
         # Grab total and hourly precip observations for a given day
         obs_keys = days[9].split()[1:]
         obs_values = [elmnt.split()[1:] for elmnt in days[11:]]
-        obs_values = [[int(val) if val.isdigit() else val for val in day] for day in obs_values]
+        obs_values = [[int(val) if val.isdigit() else -1 for val in day] for day in obs_values]
         #check=[(print('-' in day)) for day in obs_values]
 
 
@@ -79,8 +79,15 @@ class RainReport():
         # Get gage location for the table and link all date keys as values into that location
         location_key = days[0]
         location_dict[location_key] = date_obs
+        self.gage_dictionary.update(location_dict)
+        return location_key
 
-        print(location_dict)
+    def get_rainiest_day(self, location_key):
+        '''Return the rainiest day in history of that gaging stations'''
+        x = {x: self.gage_dictionary[location_key][x]['Total'] for x, y in self.gage_dictionary[location_key].items()}
+        highest_rain =  [(k, v) for k, v in x.items() if v == max(x.values())][0]
+        return f"The rainiest day was {highest_rain[0][1]}/{highest_rain[0][2]}/{highest_rain[0][0]}" \
+               f" with {highest_rain[1]/100} inches of precipitation."
 
 if __name__ == '__main__':
     report = RainReport()
@@ -88,5 +95,7 @@ if __name__ == '__main__':
     report.get_gage_locs(soup)
     hrefs = report.get_table_locs(soup)
     report.get_table('astor.rain')
-    report.parse_to_dict()
+    location = report.parse_to_dict()
+    print(report.get_rainiest_day(location))
+
 
