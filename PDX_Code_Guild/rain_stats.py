@@ -4,8 +4,6 @@
   3. Given user's args, send requests for those gages via associated hyperlinks
   4. Ask for future date, if user wants a prediction
   5. Return a table of the following statistics by gage:
-        * The specific date with the most rain.
-        * The year with the most rain.
         * Find and print the day of the year with the most rain on average.
           E.g. December 30th has 1" of rain on average.
         * Predicted amount of rain for a given date'''
@@ -67,7 +65,7 @@ class RainReport():
         # Grab total and hourly precip observations for a given day
         obs_keys = days[9].split()[1:]
         obs_values = [elmnt.split()[1:] for elmnt in days[11:]]
-        obs_values = [[int(val) if val.isdigit() else -1 for val in day] for day in obs_values]
+        obs_values = [[int(val) if val.isdigit() else -0.0001 for val in day] for day in obs_values]
         #check=[(print('-' in day)) for day in obs_values]
 
 
@@ -82,10 +80,10 @@ class RainReport():
         self.gage_dictionary.update(location_dict)
         return location_key
 
-    def get_rainiest(self, location_key):
-        '''Return the rainiest day in history of that gaging stations'''
+    def get_rainiest(self, location_key, *date_args):
+        '''Return stats for rainiest year, day, amount for given day in history of that gaging station'''
         x = {x: self.gage_dictionary[location_key][x]['Total'] for x, y in self.gage_dictionary[location_key].items()}
-        highest_rain_day =  [(k, v) for k, v in x.items() if v == max(x.values())][0]
+        highest_abs_daily = [(k, v) for k, v in x.items() if v == max(x.values())][0]
 
 
         year_rain = {}
@@ -97,18 +95,59 @@ class RainReport():
 
         highest_rain_year = [(k,v) for k, v in year_rain.items() if v == max(year_rain.values())]
 
-        return (highest_rain_day, highest_rain_year)
+        obs_by_day = {}
+        for day in x:
+            if not (day[1], day[2]) in obs_by_day:
+                obs_by_day[(day[1], day[2])] = [x[day]]
+            else:
+                obs_by_day[(day[1], day[2])].append(x[day])
+
+        daily_avg = {}
+        for day in obs_by_day:
+            daily_avg[day] = sum(obs_by_day[day])/len(obs_by_day[day])
+
+        if date_args:
+            avg_date = daily_avg[date_args]
+            max_date = max([v for v in obs_by_day[date_args]])
+            min_date = min([v for v in obs_by_day[date_args]])
+            date_stats = [max_date, min_date, avg_date]
+        else:
+            max_day_absolute = [(k,v) for k, v in daily_avg.items() if v == max(daily_avg.values())]
+            min_day_absolute = [(k,v) for k, v in daily_avg.items() if v == min(daily_avg.values())]
+            date_stats = [max_day_absolute, min_day_absolute]
+
+        return (highest_abs_daily, highest_rain_year, date_stats)
 
 if __name__ == '__main__':
     report = RainReport()
+    # TODO print location menu to console for user
+
     soup = report.scrape_home()
     report.get_gage_locs(soup)
     hrefs = report.get_table_locs(soup)
+
+    location_input = input("Please pick a location: ")
     report.get_table('astor.rain')
     location = report.parse_to_dict()
-    highest_day, highest_year = report.get_rainiest(location)
+
+    date_of_interest = tuple(input("Enter month day for date statistics, or 0 for general stats: ").split())
+    if not int(date_of_interest[0]) == 0:
+        highest_day, highest_year, date_stats = report.get_rainiest(location, int(date_of_interest[0]), int(date_of_interest[1]))
+        print()
+        print(f"Precipitation at {location_input} for {date_of_interest[0]}/{date_of_interest[1]}\n"
+              f"average: {date_stats[2]/100:.2f}\n"
+              f"max: {date_stats[0]}\n"
+              f"min: {date_stats[1]:.2f}")
+    else:
+        highest_day, highest_year, date_stats = report.get_rainiest(location)
+        print()
+        print(f"{date_stats[0][0][0][0]}/{date_stats[0][0][0][1]} the rainiest day on average with {date_stats[0][0][1]/100:.2f} " \
+              f"inches of precipitation.\n \n" \
+              f"{date_stats[1][0][0][0]}/{date_stats[1][0][0][1]} is the least rainy day on average with {abs(date_stats[1][0][1]/100):.2f} " \
+              f"inches of precipitation.")
     print()
-    print(f"The rainiest day was {highest_day[0][1]}/{highest_day[0][2]}/{highest_day[0][0]}" \
-          f" with {highest_day[1]/100} inches of precipitation.")
+    print(f"The rainiest day ever recorded was {highest_day[0][1]}/{highest_day[0][2]}/{highest_day[0][0]}" \
+          f" with {highest_day[1]/100:.2f} inches of precipitation.")
     print()
-    print(f"The rainiest year was {highest_year[0][0]} with {highest_year[0][1]/100} inches of precipitation")
+    print(f"The rainiest year ever recorded was {highest_year[0][0]} with {highest_year[0][1]/100:.2f} inches of precipitation.\n")
+
