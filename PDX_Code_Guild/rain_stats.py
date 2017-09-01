@@ -67,7 +67,6 @@ class RainReport():
         # Grab total and hourly precip observations for a given day
         obs_keys = days[9].split()[1:]
         obs_values = [elmnt.split()[1:] for elmnt in days[11:]]
-        print('-' in obs_values)
         obs_values = [[int(val) if val.isdigit() else val for val in day] for day in obs_values]
         #check=[(print('-' in day)) for day in obs_values]
 
@@ -88,7 +87,6 @@ if __name__ == '__main__':
     soup = report.scrape_home()
     report.get_gage_locs(soup)
     hrefs = report.get_table_locs(soup)
-
-    #report.get_table('astor.rain')
-    #report.parse_to_dict()
+    report.get_table('astor.rain')
+    report.parse_to_dict()
 
