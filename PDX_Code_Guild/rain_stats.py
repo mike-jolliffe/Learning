@@ -4,8 +4,7 @@
   3. Given user's args, send requests for those gages via associated hyperlinks
   4. Ask for future date, if user wants a prediction
   5. Return a table of the following statistics by gage:
-        * Find and print the day of the year with the most rain on average.
-          E.g. December 30th has 1" of rain on average.
+
         * Predicted amount of rain for a given date'''
 
 from bs4 import BeautifulSoup
@@ -52,6 +51,8 @@ class RainReport():
         return self.table_data
 
     def parse_to_dict(self):
+        '''Creates/updates dictionary of gage locations and associated observations. Returns location key for use
+        by other functions'''
         # Initialize a location dictionary
         location_dict = {}
         # Grab the raw table data that was scraped
@@ -82,10 +83,13 @@ class RainReport():
 
     def get_rainiest(self, location_key, *date_args):
         '''Return stats for rainiest year, day, amount for given day in history of that gaging station'''
+        # Create dictionary of date, precip totals for given location key
         x = {x: self.gage_dictionary[location_key][x]['Total'] for x, y in self.gage_dictionary[location_key].items()}
+
+        # Return the highest observed rain value across all days at the given location
         highest_abs_daily = [(k, v) for k, v in x.items() if v == max(x.values())][0]
 
-
+        # Create dictionary to store observations by year
         year_rain = {}
         for year in x:
             if not year[0] in year_rain:
@@ -93,8 +97,10 @@ class RainReport():
             else:
                 year_rain[year[0]] += x[year]
 
+        # Grab the year with the highest total rain amount
         highest_rain_year = [(k,v) for k, v in year_rain.items() if v == max(year_rain.values())]
 
+        # Create dictionary to store observations by day
         obs_by_day = {}
         for day in x:
             if not (day[1], day[2]) in obs_by_day:
@@ -102,15 +108,19 @@ class RainReport():
             else:
                 obs_by_day[(day[1], day[2])].append(x[day])
 
+        # Create dictionary of average rainfall for each day of a year
         daily_avg = {}
         for day in obs_by_day:
             daily_avg[day] = sum(obs_by_day[day])/len(obs_by_day[day])
 
+        # If user provides a date for grabbing stats
         if date_args:
+            # Grab the average, max, and minimum rainfall for that day of the year
             avg_date = daily_avg[date_args]
             max_date = max([v for v in obs_by_day[date_args]])
             min_date = min([v for v in obs_by_day[date_args]])
             date_stats = [max_date, min_date, avg_date]
+        # Otherwise, grab the max and day of year for max, min and day of year for min
         else:
             max_day_absolute = [(k,v) for k, v in daily_avg.items() if v == max(daily_avg.values())]
             min_day_absolute = [(k,v) for k, v in daily_avg.items() if v == min(daily_avg.values())]
@@ -121,24 +131,30 @@ class RainReport():
 if __name__ == '__main__':
     report = RainReport()
     # TODO print location menu to console for user
-
+    # Scrape the gage homepage to get hrefs for tables of all gage locations
     soup = report.scrape_home()
     report.get_gage_locs(soup)
     hrefs = report.get_table_locs(soup)
-
+    # Prompt user for location
     location_input = input("Please pick a location: ")
+    # TODO get table for user-provided location
     report.get_table('astor.rain')
+    # Parse the location data into a dictionary
     location = report.parse_to_dict()
-
+    # Grab a date of interest from a user, if they have one
     date_of_interest = tuple(input("Enter month day for date statistics, or 0 for general stats: ").split())
+    # If user provides a particular date of interest
     if not int(date_of_interest[0]) == 0:
+        # Grab and print the max, min, avg precipitation for that date
         highest_day, highest_year, date_stats = report.get_rainiest(location, int(date_of_interest[0]), int(date_of_interest[1]))
         print()
         print(f"Precipitation at {location_input} for {date_of_interest[0]}/{date_of_interest[1]}\n"
               f"average: {date_stats[2]/100:.2f}\n"
               f"max: {date_stats[0]}\n"
               f"min: {date_stats[1]:.2f}")
+    # If user doesn't provide particular date of interest
     else:
+        # Grab and print date and amounts of max average precip, min avg precip
         highest_day, highest_year, date_stats = report.get_rainiest(location)
         print()
         print(f"{date_stats[0][0][0][0]}/{date_stats[0][0][0][1]} the rainiest day on average with {date_stats[0][0][1]/100:.2f} " \
