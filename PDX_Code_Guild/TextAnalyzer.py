@@ -1,7 +1,7 @@
 import string
 import sys
 
-class TextAnalyzer():
+class TextAnalyzer:
     '''
 
     Chain together that ability to generate random sentences, one word at a time, from a given starting word.'''
@@ -10,8 +10,8 @@ class TextAnalyzer():
         self.input_file = (open(input_file)).read()
 
         # for getting all individual words and storing their occurrence frequency
-        self.words_array = []
-        self.count = {}
+        self.words_array = list()
+        self.count = dict()
 
         # for getting all word pairs and storing their occurrences
         self.pairs_array = []
