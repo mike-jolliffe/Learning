@@ -21,7 +21,7 @@ class GameBoard():
             return f'sorry, that column is full!'
 
     def printBoard(self):
-        row_num = 6
+        row_num = 5
         while row_num >= 0:
             row = []
             for index in range(1,8):
@@ -93,8 +93,10 @@ class GameBoard():
         valid_input = False
         while not valid_input:
             try:
-                play = int(input(f"Player {player}, pick a column: "))
-                self.addPiece(player, play)
+                play = input(f"Player {player}, pick a column or (q) for quit: ")
+                if play == 'q':
+                    return -1
+                self.addPiece(player, int(play))
                 valid_input = True
             except:
                 print("Please enter a number 1 through 7")
@@ -103,7 +105,7 @@ class GameBoard():
         self.printBoard()
         if self.checkWin(player):
             print(f"Player {player} wins!!!")
-            exit()
+            return -1
 
 
 if __name__=='__main__':
@@ -111,8 +113,12 @@ if __name__=='__main__':
     plays = 0
     while plays < 43:
         plays += 1
-        connect_four.playGame(1)
-        connect_four.playGame(2)
+        if connect_four.playGame(1)  == -1:
+            print("Thanks for playing!")
+            exit()
+        if connect_four.playGame(2) == -1:
+            print("Thanks for playing!")
+            exit()
     print(f"Scratch game. Nobody wins!")
 
 
