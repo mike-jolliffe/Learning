@@ -82,12 +82,22 @@ class RainReport():
         self.gage_dictionary.update(location_dict)
         return location_key
 
-    def get_rainiest_day(self, location_key):
+    def get_rainiest(self, location_key):
         '''Return the rainiest day in history of that gaging stations'''
         x = {x: self.gage_dictionary[location_key][x]['Total'] for x, y in self.gage_dictionary[location_key].items()}
-        highest_rain =  [(k, v) for k, v in x.items() if v == max(x.values())][0]
-        return f"The rainiest day was {highest_rain[0][1]}/{highest_rain[0][2]}/{highest_rain[0][0]}" \
-               f" with {highest_rain[1]/100} inches of precipitation."
+        highest_rain_day =  [(k, v) for k, v in x.items() if v == max(x.values())][0]
+
+
+        year_rain = {}
+        for year in x:
+            if not year[0] in year_rain:
+                year_rain[year[0]] = x[year]
+            else:
+                year_rain[year[0]] += x[year]
+
+        highest_rain_year = [(k,v) for k, v in year_rain.items() if v == max(year_rain.values())]
+
+        return (highest_rain_day, highest_rain_year)
 
 if __name__ == '__main__':
     report = RainReport()
@@ -96,6 +106,9 @@ if __name__ == '__main__':
     hrefs = report.get_table_locs(soup)
     report.get_table('astor.rain')
     location = report.parse_to_dict()
-    print(report.get_rainiest_day(location))
-
-
+    highest_day, highest_year = report.get_rainiest(location)
+    print()
+    print(f"The rainiest day was {highest_day[0][1]}/{highest_day[0][2]}/{highest_day[0][0]}" \
+          f" with {highest_day[1]/100} inches of precipitation.")
+    print()
+    print(f"The rainiest year was {highest_year[0][0]} with {highest_year[0][1]/100} inches of precipitation")
