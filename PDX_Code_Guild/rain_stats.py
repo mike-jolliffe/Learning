@@ -2,10 +2,8 @@
 * URL open the [main listing website](http://or.water.usgs.gov/non-usgs/bes/).
   2. Allow user to select from a list of current/available rain gages
   3. Given user's args, send requests for those gages via associated hyperlinks
-  4. Ask for future date, if user wants a prediction
-  5. Return a table of the following statistics by gage:
+  4. Ask for future date, if user wants a prediction'''
 
-        * Predicted amount of rain for a given date'''
 
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -19,7 +17,9 @@ class RainReport():
     def __init__(self):
         self.base_url = "http://or.water.usgs.gov/non-usgs/bes/"
         self.table_data = ""
+        # Dictionary to hold all scraped/parsed gage data desired by user
         self.gage_dictionary = {}
+        # Menu-style dictionary to hold an int key and [gage location, gage url snippet], from which user can select
         self.gage_locations = {}
 
     def scrape_home(self):
@@ -35,7 +35,7 @@ class RainReport():
         gages = [gage.contents for gage in gage_tags]
         for gage in gages:
             if not soup.strong in gage and soup.br in gage:
-                self.gage_locations[gage_index] = gage[0]
+                self.gage_locations[gage_index] = [gage[0]]
                 gage_index += 1
         return self.gage_locations
 
@@ -130,14 +130,17 @@ class RainReport():
 
 if __name__ == '__main__':
     report = RainReport()
-    # TODO print location menu to console for user
     # Scrape the gage homepage to get hrefs for tables of all gage locations
     soup = report.scrape_home()
     report.get_gage_locs(soup)
     hrefs = report.get_table_locs(soup)
-    # Prompt user for location
-    location_input = input("Please pick a location: ")
-    # TODO get table for user-provided location
+    # Print available gage locations for user to choose from
+    for location in report.gage_locations:
+        report.gage_locations[location].append(hrefs[location-1])
+        print (f"{location} -- {report.gage_locations[location][0]}")
+    location_input = int(input("Please pick a location: "))
+    # TODO get table for user-provided location by looking up the associated href and putting into get_table()
+    exit()
     report.get_table('astor.rain')
     # Parse the location data into a dictionary
     location = report.parse_to_dict()
@@ -149,7 +152,7 @@ if __name__ == '__main__':
         highest_day, highest_year, date_stats = report.get_rainiest(location, int(date_of_interest[0]), int(date_of_interest[1]))
         print()
         print(f"Precipitation at {location_input} for {date_of_interest[0]}/{date_of_interest[1]}\n"
-              f"average: {date_stats[2]/100:.2f}\n"
+              f"Predicted: {date_stats[2]/100:.2f}\n"
               f"max: {date_stats[0]}\n"
               f"min: {date_stats[1]:.2f}")
     # If user doesn't provide particular date of interest
