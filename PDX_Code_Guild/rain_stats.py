@@ -139,9 +139,8 @@ if __name__ == '__main__':
         report.gage_locations[location].append(hrefs[location-1])
         print (f"{location} -- {report.gage_locations[location][0]}")
     location_input = int(input("Please pick a location: "))
-    # TODO get table for user-provided location by looking up the associated href and putting into get_table()
-    exit()
-    report.get_table('astor.rain')
+    table_to_scrape = report.gage_locations[location_input]
+    report.get_table(table_to_scrape[1])
     # Parse the location data into a dictionary
     location = report.parse_to_dict()
     # Grab a date of interest from a user, if they have one
@@ -151,14 +150,16 @@ if __name__ == '__main__':
         # Grab and print the max, min, avg precipitation for that date
         highest_day, highest_year, date_stats = report.get_rainiest(location, int(date_of_interest[0]), int(date_of_interest[1]))
         print()
-        print(f"Precipitation at {location_input} for {date_of_interest[0]}/{date_of_interest[1]}\n"
+        print(f"Precipitation at {table_to_scrape[0]} for {date_of_interest[0]}/{date_of_interest[1]}\n"
               f"Predicted: {date_stats[2]/100:.2f}\n"
-              f"max: {date_stats[0]}\n"
-              f"min: {date_stats[1]:.2f}")
+              f"max: {date_stats[0]/100: .2f}\n"
+              f"min: {date_stats[1]/100:.2f}")
     # If user doesn't provide particular date of interest
     else:
         # Grab and print date and amounts of max average precip, min avg precip
         highest_day, highest_year, date_stats = report.get_rainiest(location)
+        print()
+        print(f"----- RAIN STATS FOR {table_to_scrape[0].upper()} -----")
         print()
         print(f"{date_stats[0][0][0][0]}/{date_stats[0][0][0][1]} the rainiest day on average with {date_stats[0][0][1]/100:.2f} " \
               f"inches of precipitation.\n \n" \
