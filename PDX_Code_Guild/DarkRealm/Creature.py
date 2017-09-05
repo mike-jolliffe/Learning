@@ -13,7 +13,6 @@ class Creature(object):
         move_dict = {"N": (1,0), "S": (-1, 0), "E": (0, 1), "W": (0, -1)}
         location_check = []
         if dir in move_dict:
-            #TODO resolve movements that would put player through door
             location_check = tuple(x + y for x, y in zip(self.location, move_dict[dir]))
             if location_check[0] in range(Room.size[0]) and location_check[1] in range(Room.size[1]):
                 self.location = tuple(x + y for x, y in zip(self.location, move_dict[dir]))
