@@ -1,4 +1,6 @@
 import random
+from Creature import *
+
 
 class Room(object):
     '''Used to generate a room for moving, fighting, exploring'''
@@ -9,7 +11,7 @@ class Room(object):
         self.room_exit = (self.size[0]-1, random.randint(0, self.size[1] - 1))
         self.room = {}
 
-    def build_Room(self):
+    def build_Room(self, Hero):
         '''Build a room given instance attributes and Hero/Creature locations'''
 
         # Build default room tiles
@@ -21,6 +23,10 @@ class Room(object):
         # Place entrance and exit doors
         self.room[self.entrance[0]][self.entrance[1]] = "___"
         self.room[self.room_exit[0]][self.room_exit[1]] = "___"
+        try:
+            self.room[Hero.location[0]][Hero.location[1]] = " X "
+        except:
+            print("Hero can't move there.")
 
         return self.room
 
@@ -38,7 +44,3 @@ class Room(object):
             print(' '.join(row),end="")
             print("|")
             row_num -= 1
-
-new_room = Room((9,9), "hard")
-new_room.build_Room()
-new_room.display_Room()
