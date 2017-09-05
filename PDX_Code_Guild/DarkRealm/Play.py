@@ -11,5 +11,5 @@ if __name__ == '__main__':
         dir = input("Which direction would you like to move? ")
         if dir == "Q":
             exit()
-        mike.move(dir)
+        mike.move(dir, room1)
         print(mike.location)
