@@ -24,7 +24,3 @@ class Hero(Creature):
         self.armor = armor
         self.inventory = inventory
 
-new_hero = Hero(100, "Sword", (0,0), "Mithril", {})
-
-print(new_hero.move("N"))
-print(new_hero.move("E"))
