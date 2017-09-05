@@ -8,7 +8,10 @@ class Creature(object):
 
     def move(self, dir):
         '''Given a direction tuple, updates creature object's location on the board'''
-        pass
+        move_dict = {"N": (0,1), "S": (0, -1), "E": (1, 0), "W": (-1, 0)}
+        if dir in move_dict:
+            self.location = tuple(x + y for x, y in zip(self.location, move_dict[dir]))
+        return self.location
 
     def attack(self):
         '''Makes creature object attack Hero object'''
@@ -21,4 +24,7 @@ class Hero(Creature):
         self.armor = armor
         self.inventory = inventory
 
-new_hero = Hero(100, "Sword", (1,1), "Mithril", {})
+new_hero = Hero(100, "Sword", (0,0), "Mithril", {})
+
+print(new_hero.move("N"))
+print(new_hero.move("E"))
