@@ -1,11 +1,14 @@
-import timeit
+import time
 
-def time(function, *args):
+def time_check(function, *args):
     def wrapper_func(args):
-        return timeit.timeit(str(function(args))), function(args)
+        t0 = time.time()
+        count = function(args)
+        t1 = time.time()
+        return count, t1 - t0
     return wrapper_func
 
-@time
+@time_check
 def get_array(array):
     count = 0
     for i in array:
