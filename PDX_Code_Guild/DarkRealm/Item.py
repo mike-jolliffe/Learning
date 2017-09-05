@@ -16,7 +16,7 @@ class Weapon(Item):
     def break_weapon(self):
         '''Given strength, tests weapon for breakage after each use'''
         # Generate random integer between 1 and weapon strength
-        result = random.randint(self.strength)
+        result = random.randint(1, self.strength)
         # If that integer is above the 90%ile of strength
         if result > round(0.9 * self.strength):
             # Weapon breaks
