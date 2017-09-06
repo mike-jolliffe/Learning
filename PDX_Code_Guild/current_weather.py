@@ -1,4 +1,5 @@
 import requests
+import API_Keys
 
 class WeatherGetter(object):
     '''Will create an object that accesses the Open Weather Map api'''
@@ -11,7 +12,7 @@ class WeatherGetter(object):
         object'''
 
         package = {
-            'APPID': '0a782a90c9c00349d94ab5ca05d3679c',
+            'APPID': API_Keys.key,
             'q': location,
             'zip': None,
             'units': self.units[int(unit)]
