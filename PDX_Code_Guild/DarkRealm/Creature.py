@@ -10,7 +10,7 @@ class Creature(object):
 
     def move(self, dir, Room):
         '''Given a direction tuple, updates creature object's location on the board'''
-        move_dict = {"N": (1,0), "S": (-1, 0), "E": (0, 1), "W": (0, -1)}
+        move_dict = {"n": (1,0), "s": (-1, 0), "e": (0, 1), "w": (0, -1)}
         location_check = []
         if dir in move_dict:
             location_check = tuple(x + y for x, y in zip(self.location, move_dict[dir]))
