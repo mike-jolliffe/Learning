@@ -22,18 +22,25 @@ class WeatherGetter(object):
         return resp.json()
 
     def display_weather(self, units, response):
-        '''Displays current weather for a given location'''
+        '''Displays current weather for a given location, formatted to either imperial or metric units.'''
+        #Build units dictionary for formatting units of result
+        units_dict = {'metric': {'temp': 'Celsius', 'rain': 'millimeters', 'wind': 'meters/second'},
+                      'imperial': {'temp': 'Fahrenheit', 'rain': 'inches', 'wind': 'miles/hour'}}
+
         print(f"-------- CURRENT WEATHER FOR {location.upper()} --------")
         print()
-        print()
-        print(f"Temperature: {response['main']['temp']} degrees XX")
+        print(f"Temperature: {response['main']['temp']} degrees {units_dict[self.units[units]]['temp']}")
         print(f"Humidity: {response['main']['humidity']}%")
         print(f"Cloudiness: {response['clouds']['all']}%")
         try:
-            print(f"Rain in past 3 hours: {response['rain']['3h']} XX")
+            print(f"Rain in past 3 hours: {response['rain']['3h']} {units_dict[self.units[units]]['rain']}")
         except:
-            print(f"Rain in past 3 hours: 0 XX")
-        print(f"Wind is {response['wind']['speed']} XXX from {response['wind']['deg']} degrees")
+            print(f"Rain in past 3 hours: 0 {units_dict[self.units[units]]['rain']}")
+        try:
+            print(f"Wind is {response['wind']['speed']} {units_dict[self.units[units]]['wind']} from {response['wind']['deg']} degrees")
+        except:
+            print(f"Wind is 0 {units_dict[self.units[units]]['wind']}")
+        print()
         exit()
 
 if __name__ == '__main__':
