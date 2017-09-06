@@ -4,7 +4,18 @@ import random
 from Room import *
 
 if __name__ == '__main__':
+    print()
     print("YOU'VE ENTERED THE DARK REALM")
+    print()
+    print(
+
+        f'''        The hero must navigate 
+        the Dark Realm's myriad dungeons, 
+        battling monsters of every ilk, 
+        on a mission to gain the Chalice 
+        of Object Oriented Programming wisdom!!''')
+    print()
+
     name = input(("PICK A NAME FOR YOUR HERO: "))
     while True:
         room1 = Room((random.randint(4,20), random.randint(3,20)), 2)

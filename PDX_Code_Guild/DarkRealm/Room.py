@@ -23,16 +23,20 @@ class Room(object):
         # Place entrance and exit doors
         self.room[self.entrance[0]][self.entrance[1]] = "___"
         self.room[self.room_exit[0]][self.room_exit[1]] = "___"
+        # Place hero
         try:
             self.room[Hero.location[0]][Hero.location[1]] = " X "
         except:
             print("Hero can't move there.")
+        # Place bad guys
         for creature in creatures:
             self.room[creature[0]][creature[1]] = " B "
 
         return self.room
 
     def seed_Creatures(self):
+        '''Taking a room's difficulty, creates a location array of bad guy locations with number of creatures
+        depending on room difficulty'''
         num_creatures = self.difficulty
         # TODO instantiate a bunch of creature objects and store in a dict. Resolve how to initialize and store their locations
         creature_array = []
@@ -43,6 +47,7 @@ class Room(object):
         return creature_array
 
     def display_Room(self):
+        '''Print the room to console for user to interact with'''
         row_num = self.size[0] - 1
         while row_num >= 0:
             row = []
