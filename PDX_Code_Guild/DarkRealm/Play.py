@@ -51,6 +51,8 @@ if __name__ == '__main__':
                 break
             elif hero.location in baddies:
                 print()
-                print("FIGHT!!!")
+                sBider = Creature(5, 'fangs', hero.location)
+                ("FIGHT!!!")
+                hero.fight(sBider)
                 # TODO build a fight function (class?) that can be called
                 exit()

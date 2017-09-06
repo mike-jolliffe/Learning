@@ -20,6 +20,7 @@ class Creature(object):
 
     def attack(self):
         '''Makes creature object attack Hero object'''
+        # TODO Build this function for Creature object to attack Hero object
         pass
 
 class Hero(Creature):
@@ -29,3 +30,11 @@ class Hero(Creature):
         self.armor = armor
         self.inventory = inventory
 
+    def fight(self, creature):
+        # TODO Figure out how to print name of variable to which a Creature instance has been bound
+        # print(#f"You've encountered a {__str__}!!")
+        print(creature.__class__.__name__)
+        print(f'''-------- CREATURE STATS --------
+                Health: {creature.health}
+                Weapon: {creature.weapon} 
+                Damage: XXX ''') #TODO hook up damage by accessing Weapon() sub-class
