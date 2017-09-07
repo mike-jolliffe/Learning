@@ -25,7 +25,9 @@ if __name__ == '__main__':
     while True:
         room1 = Room((random.randint(4,15), random.randint(3,15)), 2)
         hero = Hero(name, 100, "Sword", room1.entrance, "Mithril", {})
-        baddies = room1.seed_Creatures()
+        baddies = room1.generate_Creature_locs()
+        print(room1.make_Creatures(baddies))
+        exit()
         while True:
             room1.build_Room(hero, baddies)
             room1.display_Room()

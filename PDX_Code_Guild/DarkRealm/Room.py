@@ -11,6 +11,15 @@ class Room(object):
         self.entrance = (0, random.randint(0, self.size[1] - 1))
         self.room_exit = (self.size[0]-1, random.randint(0, self.size[1] - 1))
         self.room = {}
+        self.creature_dict = {'ROUS': Creature.Creature('ROUS', 4, Item.Weapon('fangs', (0,0), 5, 8), (0,0)),
+                              'BabyDragon': Creature.Creature('BabyDragon', 6, Item.Weapon('fangs', (0,0), 5, 8), (0,0)),
+                              'MadBat': Creature.Creature('MadBat', 2, Item.Weapon('electric shock', (0,0), 2, 2), (0,0)),
+                              'Mugwump': Creature.Creature('Mugwump', 1, Item.Weapon('clobber', (0,0), 3, 2), (0,0)),
+                              'Jabberwocky': Creature.Creature('Jabberwocky', 3, Item.Weapon('talk-ya-ear-off', (0,0), 4, 2), (0,0)),
+                              'JellyBlob': Creature.Creature('JellyBlob', 2, Item.Weapon('wiggles', (0,0), 1, 2), (0,0)),
+                              'WelshCorgie': Creature.Creature('WelshCorgie', 8, Item.Weapon('the-lazy-eye', (0,0), 3, 2), (0,0))
+                            }
+
 
     def build_Room(self, Hero, creatures):
         '''Build a room given instance attributes and Hero/Creature locations'''
@@ -35,7 +44,7 @@ class Room(object):
 
         return self.room
 
-    def seed_Creatures(self):
+    def generate_Creature_locs(self):
         '''Taking a room's difficulty, creates a location array of bad guy locations with number of creatures
         depending on room difficulty'''
         num_creatures = self.difficulty
@@ -47,13 +56,22 @@ class Room(object):
             if not location in locations_array:
                 locations_array.append(location)
 
+        return locations_array
+
+
+    def make_Creatures(self, locations):
+        '''Populates a dictionary of Creature objects with updated location attributes'''
         # Generate a bunch of Creature objects for placement
-        creature_pick_dict = {1: 'ROUS', 2: 'BabyDragon', 3: 'MadBat', 4: 'Mugwump', 5: 'Jabberwocky', 6: 'JellyBlob', 7: 'WelshCorgie'}
+        creature_pick_dict = {1: 'ROUS', 2: 'BabyDragon', 3: 'MadBat', 4: 'Mugwump', 5: 'Jabberwocky', 6: 'JellyBlob',
+                              7: 'WelshCorgie'}
         creature_place_dict = {}
-        for i in range(num_creatures):
-            pick = random.randint(1,8)
-            creature_place_dict[locations_array[i]] = Creature.Creature(creature_pick_dict[pick], random.randint(1,8), \
-                                                                        Item.Weapon.weapon_randomizer(self), locations_array[i]) #TODO fix weapon
+        for i in range(len(locations)):
+            pick = random.randint(1, 8)
+            # Pick a random creature
+            creature_to_place = self.creature_dict[creature_pick_dict[pick]]
+            creature_to_place.location = locations[i]
+
+            creature_place_dict[locations[i]] = creature_to_place # TODO fix weapon
 
         return creature_place_dict
 

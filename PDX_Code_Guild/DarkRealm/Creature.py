@@ -24,6 +24,7 @@ class Creature(object):
         # TODO Build this function for Creature object to attack Hero object
         pass
 
+
 class Hero(Creature):
     '''Player Character that modifies Creature class'''
     def __init__(self, name, health, weapon, location, armor, inventory):

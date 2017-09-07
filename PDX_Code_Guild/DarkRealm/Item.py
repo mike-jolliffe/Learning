@@ -27,11 +27,11 @@ class Weapon(Item):
 
     def weapon_randomizer(self):
         '''Returns a dictionary for selecting random weapons'''
-        baddie_weapons = {1: Weapon('fangs', Creature.Creature.location, 5, 8),
-                          2: Weapon('electric shock', Creature.Creature.location, 2, 2),
-                          3: Weapon('clobber', Creature.Creature.location, 3, 2),
-                          4: Weapon('talk-ya-ear-off', Creature.Creature.location, 4, 2),
-                          5: Weapon('the-lazy-eye', Creature.Creature.location, 1, 2)}
+        baddie_weapons = {1: Weapon('fangs', (0,0), 5, 8),
+                          2: Weapon('electric shock', (0,0), 2, 2),
+                          3: Weapon('clobber', (0,0), 3, 2),
+                          4: Weapon('talk-ya-ear-off', (0,0), 4, 2),
+                          5: Weapon('the-lazy-eye', (0,0), 1, 2)}
 
         hero_weapons = {}
 
