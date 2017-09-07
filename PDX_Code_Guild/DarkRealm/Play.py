@@ -71,7 +71,8 @@ if __name__ == '__main__':
                     hero.inventory[room1.item_dict[item].description] = {room1.item_dict[item]: 1}
                 else:
                     hero.inventory[room1.item_dict[item].description][room1.item_dict[item]] += 1
-                #TODO remove item from the room while hero still in it
+                # Remove the item from the room
+                item = None
 
     print("You've entered the boss room!!!")
     #TODO create a boss room after hero gets through the first x rooms
