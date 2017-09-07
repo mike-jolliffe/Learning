@@ -21,9 +21,12 @@ class Room(object):
                             }
         # TODO place items in the room randomly where there aren't doors, bad guys, or heros
         self.item_dict = {'+1_Potion': Item.Item('+1_Potion', (0,0), -1),
-                          'Journal_Page': Item.Item('Journal_Page', (0,0), 0)}
+                          'Journal_Page': Item.Item('Journal_Page', (0,0), 0),
+                          'Broadsword': Item.Weapon('Broadsword', (0,0), 8, 50)} # TODO, hook up weapon damage to fight()
 
-    def build_Room(self, Hero, creatures):
+        self.item_placed = False
+
+    def build_Room(self, Hero, creatures, item):
         '''Build a room given instance attributes and Hero/Creature locations'''
 
         # Build default room tiles
@@ -44,6 +47,13 @@ class Room(object):
             # Don't place bad guys over doorways or heros
             if not (self.room[creature[0]][creature[1]] == "__" or self.room[creature[0]][creature[1]] == " X "):
                 self.room[creature[0]][creature[1]] = " B "
+        # Place item # TODO fix the random generation and placement of items
+        if self.item_placed == False:
+            self.generate_Item()
+            self.item_placed = True
+        else:
+            item_loc = self.item_dict[item].location
+            self.room[item_loc[0]][item_loc[1]] = " ? "
 
         return self.room
 
@@ -77,6 +87,22 @@ class Room(object):
             creature_place_dict[locations[i]] = creature_to_place # TODO fix weapon default location of (0,0)
 
         return creature_place_dict
+
+    def generate_Item(self):
+        '''Randomizes and updates the location of items'''
+        item_dict = {1:'+1_Potion', 2: 'Journal_Page', 3:'Broadsword'}
+        item = item_dict[random.choice([1,1,1,1,1,1,1,1,2,2,2,2,3])]
+        # Get open locations
+        open_locs = []
+        for x in self.room:
+            for y in range(len(self.room[x])):
+                if self.room[x][y] == '   ':
+                    open_locs.append((x, y))
+        # Place item at a random open location
+        self.item_dict[item].location = random.choice(open_locs)
+        item_loc = self.item_dict[item].location
+        self.room[item_loc[0]][item_loc[1]] = " ? "
+        return item
 
     def display_Room(self):
         '''Print the room to console for user to interact with'''

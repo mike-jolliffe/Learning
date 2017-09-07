@@ -1,7 +1,7 @@
 from Creature import *
 from Item import *
 import random
-from Room import *
+import Room
 import subprocess as sp
 
 if __name__ == '__main__':
@@ -24,11 +24,12 @@ if __name__ == '__main__':
     room_count = 0
 
     while room_count < 3:
-        room1 = Room((random.randint(4,15), random.randint(3,15)), 2)
+        room1 = Room.Room((random.randint(4,15), random.randint(3,15)), 2)
         room_count += 1
         hero = Hero(name, 100, "Sword", room1.entrance, "Mithril", {})
         baddie_locs = room1.generate_Creature_locs()
         creature_lookup = room1.make_Creatures(baddie_locs)
+        room1.item_placed = False
         while True:
             room1.build_Room(hero, baddie_locs)
             room1.display_Room()
@@ -59,6 +60,9 @@ if __name__ == '__main__':
                 if result:
                     # Eliminate the creature from the room
                     baddie_locs.remove(hero.location)
+            elif hero.location in [loc.location for loc in room1.item_dict.values()]:
+                print("You found some goodies!!!")
+                exit()
 
     print("You've entered the boss room!!!")
     #TODO create a boss room after hero gets through the first x rooms
