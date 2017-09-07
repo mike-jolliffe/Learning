@@ -62,3 +62,11 @@ class Hero(Creature):
         else:
             # Defeat is False, creature will remain
             return False
+    def get_inventory(self):
+        '''Returns the hero's current inventory'''
+        print(f"Your Current Inventory:")
+        inventory = []
+        for item in self.inventory:
+            for value in self.inventory[item].values():
+                inventory.append(f"{item}:  {value}")
+        return inventory

@@ -22,11 +22,12 @@ if __name__ == '__main__':
     print(f"Welcome, {name}! Steel thy nerves for you are about to encounter some terrifying monsters!!!")
 
     room_count = 0
+    hero = Hero(name, 100, "Sword", (0,0), "Mithril", {})
 
     while room_count < 3:
         room1 = Room.Room((random.randint(4,15), random.randint(3,15)), 2)
         room_count += 1
-        hero = Hero(name, 100, "Sword", room1.entrance, "Mithril", {})
+        hero.location = room1.entrance
         baddie_locs = room1.generate_Creature_locs()
         creature_lookup = room1.make_Creatures(baddie_locs)
         item = room1.generate_Item()
@@ -40,10 +41,13 @@ if __name__ == '__main__':
                 exit()
             elif dir == "1":
                 sp.call('clear', shell=True)
-                print(f"Health: {hero.health}\n"
+                [print(item) for item in hero.get_inventory()]
+                print()
+                print(
+                      f"Health: {hero.health}\n"
                       f"Weapons: {hero.weapon}\n"
                       f"Armor: {hero.armor}\n"
-                      f"Inventory: {hero.inventory}")
+                      )
                 pause = input("Press y to continue or any other key to exit: ")
                 if pause == 'y':
                     continue
@@ -61,9 +65,13 @@ if __name__ == '__main__':
                 if result:
                     # Eliminate the creature from the room
                     baddie_locs.remove(hero.location)
-            elif hero.location in [loc.location for loc in room1.item_dict.values()]:
-                print("You found some goodies!!!")
-                exit()
+            elif hero.location == room1.item_dict[item].location:
+                print(f"You found a {item}!!!")
+                if not item in hero.inventory:
+                    hero.inventory[room1.item_dict[item].description] = {room1.item_dict[item]: 1}
+                else:
+                    hero.inventory[room1.item_dict[item].description][room1.item_dict[item]] += 1
+                #TODO remove item from the room while hero still in it
 
     print("You've entered the boss room!!!")
     #TODO create a boss room after hero gets through the first x rooms

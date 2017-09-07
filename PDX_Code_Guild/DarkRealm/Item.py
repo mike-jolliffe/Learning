@@ -1,5 +1,5 @@
 import random
-import Creature
+
 
 class Item(object):
     '''Used to create an item, describe it, and make it do things'''

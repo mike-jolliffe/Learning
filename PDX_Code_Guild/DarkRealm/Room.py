@@ -19,7 +19,7 @@ class Room(object):
                               'JellyBlob': Creature.Creature('JellyBlob', 5, Item.Weapon('wiggles', (0,0), 1, 2), (0,0)),
                               'WelshCorgie': Creature.Creature('WelshCorgie', 12, Item.Weapon('the-lazy-eye', (0,0), 3, 2), (0,0))
                             }
-        # TODO place items in the room randomly where there aren't doors, bad guys, or heros
+
         self.item_dict = {'+1_Potion': Item.Item('+1_Potion', (0,0), -1),
                           'Journal_Page': Item.Item('Journal_Page', (0,0), 0),
                           'Broadsword': Item.Weapon('Broadsword', (0,0), 8, 50)} # TODO, hook up weapon damage to fight()
@@ -45,20 +45,22 @@ class Room(object):
             # Don't place bad guys over doorways or heros
             if not (self.room[creature[0]][creature[1]] == "__" or self.room[creature[0]][creature[1]] == " X "):
                 self.room[creature[0]][creature[1]] = " B "
-        # Place item # TODO fix the random generation and placement of items
+        # Place item
         if self.item_placed == True:
+            # if the item is already placed within a room, just use its current location
             self.room[self.item_dict[item].location[0]][self.item_dict[item].location[1]] = " ? "
         else:
-            # Get open locations
+            # Otherwise, get open locations
             open_locs = []
             for x in self.room:
                 for y in range(len(self.room[x])):
                     if self.room[x][y] == '   ':
                         open_locs.append((x, y))
-            # Place item at a random open location
+            # Place item at a random open location within the room
             self.item_dict[item].location = random.choice(open_locs)
             item_loc = self.item_dict[item].location
             self.room[item_loc[0]][item_loc[1]] = " ? "
+            # Modify item_placed status to True for the room
             self.item_placed = True
 
         return self.room
