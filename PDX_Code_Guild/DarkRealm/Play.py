@@ -21,9 +21,11 @@ if __name__ == '__main__':
 
     print(f"Welcome, {name}! Steel thy nerves for you are about to encounter some terrifying monsters!!!")
 
+    room_count = 0
 
-    while True:
+    while room_count < 5:
         room1 = Room((random.randint(4,15), random.randint(3,15)), 2)
+        room_count += 1
         hero = Hero(name, 100, "Sword", room1.entrance, "Mithril", {})
         baddie_locs = room1.generate_Creature_locs()
         creature_lookup = room1.make_Creatures(baddie_locs)
@@ -57,3 +59,5 @@ if __name__ == '__main__':
                 if result:
                     # Eliminate the creature from the room
                     baddie_locs.remove(hero.location)
+
+    #TODO create a boss room after hero gets through the first five rooms
