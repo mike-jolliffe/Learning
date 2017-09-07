@@ -19,7 +19,9 @@ class Room(object):
                               'JellyBlob': Creature.Creature('JellyBlob', 5, Item.Weapon('wiggles', (0,0), 1, 2), (0,0)),
                               'WelshCorgie': Creature.Creature('WelshCorgie', 12, Item.Weapon('the-lazy-eye', (0,0), 3, 2), (0,0))
                             }
-
+        # TODO place items in the room randomly where there aren't doors, bad guys, or heros
+        self.item_dict = {'+1_Potion': Item.Item('+1_Potion', (0,0), -1),
+                          'Journal_Page': Item.Item('Journal_Page', (0,0), 0)}
 
     def build_Room(self, Hero, creatures):
         '''Build a room given instance attributes and Hero/Creature locations'''
@@ -29,7 +31,6 @@ class Room(object):
             self.room[tile_x] = []
             for tile_y in range(self.size[1]):
                 self.room[tile_x].append("   ")
-
         # Place entrance and exit doors
         self.room[self.entrance[0]][self.entrance[1]] = "___"
         self.room[self.room_exit[0]][self.room_exit[1]] = "___"
@@ -40,7 +41,9 @@ class Room(object):
             print("Hero can't move there.")
         # Place bad guys
         for creature in creatures:
-            self.room[creature[0]][creature[1]] = " B "
+            # Don't place bad guys over doorways or heros
+            if not (self.room[creature[0]][creature[1]] == "__" or self.room[creature[0]][creature[1]] == " X "):
+                self.room[creature[0]][creature[1]] = " B "
 
         return self.room
 
@@ -66,12 +69,12 @@ class Room(object):
                               7: 'WelshCorgie'}
         creature_place_dict = {}
         for i in range(len(locations)):
-            pick = random.randint(1, 8)
+            pick = random.randint(1, 7)
             # Pick a random creature
             creature_to_place = self.creature_dict[creature_pick_dict[pick]]
             creature_to_place.location = locations[i]
 
-            creature_place_dict[locations[i]] = creature_to_place # TODO fix weapon
+            creature_place_dict[locations[i]] = creature_to_place # TODO fix weapon default location of (0,0)
 
         return creature_place_dict
 
