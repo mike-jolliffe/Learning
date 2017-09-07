@@ -29,9 +29,10 @@ if __name__ == '__main__':
         hero = Hero(name, 100, "Sword", room1.entrance, "Mithril", {})
         baddie_locs = room1.generate_Creature_locs()
         creature_lookup = room1.make_Creatures(baddie_locs)
+        item = room1.generate_Item()
         room1.item_placed = False
         while True:
-            room1.build_Room(hero, baddie_locs)
+            room1.build_Room(hero, baddie_locs, item)
             room1.display_Room()
             dir = input(f"Which direction would you like {name} to move? (n)orth, (s)outh, (e)ast, or (w)est?\n"
                         f"You may also press (1) for a status check or (q) to quit ")
