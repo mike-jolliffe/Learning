@@ -19,10 +19,6 @@ class Creature(object):
                 self.location = tuple(x + y for x, y in zip(self.location, move_dict[dir]))
         return self.location
 
-    def attack(self):
-        '''Makes creature object attack Hero object'''
-        # TODO Build this function for Creature object to attack Hero object
-        pass
 
 class Hero(Creature):
     '''Player Character that modifies Creature class'''
@@ -31,6 +27,13 @@ class Hero(Creature):
         self.armor = armor
         self.inventory = inventory
 
+    def attacked(self, creature):
+        '''Makes creature object attack Hero object'''
+        damage = random.choice([0, 1, 1, 1, 1, 2, 3, 4])
+        print(
+            f"The {creature.name} attacks {self.name}, causing {damage} damage.")
+        self.health -= damage
+
     def fight(self, creature):
         print(f"You've encountered a {creature.name}!!")
         print(f'''-------- {creature.name.upper()} STATS --------
@@ -38,8 +41,7 @@ class Hero(Creature):
                 Weapon: {creature.weapon.description} 
                 Damage: {creature.weapon.damage}''')
 
-        health = creature.health
-        while health > 0:
+        while creature.health > 0 and self.health > 0:
             attack = input("1 -- Stab \n"
                            "2 -- Slash \n"
                            "3 -- Run Away ")
@@ -49,16 +51,21 @@ class Hero(Creature):
                 break
             elif attack == '1':
                 points = random.choice([2,2,2,3,3,4])
-                health -= points
+                creature.health -= points
                 print(f"Your attack did {points} damage!")
             elif attack == '2':
                 points = random.choice([0,0,0,5,5,8])
-                health -= points
+                creature.health -= points
                 print(f"Your attack did {points} damage!")
-        if health <= 0:
+            self.attacked(creature)
+
+        if creature.health <= 0:
             print(f"You've defeated the vicious {creature.name}")
             # Defeat is True, so creature will be removed from board
             return True
+        elif hero.health <= 0:
+            print(f"{self.name} has perished in the Dark Realm!")
+            exit()
         else:
             # Defeat is False, creature will remain
             return False
