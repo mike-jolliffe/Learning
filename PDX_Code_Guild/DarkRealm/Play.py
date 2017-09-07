@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     while True:
         room1 = Room((random.randint(4,15), random.randint(3,15)), 2)
-        hero = Hero(100, "Sword", room1.entrance, "Mithril", {})
+        hero = Hero(name, 100, "Sword", room1.entrance, "Mithril", {})
         baddies = room1.seed_Creatures()
         while True:
             room1.build_Room(hero, baddies)
@@ -51,8 +51,6 @@ if __name__ == '__main__':
                 break
             elif hero.location in baddies:
                 print()
-                sBider = Creature(5, 'fangs', hero.location)
                 ("FIGHT!!!")
-                hero.fight(sBider)
-                # TODO build a fight function (class?) that can be called
+                hero.fight(baddies[hero.location])
                 exit()

@@ -3,7 +3,8 @@ from Room import *
 class Creature(object):
     '''Used for creating a creature, giving it stats, and making it fight'''
 
-    def __init__(self, health, weapon, location):
+    def __init__(self, name, health, weapon, location):
+        self.name = name
         self.health = health
         self.weapon = weapon
         self.location = location
@@ -25,16 +26,15 @@ class Creature(object):
 
 class Hero(Creature):
     '''Player Character that modifies Creature class'''
-    def __init__(self, health, weapon, location, armor, inventory):
-        Creature.__init__(self, health, weapon, location)
+    def __init__(self, name, health, weapon, location, armor, inventory):
+        Creature.__init__(self, name, health, weapon, location)
         self.armor = armor
         self.inventory = inventory
 
     def fight(self, creature):
         # TODO Figure out how to print name of variable to which a Creature instance has been bound
-        # print(#f"You've encountered a {__str__}!!")
-        print(creature.__class__.__name__)
-        print(f'''-------- CREATURE STATS --------
+        print(f"You've encountered a {creature.name}!!")
+        print(f'''-------- {creature.name.upper()} STATS --------
                 Health: {creature.health}
                 Weapon: {creature.weapon} 
                 Damage: XXX ''') #TODO hook up damage by accessing Weapon() sub-class

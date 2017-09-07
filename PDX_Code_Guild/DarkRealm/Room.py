@@ -1,5 +1,5 @@
 import random
-from Creature import *
+import Creature
 
 
 class Room(object):
@@ -38,13 +38,23 @@ class Room(object):
         '''Taking a room's difficulty, creates a location array of bad guy locations with number of creatures
         depending on room difficulty'''
         num_creatures = self.difficulty
-        # TODO instantiate a bunch of creature objects and store in a dict. Resolve how to initialize and store their locations
-        creature_array = []
+
+        # Generate a bunch of random locations within the room for placing creatures
+        locations_array = []
         for creature in range(num_creatures):
             location = (random.randint(0, self.size[0] - 1), random.randint(0, self.size[1] - 1))
-            if not location in creature_array:
-                creature_array.append(location)
-        return creature_array
+            if not location in locations_array:
+                locations_array.append(location)
+
+        # Generate a bunch of Creature objects for placement
+        creature_pick_dict = {1: 'ROUS', 2: 'BabyDragon', 3: 'MadBat', 4: 'Mugwump', 5: 'Jabberwocky', 6: 'JellyBlob', 7: 'WelshCorgie'}
+        creature_place_dict = {}
+        for i in range(num_creatures):
+            pick = random.randint(1,8)
+            creature_place_dict[locations_array[i]] = Creature.Creature(creature_pick_dict[pick], random.randint(1,8),
+                                                                        'XXX', locations_array[i]) #TODO fix weapon
+
+        return creature_place_dict
 
     def display_Room(self):
         '''Print the room to console for user to interact with'''
@@ -54,7 +64,7 @@ class Room(object):
             print("|",end="")
             for index in range(self.size[1]):
                 try:
-                    # TODO fix this for Items
+                    # TODO add Items
                     row.append(self.room[row_num][index])
                 except:
                     row.append("   ")
