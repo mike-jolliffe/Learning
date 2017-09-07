@@ -1,4 +1,5 @@
 import random
+import Creature
 
 class Item(object):
     '''Used to create an item, describe it, and make it do things'''
@@ -23,3 +24,16 @@ class Weapon(Item):
             return True
         else:
             return False
+
+    def weapon_randomizer(self):
+        '''Returns a dictionary for selecting random weapons'''
+        baddie_weapons = {1: Weapon('fangs', Creature.Creature.location, 5, 8),
+                          2: Weapon('electric shock', Creature.Creature.location, 2, 2),
+                          3: Weapon('clobber', Creature.Creature.location, 3, 2),
+                          4: Weapon('talk-ya-ear-off', Creature.Creature.location, 4, 2),
+                          5: Weapon('the-lazy-eye', Creature.Creature.location, 1, 2)}
+
+        hero_weapons = {}
+
+        pick = random.randint(1, len(baddie_weapons))
+        return baddie_weapons[pick]

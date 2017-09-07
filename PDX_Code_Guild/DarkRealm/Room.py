@@ -1,5 +1,6 @@
 import random
 import Creature
+import Item
 
 
 class Room(object):
@@ -51,8 +52,8 @@ class Room(object):
         creature_place_dict = {}
         for i in range(num_creatures):
             pick = random.randint(1,8)
-            creature_place_dict[locations_array[i]] = Creature.Creature(creature_pick_dict[pick], random.randint(1,8),
-                                                                        'XXX', locations_array[i]) #TODO fix weapon
+            creature_place_dict[locations_array[i]] = Creature.Creature(creature_pick_dict[pick], random.randint(1,8), \
+                                                                        Item.Weapon.weapon_randomizer(self), locations_array[i]) #TODO fix weapon
 
         return creature_place_dict
 
