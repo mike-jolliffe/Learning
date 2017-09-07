@@ -24,7 +24,6 @@ class Creature(object):
         # TODO Build this function for Creature object to attack Hero object
         pass
 
-
 class Hero(Creature):
     '''Player Character that modifies Creature class'''
     def __init__(self, name, health, weapon, location, armor, inventory):
@@ -37,5 +36,5 @@ class Hero(Creature):
         print(f"You've encountered a {creature.name}!!")
         print(f'''-------- {creature.name.upper()} STATS --------
                 Health: {creature.health}
-                Weapon: {creature.weapon} 
-                Damage: XXX ''') #TODO hook up damage by accessing Weapon() sub-class
+                Weapon: {creature.weapon.description} 
+                Damage: {creature.weapon.damage}''') #TODO hook up damage by accessing Weapon() sub-class

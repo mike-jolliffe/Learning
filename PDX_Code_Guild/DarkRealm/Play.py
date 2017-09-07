@@ -25,11 +25,10 @@ if __name__ == '__main__':
     while True:
         room1 = Room((random.randint(4,15), random.randint(3,15)), 2)
         hero = Hero(name, 100, "Sword", room1.entrance, "Mithril", {})
-        baddies = room1.generate_Creature_locs()
-        print(room1.make_Creatures(baddies))
-        exit()
+        baddie_locs = room1.generate_Creature_locs()
+        creature_lookup = room1.make_Creatures(baddie_locs)
         while True:
-            room1.build_Room(hero, baddies)
+            room1.build_Room(hero, baddie_locs)
             room1.display_Room()
             dir = input(f"Which direction would you like {name} to move? (n)orth, (s)outh, (e)ast, or (w)est?\n"
                         f"You may also press (1) for a status check or (q) to quit ")
@@ -51,8 +50,8 @@ if __name__ == '__main__':
             hero.move(dir, room1)
             if hero.location == room1.room_exit:
                 break
-            elif hero.location in baddies:
+            elif hero.location in baddie_locs:
                 print()
                 ("FIGHT!!!")
-                hero.fight(baddies[hero.location])
+                hero.fight(creature_lookup[hero.location])
                 exit()
