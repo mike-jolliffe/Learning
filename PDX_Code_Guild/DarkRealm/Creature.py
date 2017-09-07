@@ -32,9 +32,33 @@ class Hero(Creature):
         self.inventory = inventory
 
     def fight(self, creature):
-        # TODO Figure out how to print name of variable to which a Creature instance has been bound
         print(f"You've encountered a {creature.name}!!")
         print(f'''-------- {creature.name.upper()} STATS --------
                 Health: {creature.health}
                 Weapon: {creature.weapon.description} 
-                Damage: {creature.weapon.damage}''') #TODO hook up damage by accessing Weapon() sub-class
+                Damage: {creature.weapon.damage}''')
+
+        health = creature.health
+        while health > 0:
+            attack = input("1 -- Stab \n"
+                           "2 -- Slash \n"
+                           "3 -- Run Away ")
+
+            if attack == '3':
+                print("You escaped!")
+                break
+            elif attack == '1':
+                points = random.choice([2,2,2,3,3,4])
+                health -= points
+                print(f"Your attack did {points} damage!")
+            elif attack == '2':
+                points = random.choice([0,0,0,5,5,8])
+                health -= points
+                print(f"Your attack did {points} damage!")
+        if health <= 0:
+            print(f"You've defeated the vicious {creature.name}")
+            # Defeat is True, so creature will be removed from board
+            return True
+        else:
+            # Defeat is False, creature will remain
+            return False

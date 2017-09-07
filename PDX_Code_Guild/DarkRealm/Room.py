@@ -11,13 +11,13 @@ class Room(object):
         self.entrance = (0, random.randint(0, self.size[1] - 1))
         self.room_exit = (self.size[0]-1, random.randint(0, self.size[1] - 1))
         self.room = {}
-        self.creature_dict = {'ROUS': Creature.Creature('ROUS', 4, Item.Weapon('fangs', (0,0), 5, 8), (0,0)),
+        self.creature_dict = {'ROUS': Creature.Creature('ROUS', 8, Item.Weapon('fangs', (0,0), 5, 8), (0,0)),
                               'BabyDragon': Creature.Creature('BabyDragon', 6, Item.Weapon('fangs', (0,0), 5, 8), (0,0)),
-                              'MadBat': Creature.Creature('MadBat', 2, Item.Weapon('electric shock', (0,0), 2, 2), (0,0)),
-                              'Mugwump': Creature.Creature('Mugwump', 1, Item.Weapon('clobber', (0,0), 3, 2), (0,0)),
-                              'Jabberwocky': Creature.Creature('Jabberwocky', 3, Item.Weapon('talk-ya-ear-off', (0,0), 4, 2), (0,0)),
-                              'JellyBlob': Creature.Creature('JellyBlob', 2, Item.Weapon('wiggles', (0,0), 1, 2), (0,0)),
-                              'WelshCorgie': Creature.Creature('WelshCorgie', 8, Item.Weapon('the-lazy-eye', (0,0), 3, 2), (0,0))
+                              'MadBat': Creature.Creature('MadBat', 3, Item.Weapon('electric shock', (0,0), 2, 2), (0,0)),
+                              'Mugwump': Creature.Creature('Mugwump', 4, Item.Weapon('clobber', (0,0), 3, 2), (0,0)),
+                              'Jabberwocky': Creature.Creature('Jabberwocky', 6, Item.Weapon('talk-ya-ear-off', (0,0), 4, 2), (0,0)),
+                              'JellyBlob': Creature.Creature('JellyBlob', 5, Item.Weapon('wiggles', (0,0), 1, 2), (0,0)),
+                              'WelshCorgie': Creature.Creature('WelshCorgie', 12, Item.Weapon('the-lazy-eye', (0,0), 3, 2), (0,0))
                             }
 
 

@@ -53,5 +53,7 @@ if __name__ == '__main__':
             elif hero.location in baddie_locs:
                 print()
                 ("FIGHT!!!")
-                hero.fight(creature_lookup[hero.location])
-                exit()
+                result = hero.fight(creature_lookup[hero.location])
+                if result:
+                    # Eliminate the creature from the room
+                    baddie_locs.remove(hero.location)
