@@ -1,6 +1,10 @@
 # Dark Realm:
 ## A command line dungeon crawler
 
+### Language
+
+Dark Realm was written--and will run in--Python3.6
+
 ### Files
 
 Dark Realm consists of four files:
