@@ -3,6 +3,7 @@ from Item import *
 import random
 import Room
 import subprocess as sp
+import time
 
 if __name__ == '__main__':
     print()
@@ -48,9 +49,27 @@ if __name__ == '__main__':
                       f"Weapons: {hero.weapon}\n"
                       f"Armor: {hero.armor}\n"
                       )
-                pause = input("Press y to continue or any other key to exit: ")
+                pause = input("Type the first letter of an item to use it. Press y to leave menu or any other key to quit the game: ")
                 if pause == 'y':
                     continue
+                elif pause == '+':
+                    try:
+                        hero.use_item('+1_Potion', room_count)
+                    except:
+                        print(f"You don't currently have any +1_Potion in your inventory.")
+                elif pause == 'B' or pause == 'b':
+                    try:
+                        hero.use_item('Broadsword', room_count)
+                    except:
+                        print(f"you don't currently have a Broadsword in your inventory.")
+                elif pause == 'J' or pause == 'j':
+                    try:
+                        sp.call('clear', shell=True)
+                        hero.use_item('Journal_Page', room_count)
+                        time.sleep(8)
+                    except:
+                        print(f"you don't have any journal pages in your inventory.")
+
                 else:
                     exit()
             # Clear screen in terminal so only one room map is showing
@@ -71,8 +90,7 @@ if __name__ == '__main__':
                     hero.inventory[room1.item_dict[item].description] = 1
                 else:
                     hero.inventory[room1.item_dict[item].description] += 1
-                # TODO Remove the item from the room
+                # Remove item from room
                 room1.item_dict[item].location = None
 
-    print("You've entered the boss room!!!")
-    #TODO create a boss room after hero gets through the first x rooms
+    print("You've escaped the Dark Realm!!!")

@@ -101,7 +101,7 @@ class Room(object):
     def generate_Item(self):
         '''Randomizes and updates the location of items'''
         item_dict = {1:'+1_Potion', 2: 'Journal_Page', 3:'Broadsword'}
-        item = item_dict[random.choice([1,1,1,1,1,1,1,1,2,2,2,2,3])]
+        item = item_dict[random.choice([1,1,1,1,2,2,2,2,3])]
         return item
 
     def display_Room(self):
