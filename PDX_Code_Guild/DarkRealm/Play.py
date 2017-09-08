@@ -68,10 +68,10 @@ if __name__ == '__main__':
             elif hero.location == room1.item_dict[item].location:
                 print(f"You found a {item}!!!")
                 if not item in hero.inventory:
-                    hero.inventory[room1.item_dict[item].description] = {room1.item_dict[item]: 1}
+                    hero.inventory[room1.item_dict[item].description] = 1
                 else:
-                    hero.inventory[room1.item_dict[item].description][room1.item_dict[item]] += 1
-                # Remove the item from the room
+                    hero.inventory[room1.item_dict[item].description] += 1
+                # TODO Remove the item from the room
                 room1.item_dict[item].location = None
 
     print("You've entered the boss room!!!")

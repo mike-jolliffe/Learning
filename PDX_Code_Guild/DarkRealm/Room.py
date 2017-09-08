@@ -46,7 +46,7 @@ class Room(object):
             if not (self.room[creature[0]][creature[1]] == "__" or self.room[creature[0]][creature[1]] == " X "):
                 self.room[creature[0]][creature[1]] = " B "
         # Place item
-        if (self.item_placed == True and self.item_dict[item].location == None): # TODO figure out how to remove an item the hero grabbed
+        if (self.item_placed == True and self.item_dict[item].location == None):
             pass
         elif self.item_placed == True:
             # if the item is already placed within a room, just use its current location

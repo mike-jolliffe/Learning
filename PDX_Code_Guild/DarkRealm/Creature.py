@@ -74,6 +74,5 @@ class Hero(Creature):
         print(f"Your Current Inventory:")
         inventory = []
         for item in self.inventory:
-            for value in self.inventory[item].values():
-                inventory.append(f"{item}:  {value}")
+            inventory.append(f"{item}: {self.inventory[item]}")
         return inventory
