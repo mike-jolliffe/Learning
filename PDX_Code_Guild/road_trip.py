@@ -128,8 +128,9 @@ if __name__ == '__main__':
     start_city, num_hops = hopper.get_input()
     # Get set of hoppable cities
     city_list = hopper.can_hop(start_city, num_hops)
-    #print(city_list)
+    print(city_list)
     all_destinations, hop_times = hopper.hop_times(city_list)
+    print(hop_times) # TODO fix the issue with summing in hop times, something not quite right.
     all_times = hopper.all_times(all_destinations, hop_times)
     print(all_times)
     hopper.min_time(all_times)
