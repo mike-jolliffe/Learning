@@ -32,29 +32,26 @@ class CityHopper:
         return self.start_city, self.num_hops
 
     def can_hop(self, start_city, num_hops):
-        '''Given a starting city and number of hops, returns all cities that can be reached, within that
-        number of hops'''
-
+        '''Given a starting city and number of hops, returns hops left, and city-pairs that can be hopped from starting
+        city'''
         if num_hops == 0:
             return self.hoppable
         else:
             for city in CityHopper.city_dict[start_city].keys():
-                print(city)
-                self.hoppable.append(city)
-                start_city = city
-                self.can_hop(start_city, num_hops-1)
+                self.hoppable.append((num_hops, start_city, city))
+                self.can_hop(city, num_hops-1)
             return self.hoppable
-
-
-
 
     def min_time(self, city_list):
         '''Calculates minimum travel time to each city that falls within the number of hops'''
         pass
 
 if __name__ == '__main__':
+    # Create CityHopper instance
     hopper = CityHopper()
+    # Grab starting city and number of hops from user
     start_city, num_hops = hopper.get_input()
+    # Get set of hoppable cities
     city_list = hopper.can_hop(start_city, num_hops)
     print(city_list)
     best_times = hopper.min_time(city_list)
