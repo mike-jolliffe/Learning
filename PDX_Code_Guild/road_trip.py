@@ -105,4 +105,4 @@ if __name__ == '__main__':
     all_destinations, hop_times = hopper.hop_times(city_list)
     print(all_destinations)
     print(hop_times)
-
+    # TODO run debugger and resolve the 28 hours issue with Philadelphia from Portland. It should be 17 or so
