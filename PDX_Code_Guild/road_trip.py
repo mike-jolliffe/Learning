@@ -44,7 +44,14 @@ class CityHopper:
 
     def min_time(self, city_list):
         '''Calculates minimum travel time to each city that falls within the number of hops'''
-        pass
+        # Try a data structure with the following form
+        #   'Starting_city':
+        #       {(travel time, ending city):
+        #           {(travel time, ending city):
+
+        # Calculate the sum of time for each different trip from starting city to final ending city
+        # Display only the minimum time pairs for all trips
+
 
 if __name__ == '__main__':
     # Create CityHopper instance
