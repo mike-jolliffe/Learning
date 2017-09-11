@@ -69,7 +69,6 @@ class CityHopper:
 
         # For all keys > 1 in dictionary, grab the travel time from the previous key and add to current travel time
         key_count = 1
-        print(hop_time_dict)
         # For a given hop number key
         for keys in hop_time_dict:
             # For each city pair within the hop number
@@ -80,17 +79,14 @@ class CityHopper:
                 if not key_count == 1:
                     # Look into the prior hop's cities
                     for city in hop_time_dict[keys-1]:
-                        print (f"City {city}")
                         # When a given city (to city) matches the from city
                         if city[1] == from_city:
-                            # Modify the higher key's city distance
-                            hop_time_dict[keys][key][2] += hop_time_dict[keys-1][city][2]
+                        # Modify the higher key's city distance
+                            key[2] += city[2]
                 else:
                     break
-        key_count += 1
+            key_count += 1
 
-        print(hop_time_dict)
-        exit()
         return all_dest, hop_time_dict
 
     def min_times(self, hop_time_dict):
