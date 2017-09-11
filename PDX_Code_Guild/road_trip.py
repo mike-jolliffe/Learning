@@ -16,9 +16,12 @@ class CityHopper:
     }
 
     def __init__(self):
-
+        # Holder for starting city
         self.start_city = None
+        # Holder for number of hops
         self.num_hops = None
+        # Holder for all cities falling within number of hops
+        self.hoppable = []
 
     def get_input(self):
         '''Gets starting city and number of hops from user, stores them as instance attributes'''
@@ -26,10 +29,22 @@ class CityHopper:
             print(f"- {key}")
         self.start_city = input(f"Please enter your starting city: ")
         self.num_hops = int(input(f"How many hops can you take? "))
+        return self.start_city, self.num_hops
 
-    def can_hop(self):
+    def can_hop(self, start_city, num_hops):
         '''Given a starting city and number of hops, returns all cities that can be reached, within that
         number of hops'''
+
+        if num_hops == 0:
+            return self.hoppable
+        else:
+            for city in CityHopper.city_dict[start_city].keys():
+                print(city)
+                self.hoppable.append(city)
+                start_city = city
+                self.can_hop(start_city, num_hops-1)
+            return self.hoppable
+
 
 
 
@@ -39,7 +54,8 @@ class CityHopper:
 
 if __name__ == '__main__':
     hopper = CityHopper()
-    hopper.get_input()
-    city_list = hopper.can_hop()
+    start_city, num_hops = hopper.get_input()
+    city_list = hopper.can_hop(start_city, num_hops)
+    print(city_list)
     best_times = hopper.min_time(city_list)
 
