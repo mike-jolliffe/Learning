@@ -43,8 +43,13 @@ class CityHopper:
             return self.hoppable
 
     def hop_times(self, city_list):
-        '''Calculates minimum travel time to each city that falls within the number of hops'''
+        '''Builds dictionary of travel times, with hop number as key. Returns the dict and
+        a set of all possible destinations falling within that number of hops'''
 
+        # Build set of all possible destinations
+        all_dest = set([city[2] for city in city_list])
+
+        # Build travel times dictionary tied to hop number
         hop_time_dict = {}
 
         max_hop_num = max([city[0] for city in city_list])
@@ -53,15 +58,19 @@ class CityHopper:
         while hop_num <= max_hop_num:
             for city in city_list:
                 if city[0] == hop_countdown and not hop_num in hop_time_dict:
-                    hop_time_dict[hop_num] = [[city[2], city[3]]] #TODO fix this
+                    hop_time_dict[hop_num] = [[city[1], city[2], city[3]]]
                 elif city[0] == hop_countdown:
-                    hop_time_dict[hop_num].append([city[2], city[3]])
+                    hop_time_dict[hop_num].append([city[1], city[2], city[3]])
 
             hop_num += 1
             hop_countdown -= 1
 
-        return hop_time_dict
+        return all_dest, hop_time_dict
 
+    def min_times(self, hop_time_dict):
+        '''Returns all cities that can be reached and their minimum travel time.'''
+        # For each possible destination in the all destinations set, walk through dictionary and return
+        # the minimum time associated with getting to it.
 
 if __name__ == '__main__':
     # Create CityHopper instance
@@ -71,5 +80,7 @@ if __name__ == '__main__':
     # Get set of hoppable cities
     city_list = hopper.can_hop(start_city, num_hops)
     print(city_list)
-    best_times = hopper.hop_times(city_list)
+    all_destinations ,hop_times = hopper.hop_times(city_list)
+    print(all_destinations)
+    print(hop_times)
 
