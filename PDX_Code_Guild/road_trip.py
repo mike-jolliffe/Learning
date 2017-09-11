@@ -3,6 +3,8 @@
 * When the user enters a city and a number of hops, print out the shortest travel times to each city.
 Paths with fewer hops are not necessarily those with the shorter travel times.'''
 
+import itertools
+
 class CityHopper:
     '''Allows user to check shortest routes and potential cities based on a starting city
     and number of connecting hops.'''
@@ -87,12 +89,37 @@ class CityHopper:
                     break
             key_count += 1
 
+        # Clean up the dictionary by removing the from city, leaving only destination and cumulative distance
+        for keys in hop_time_dict:
+            for key in hop_time_dict[keys]:
+                del key[0]
+
         return all_dest, hop_time_dict
 
-    def min_times(self, hop_time_dict):
-        '''Returns all cities that can be reached and their minimum travel time.'''
-        # For each possible destination in the all destinations set, walk through dictionary and return
-        # the minimum time associated with getting to it.
+    def all_times(self, all_destinations, hop_time_dict):
+        '''Returns all cities that can be reached and their various travel times via different hops.'''
+        # Create a dictionary that will hold cumulative times by destination
+        cumulative_times = {}
+        # For each final destination city
+        for city in all_destinations:
+            # Get the distance from the hop time dictionary for all hops with this city as the destination
+            time_array = [[destination[1] for destination in value if destination[0] == city] for key, value in hop_time_dict.items()]
+            # Add the city and various times to the cumulative times dictionary
+            if not city in cumulative_times:
+                cumulative_times[city] = time_array
+        # Flatten the values in the dictionary
+        for key in cumulative_times:
+            cumulative_times[key] = list(itertools.chain.from_iterable(cumulative_times[key]))
+
+        return cumulative_times
+
+    def min_time(self, cumulative_times):
+        '''Returns all available destination cities, and their minimum travel times'''
+        print(f"\nStarting from {self.start_city} and given {self.num_hops} hops, you can travel to:\n")
+        for city in cumulative_times:
+            travel_min = min(cumulative_times[city])
+            print(f"{city} in {travel_min} hours")
+
 
 if __name__ == '__main__':
     # Create CityHopper instance
@@ -103,6 +130,7 @@ if __name__ == '__main__':
     city_list = hopper.can_hop(start_city, num_hops)
     #print(city_list)
     all_destinations, hop_times = hopper.hop_times(city_list)
-    print(all_destinations)
-    print(hop_times)
-    # TODO run debugger and resolve the 28 hours issue with Philadelphia from Portland. It should be 17 or so
+    all_times = hopper.all_times(all_destinations, hop_times)
+    print(all_times)
+    hopper.min_time(all_times)
+
