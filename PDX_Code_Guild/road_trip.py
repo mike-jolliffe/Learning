@@ -44,6 +44,30 @@ class CityHopper:
 
     def min_time(self, city_list):
         '''Calculates minimum travel time to each city that falls within the number of hops'''
+        # Initialize a dictionary for chaining hop times
+        two_hop = []
+
+        # Add travel time between pairs to the pair tuple
+        for i in range(len(city_list)):
+            city_list[i] += (CityHopper.city_dict[city_list[i][1]][city_list[i][2]],)
+
+        first_hop_num = max([city[0] for city in city_list])
+        hop_num = first_hop_num
+        # while hop_num > 0:
+        #     for city in city_list:
+        #         if city[0] == hop_num and not city[1] in hop_time_dict:
+        #             hop_time_dict[city[1]] = (hop_time_dict[city[1]][city[2]] , city[2])
+
+        for hop_from in city_list:
+            if hop_from[0] == first_hop_num:
+                for hop_to in city_list:
+                    if hop_to[0] == first_hop_num - 1 and hop_to[1] == hop_from[2]:
+                        two_hop.append([hop_from[1], hop_from[2], hop_to[2], hop_from[3] + hop_to[3]])
+
+
+        print (city_list)
+        print()
+        print(two_hop)
         # Try a data structure with the following form
         #   'Starting_city':
         #       {(travel time, ending city):
