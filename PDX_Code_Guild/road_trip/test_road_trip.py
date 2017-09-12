@@ -5,7 +5,21 @@ from road_trip import CityHopper
 class TestHopper(unittest.TestCase):
     def setUp(self):
         self.hopper = CityHopper()
-        self.start_city, self.num_hops = self.hopper.get_input()
+        self.start_city, self.num_hops = "Boston", 1
+        self.can_hop = self.hopper.can_hop(self.start_city, self.num_hops)
+
+    def test_get_input(self):
+        self.assertIsInstance(self.start_city, str)
+        self.assertIsInstance(self.num_hops, int)
+
+    def test_can_hop(self):
+        self.assertEqual(self.can_hop,
+                         [(1, "Boston", "New York", 4),
+                          (1, "Boston", "Albany", 6),
+                          (1, "Boston", "Portland", 3)])
+        print(self.can_hop)
+        self.assertEqual(len(self.can_hop), 3)
+
 
 
     def test_min_time(self):
