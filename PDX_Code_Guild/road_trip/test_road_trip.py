@@ -45,6 +45,18 @@ class TestHopper(unittest.TestCase):
                                                ['Boston', 12], ['New York', 11], ['Portland', 13],
                                                ['Boston', 6], ['Albany', 10]]})
 
+        self.assertEqual(self.hop_times3, {1: [['New York', 4], ['Albany', 6], ['Portland', 3]],
+                                           2: [['Boston', 8], ['Albany', 9], ['Philadelphia', 13],
+                                               ['Boston', 12], ['New York', 11], ['Portland', 13],
+                                               ['Boston', 6], ['Albany', 10]],
+                                           3: [['New York', 12], ['Albany', 14], ['Portland', 11],
+                                               ['Boston', 15], ['New York', 14], ['Portland', 16],
+                                               ['New York', 22],
+                                               ['New York', 16], ['Albany', 18], ['Portland', 15],
+                                               ['Boston', 15], ['Albany', 16], ['Philadelphia', 20],
+                                               ['Boston', 16], ['Albany', 20],
+                                               ['New York', 10], ['Albany', 12], ['Portland', 9],
+                                               ['Boston', 16], ['New York', 15], ['Portland', 17]]})
     def test_all_times(self):
         # Check that cumulative times are aggregated by destination city across all possible hops
         self.assertEqual(self.all_times1, {'New York': [4], 'Albany': [6], 'Portland': [3]})

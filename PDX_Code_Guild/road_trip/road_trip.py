@@ -40,7 +40,7 @@ class CityHopper:
             return self.hoppable
         else:
             for city in CityHopper.city_dict[start_city].keys():
-                self.hoppable.append((num_hops, start_city, city, CityHopper.city_dict[start_city][city]))
+                self.hoppable.append([num_hops, start_city, city, CityHopper.city_dict[start_city][city]])
                 self.can_hop(city, num_hops-1)
             return self.hoppable
 
@@ -58,36 +58,44 @@ class CityHopper:
         hop_countdown = max_hop_num
         hop_num = 1
 
+        for cities in city_list:
+            cities[0] = abs(cities[0] - (max_hop_num + 1))
+
         # Put individual travel time pairs into dictionary
         while hop_num <= max_hop_num:
             for city in city_list:
-                if city[0] == hop_countdown and not hop_num in hop_time_dict:
+                if city[0] == hop_num and not hop_num in hop_time_dict:
                     hop_time_dict[hop_num] = [[city[1], city[2], city[3]]]
-                elif city[0] == hop_countdown:
+                elif city[0] == hop_num:
                     hop_time_dict[hop_num].append([city[1], city[2], city[3]])
-
+                else:
+                    pass
             hop_num += 1
-            hop_countdown -= 1
 
+        # TODO resolve the bug in this part of the code that makes the 3-hop total too high
         # For all keys > 1 in dictionary, grab the travel time from the previous key and add to current travel time
-        key_count = 1
-        # For a given hop number key
-        for keys in hop_time_dict:
+        key_count = sorted([key for key in hop_time_dict.keys()])
+        # For a given hop number
+        for hop in key_count:
             # For each city pair within the hop number
-            for key in hop_time_dict[keys]:
+            for final_cities in hop_time_dict[hop]:
                 # The first city in that pair is the from city
-                from_city = key[0]
+                from_city = final_cities[0]
                 # If we are not in the first hop
-                if not key_count == 1:
+                if not hop == 1:
                     # Look into the prior hop's cities
-                    for city in hop_time_dict[keys-1]:
-                        # When a given city (to city) matches the from city
-                        if city[1] == from_city:
+                    for interim_cities in hop_time_dict[hop-1]: # TODO resolve whether I need a loop here, maybe not
+                        # When a prior hop's to city matches current from city
+                        if interim_cities[1] == from_city:
+                            print(f"Departure city: {interim_cities[1]}, time so far: {interim_cities[2]}, "
+                                  f"{from_city}, new distance: {final_cities[2]}")
                         # Modify the higher key's city distance
-                            key[2] += city[2]
+                            final_cities[2] += interim_cities[2]
+                            print(f" New total dist: {final_cities[2]}")
                 else:
                     break
-            key_count += 1
+
+            hop += 1
 
         # Clean up the dictionary by removing the from city, leaving only destination and cumulative distance
         for keys in hop_time_dict:
@@ -95,6 +103,7 @@ class CityHopper:
                 del key[0]
 
         return all_dest, hop_time_dict
+
 
     def all_times(self, all_destinations, hop_time_dict):
         '''Returns all cities that can be reached and their various travel times via different hops.'''
@@ -130,12 +139,9 @@ if __name__ == '__main__':
     start_city, num_hops = hopper.get_input()
     # Get set of hoppable cities
     city_list = hopper.can_hop(start_city, num_hops)
-    print(city_list)
     all_destinations, hop_times = hopper.hop_times(city_list)
-    print(hop_times) # TODO fix the issue with summing in hop times, something not quite right.
     all_times = hopper.all_times(all_destinations, hop_times)
-    print(all_times)
-    print(f"\nStarting from {self.start_city} and given {self.num_hops} hops, you can travel to:\n")
+    print(f"\nStarting from {hopper.start_city} and given {hopper.num_hops} hops, you can travel to:\n")
     min_times = hopper.min_time(all_times)
     for city in min_times:
         print(f"{city} in {min_times[city]} hours")
