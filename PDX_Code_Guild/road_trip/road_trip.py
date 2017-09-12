@@ -115,10 +115,12 @@ class CityHopper:
 
     def min_time(self, cumulative_times):
         '''Returns all available destination cities, and their minimum travel times'''
-        print(f"\nStarting from {self.start_city} and given {self.num_hops} hops, you can travel to:\n")
+        min_times_dict = {}
         for city in cumulative_times:
             travel_min = min(cumulative_times[city])
-            print(f"{city} in {travel_min} hours")
+            min_times_dict[city] = travel_min
+
+        return min_times_dict
 
 
 if __name__ == '__main__':
@@ -133,5 +135,8 @@ if __name__ == '__main__':
     print(hop_times) # TODO fix the issue with summing in hop times, something not quite right.
     all_times = hopper.all_times(all_destinations, hop_times)
     print(all_times)
-    hopper.min_time(all_times)
+    print(f"\nStarting from {self.start_city} and given {self.num_hops} hops, you can travel to:\n")
+    min_times = hopper.min_time(all_times)
+    for city in min_times:
+        print(f"{city} in {min_times[city]} hours")
 
