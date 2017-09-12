@@ -8,11 +8,13 @@ class TestHopper(unittest.TestCase):
         self.hopper1 = CityHopper()
         self.can_hop1 = self.hopper1.can_hop("Boston", 1)
         self.all_dests1, self.hop_times1 = self.hopper1.hop_times(self.can_hop1)
+        self.all_times1 = self.hopper1.all_times(self.all_dests1, self.hop_times1)
 
         # Two hops from Boston for testing
         self.hopper2 = CityHopper()
         self.can_hop2 = self.hopper2.can_hop("Boston", 2)
         self.all_dests2, self.hop_times2 = self.hopper2.hop_times(self.can_hop2)
+        self.all_times2 = self.hopper2.all_times(self.all_dests2, self.hop_times2)
 
         # Three hops from Boston for testing
         self.hopper3 = CityHopper()
@@ -42,11 +44,12 @@ class TestHopper(unittest.TestCase):
                                                ['Boston', 6], ['Albany', 10]]})
 
     def test_all_times(self):
-
+        self.assertEqual(self.all_times1, {'New York': [4], 'Albany': [6], 'Portland': [3]})
+        self.assertEqual(self.all_times2, {'Boston': [8, 12, 6], 'New York': [4, 11], 'Albany': [6, 9, 10],
+                                           'Portland': [3, 13], 'Philadelphia': [13]})
 
     def test_min_time(self):
-        self.assertEqual(self.hopper1.min_time({'A': [2, 3, 4, 5], 'B': [5, 8, 15]}),
-                         {'A': 2, 'B': 5})
+
         # def test_hand(self):
     #     self.assertEqual(self.player.score_hand(), 21)
     #
