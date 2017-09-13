@@ -6,6 +6,8 @@ class TestHopper(unittest.TestCase):
     def setUp(self):
         # Set up a single hop from Boston for testing
         self.hopper1 = CityHopper()
+        self.hopper1.start_city = "Boston"
+        self.hopper1.num_hops = 1
         self.can_hop1 = self.hopper1.can_hop("Boston", 1)
         self.all_dests1, self.hop_times1 = self.hopper1.hop_times(self.can_hop1)
         self.all_times1 = self.hopper1.all_times(self.all_dests1, self.hop_times1)
@@ -13,6 +15,8 @@ class TestHopper(unittest.TestCase):
 
         # Two hops from Boston for testing
         self.hopper2 = CityHopper()
+        self.hopper2.start_city = "Boston"
+        self.hopper2.num_hops = 2
         self.can_hop2 = self.hopper2.can_hop("Boston", 2)
         self.all_dests2, self.hop_times2 = self.hopper2.hop_times(self.can_hop2)
         self.all_times2 = self.hopper2.all_times(self.all_dests2, self.hop_times2)
@@ -20,14 +24,16 @@ class TestHopper(unittest.TestCase):
 
         # Three hops from Boston for testing
         self.hopper3 = CityHopper()
+        self.hopper3.start_city = "Boston"
+        self.hopper3.num_hops = 3
         self.can_hop3 = self.hopper3.can_hop("Boston", 3)
         self.all_dests3, self.hop_times3 = self.hopper3.hop_times(self.can_hop3)
 
     def test_can_hop(self):
         self.assertEqual(self.can_hop1,
-                         [(1, "Boston", "New York", 4),
-                          (1, "Boston", "Albany", 6),
-                          (1, "Boston", "Portland", 3)])
+                         [[1, "Boston", "New York", 4],
+                          [1, "Boston", "Albany", 6],
+                          [1, "Boston", "Portland", 3]])
         self.assertEqual(len(self.can_hop1), 3)
         self.assertEqual(len(self.can_hop2), 11)
         self.assertEqual(len(self.can_hop3), 32)
@@ -39,25 +45,40 @@ class TestHopper(unittest.TestCase):
         self.assertEqual(self.all_dests3, {'New York', 'Albany', 'Portland', 'Boston', 'Philadelphia'})
 
         # Check that distances dictionary populates correctly
-        self.assertEqual(self.hop_times1, {1: [['New York', 4], ['Albany', 6], ['Portland', 3]]})
-        self.assertEqual(self.hop_times2, {1: [['New York', 4], ['Albany', 6], ['Portland', 3]],
-                                           2: [['Boston', 8], ['Albany', 9], ['Philadelphia', 13],
-                                               ['Boston', 12], ['New York', 11], ['Portland', 13],
-                                               ['Boston', 6], ['Albany', 10]]})
+        self.assertEqual(self.hop_times1, [['Boston', 'New York', 4], ['Boston', 'Albany', 6], ['Boston', 'Portland', 3]])
+        self.assertEqual(self.hop_times2, [['Boston', 'New York', 4], ['Boston', 'Albany', 6], ['Boston', 'Portland', 3],
+                                           ['Boston','New York', 'Boston', 8], ['Boston', 'New York', 'Albany', 9],
+                                           ['Boston', 'New York', 'Philadelphia', 13], ['Boston', 'Albany', 'Boston', 12],
+                                           ['Boston', 'Albany', 'New York', 11], ['Boston', 'Albany', 'Portland', 13],
+                                           ['Boston', 'Portland', 'Boston', 6], ['Boston', 'Portland', 'Albany', 10]])
 
-        self.assertEqual(self.hop_times3, {1: [['New York', 4], ['Albany', 6], ['Portland', 3]],
-                                           2: [['Boston', 8], ['Albany', 9], ['Philadelphia', 13],
-                                               ['Boston', 12], ['New York', 11], ['Portland', 13],
-                                               ['Boston', 6], ['Albany', 10]],
-                                           3: [['New York', 12], ['Albany', 14], ['Portland', 11],
-                                               ['Boston', 15], ['New York', 14], ['Portland', 16],
-                                               ['New York', 22],
-                                               ['New York', 16], ['Albany', 18], ['Portland', 15],
-                                               ['Boston', 15], ['Albany', 16], ['Philadelphia', 20],
-                                               ['Boston', 16], ['Albany', 20],
-                                               ['New York', 10], ['Albany', 12], ['Portland', 9],
-                                               ['Boston', 16], ['New York', 15], ['Portland', 17]]})
-    def test_all_times(self):
+        self.assertEqual(self.hop_times3, [['Boston', 'New York', 4], ['Boston', 'Albany', 6], ['Boston', 'Portland', 3],
+                                           ['Boston','New York', 'Boston', 8], ['Boston', 'New York', 'Albany', 9],
+                                           ['Boston', 'New York', 'Philadelphia', 13], ['Boston', 'Albany', 'Boston', 12],
+                                           ['Boston', 'Albany', 'New York', 11], ['Boston', 'Albany', 'Portland', 13],
+                                           ['Boston', 'Portland', 'Boston', 6], ['Boston', 'Portland', 'Albany', 10],
+                                           ['Boston', 'New York', 'Boston', 'New York', 12],
+                                           ['Boston', 'New York', 'Boston', 'Albany', 14],
+                                           ['Boston','New York', 'Boston', 'Portland', 11],
+                                           ['Boston', 'New York', 'Albany', 'Boston', 15],
+                                           ['Boston', 'New York', 'Albany', 'New York', 14],
+                                           ['Boston', 'New York', 'Albany', 'Portland', 16],
+                                           ['Boston', 'New York', 'Philadelphia', 'New York', 22],
+                                           ['Boston', 'Albany', 'Boston', 'New York', 16],
+                                           ['Boston', 'Albany', 'Boston', 'Albany', 18],
+                                           ['Boston', 'Albany', 'Boston', 'Portland', 15],
+                                           ['Boston', 'Albany', 'New York', 'Boston', 15],
+                                           ['Boston', 'Albany', 'New York', 'Albany', 16],
+                                           ['Boston', 'Albany', 'New York', 'Philadelphia', 20],
+                                           ['Boston', 'Albany', 'Portland', 'Boston', 16],
+                                           ['Boston', 'Albany', 'Portland', 'Albany', 20],
+                                           ['Boston', 'Portland', 'Boston', 'New York', 10],
+                                           ['Boston', 'Portland', 'Boston', 'Albany', 12],
+                                           ['Boston', 'Portland', 'Boston', 'Portland', 9],
+                                           ['Boston', 'Portland', 'Albany', 'Boston', 16],
+                                           ['Boston', 'Portland', 'Albany', 'New York', 15],
+                                           ['Boston', 'Portland', 'Albany', 'Portland', 17]])
+
         # Check that cumulative times are aggregated by destination city across all possible hops
         self.assertEqual(self.all_times1, {'New York': [4], 'Albany': [6], 'Portland': [3]})
         self.assertEqual(self.all_times2, {'Boston': [8, 12, 6], 'New York': [4, 11], 'Albany': [6, 9, 10],
