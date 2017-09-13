@@ -28,6 +28,8 @@ class TestHopper(unittest.TestCase):
         self.hopper3.num_hops = 3
         self.can_hop3 = self.hopper3.can_hop("Boston", 3)
         self.all_dests3, self.hop_times3 = self.hopper3.hop_times(self.can_hop3)
+        self.all_times3 = self.hopper2.all_times(self.all_dests3, self.hop_times3)
+        self.min_times3 = self.hopper3.min_time(self.all_times3)
 
     def test_can_hop(self):
         self.assertEqual(self.can_hop1,
@@ -84,12 +86,20 @@ class TestHopper(unittest.TestCase):
         self.assertEqual(self.all_times2, {'Boston': [8, 12, 6], 'New York': [4, 11], 'Albany': [6, 9, 10],
                                            'Portland': [3, 13], 'Philadelphia': [13]})
 
+        self.assertEqual(self.all_times3, {'Boston': [8, 12, 6, 15, 15, 16, 16],
+                                           'New York': [4, 11, 12, 14, 22, 16, 10, 15],
+                                           'Albany': [6, 9, 10, 14, 18, 16, 20, 12],
+                                           'Portland': [3, 13, 11, 16, 15, 9, 17],
+                                           'Philadelphia': [13, 20]})
+
     def test_min_time(self):
         # Check that the minimum travel time for each destination city is returned
         self.assertEqual(self.min_times1, {'New York': 4, 'Albany': 6, 'Portland': 3})
         self.assertEqual(self.min_times2, {'Boston': 6, 'New York': 4, 'Albany': 6,
                                            'Portland': 3, 'Philadelphia': 13})
 
+        self.assertEqual(self.min_times3, {'Boston': 6, 'New York': 4, 'Albany': 6,
+                                           'Portland': 3, 'Philadelphia': 13})
 
 if __name__ == '__main__':
     unittest.main()
