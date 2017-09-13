@@ -1,12 +1,11 @@
-from api_credentials import FROM_NUM, TO_NUM, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN
+from api_credentials import FROM_NUM, TO_NUM, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_NEW_NUM_SID
 from twilio.rest import Client
-
 
 class Message:
 
     client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
-    def __init__(self, text):
+    def __init__(self, text=''):
         self.text = text
         self.from_num = FROM_NUM
 
@@ -18,16 +17,17 @@ class Message:
     def send(self, to_num):
         '''Sends a message to a given number via Twilio API'''
 
-
-        # call = client.api.account.calls\
-        #       .create(to=TO_NUM,  # Any phone number
-        #               from_=FROM_NUM, # Must be a valid Twilio number
-        #               url="https://drive.google.com/open?id=0BxwVfppX-_KLdG11MHl6Q0Y1STg")
         valid_number = self.check(to_num)
 
-        Message.client.messages.create(to=valid_number, from_=self.from_num,
-                                   body=self.text)
+        call = Message.client.api.account.calls\
+              .create(to=valid_number,  # Any phone number
+                      from_=FROM_NUM, # Must be a valid Twilio number
+                      url="https://41421258.ngrok.io")
+
+
+        #Message.client.messages.create(to=valid_number, from_=self.from_num,
+        #                           body=self.text)
 
 if __name__ == '__main__':
-    new_message = Message("Here's a message from my command line app!")
+    new_message = Message()
     new_message.send(TO_NUM)
