@@ -1,3 +1,4 @@
-#Calculating the Distance Between Two Points on Earth
+# Calculating the Distance Between Two Points on Earth
 
-[[https://raw.githubusercontent.com/mike-jolliffe/Learning/PDX_Code_Guild/geometry/Great_Circle_Distance.png]]
+![haversine formula]
+(https://github.com/mike-jolliffe/Learning/blob/master/PDX_Code_Guild/geometry/Great_Circle_Distance.png)
