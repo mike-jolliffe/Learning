@@ -1,12 +1,5 @@
 '''
 
-
-Then create some top-level functions in those modules that know how to operate on instances of each class.
-
-In the `rectangle` module:
-
-* Know if a point is inside a rectangle
-
 All functions, even magic methods, should have tests.
 
 Create a bunch of Point instances and put them in a container.
@@ -46,9 +39,9 @@ class Point(object):
 
 if __name__ == '__main__':
     point1 = Point(0,0)
-    point2 = Point(1,1)
+    point2 = Point(5,5)
     print(point1)
     print(point2)
     print(point1 == point2)
     print(point1.distance_to(point2))
-    print(point1.move((1,1)))
+    print(point1.move((-1,-1)))
