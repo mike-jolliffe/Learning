@@ -1,11 +1,5 @@
 '''
 
-All functions, even magic methods, should have tests.
-
-Create a bunch of Point instances and put them in a container.
-
-Then, Given a single Point instance, return all of the point instances within a given radius.
-
 Implement the Haversine formula to compute the distance between two given points on the earth.
 
 [Haversine Formula Wiki](https://en.wikipedia.org/wiki/Haversine_formula)
@@ -36,6 +30,7 @@ class Point(object):
         self.x += distance[0]
         self.y += distance[1]
         return self.__repr__()
+
 
 if __name__ == '__main__':
     point1 = Point(0,0)
