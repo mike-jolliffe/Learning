@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="DinnerStyle.css">
+    <title>Dinner Survey</title>
+</head>
+<body>
+    <article>
+        <div>
+            <form action="https://example.com/login" method="post" enctype="multipart/form-data">
+                <fieldset>
+                    <legend>DINNER</legend>
+                    <label for="formDinner">What you ate last night:</label>
+                    <input class="text_input" type="text" name="dinnerDescription" id="formDinner"><br>
+                    <br>
+                    <h5>Check ingredients it included:</h5>
+                        <label for="formIngredientsMeat"><input type="checkbox" name="Ingredients" id="formIngredientsMeat" value="Meat"> Meat</label>
+                        <label for="formIngredientsPotatoes"><input type="checkbox" name="dinnerIngredients" id="formIngredientsPotatoes" value="Potatoes"> Potatoes</label>
+                        <label for="formIngredientsBroccoli"><input type="checkbox" name="dinnerIngredients" id="formIngredientsBroccoli" value="Broccoli"> Broccoli</label>
+                        <label for="formIngredientsCheese"><input type="checkbox" name="dinnerIngredients" id="formIngredientsCheese" value="Cheese"> Cheese</label>
+                    <h5>Are you normally vegetarian?</h5>
+                        <label for="formVegetarianYes"><input type="radio" name="Vegetarian" id="formVegetarianYes">Yes</label>
+                        <label for="formVegetarianNo"><input type="radio" name="Vegetarian" id="formVegetarianNo">No</label><br>
+                    <label for="formMostMemDinner">What's your most memorable meal?</label>
+                    <input class="text_input" type="text" name="formMostMemDinner" id="formMostMemDinner">
+                    <br><br>
+                    <input type="button" class="Buttons" name="Hungry" value="Click if you're hungry!!!">
+                    <h5>Share a photo of your favorite chopsticks!</h5>
+                        <input class="Buttons" type="file" name="chopsticksPhoto">
+                </fieldset>
+                <fieldset>
+                    <legend>DESSERT</legend>
+                    <label>Favorite Dessert</label>
+                    <select name="formFaveDessert">
+                        <option value="Chocolate">Chocolate</option>
+                        <option value="Phish Food">Phish Food</option>
+                        <option value="Brownie">Brownie</option>
+                        <option value="Other">I'm strange...It's not chocolatey.</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <input type="submit" name="Submit" id="SurveySubmit" value="Submit Survey">
+                </fieldset>
+            </form>
+        </div>
+    </article>
+</body>
+</html>

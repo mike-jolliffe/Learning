@@ -1,0 +1,19 @@
+body {background-color: #eeeeee}
+
+label {display: block;
+       margin-bottom: 5px;
+}
+
+h5 {margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.text_input {width: 500px;}
+
+.Buttons {margin-bottom: 10px;}
+
+#SurveySubmit {margin-top: 25px;
+               margin-bottom: 20px;
+               color: whitesmoke;
+               background-color: #30799B;
+}
