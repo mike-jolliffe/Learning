@@ -2,7 +2,7 @@ import unittest
 from point import Point
 from rectangle import Rectangle
 from distance_on_sphere import Haversine
-import rectangle
+
 
 
 class TestPoints(unittest.TestCase):
