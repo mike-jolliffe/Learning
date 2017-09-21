@@ -16,7 +16,7 @@ class Haversine(Point):
         c = 2 * asin(sqrt(a))
         r = 3956  # Radius of earth in miles
         distance = c * r
-        return f"{distance: 0.2f} miles"
+        return distance
 
 if __name__ == '__main__':
     loc1 = tuple(map(float, input(f'Point one lat/long (e.g., 45.25 -117.77: ').split()))
@@ -24,4 +24,5 @@ if __name__ == '__main__':
 
     world_dist = Haversine(loc1[0], loc1[1])
 
-    print(world_dist.distance_to(Point(loc2[0], loc2[1])))
+    distance = world_dist.distance_to(Point(loc2[0], loc2[1]))
+    print(f"{distance: 0.2f} miles")

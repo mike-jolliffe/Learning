@@ -1,6 +1,7 @@
 import unittest
 from point import Point
 from rectangle import Rectangle
+from distance_on_sphere import Haversine
 import rectangle
 
 
@@ -46,7 +47,15 @@ class TestRects(unittest.TestCase):
         self.assertTrue(self.rect1.point_inside(Point(2,2)))
         self.assertFalse(self.rect1.point_inside(Point(10,10)))
 
+class TestDistOnSphere(unittest.TestCase):
+    def setUp(self):
+        # Create two points with 1 degree of latitude diff
+        self.point1 = Haversine(45, 118)
+        self.point2 = Haversine(46, 118)
 
+    def test_distance_to(self):
+        # One degree of latitude is approximately 69 miles
+        self.assertAlmostEqual(self.point1.distance_to(self.point2), 69, places=1)
 
 if __name__ == '__main__':
     unittest.main()
