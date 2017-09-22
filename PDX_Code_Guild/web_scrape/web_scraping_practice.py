@@ -1,8 +1,4 @@
-'''Write a simple program using beautifulsoup4 that scrapes [Quotes to Scrape](http://quotes.toscrape.com/) and returns the top 10 tags as a list.
-
-  2. Use the [Beautiful Soup Documentation](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) to gather the top 10 tags.
-
-* Make a dictionary from the first page of quotes. Make the key the authors name and the value the quote.
+'''
 * Output a new html page with your own css styling that displays the quotes and tags.'''
 
 from bs4 import BeautifulSoup
