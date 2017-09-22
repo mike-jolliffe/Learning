@@ -22,22 +22,34 @@ class SoupScraper:
             soup_page = BeautifulSoup(resp.text, 'html.parser')
             self.soup.append(soup_page)
 
-    def get_tags(self):
-        '''Returns a list of all href tag instances in the scraped page'''
-        tags = [[tag.contents[0] for tag in page.find_all('a')] for page in self.soup]
+class SoupParser:
+    def __init__(self, SoupScraper):
+        self.soup = SoupScraper.soup
+
+    def get_contents_of_tag_type(self, tag):
+        '''Returns a list of all contents in a given tag'''
+        tags = [[tag.contents[0] for tag in page.find_all(tag)] for page in self.soup]
         flat_list = [item for sublist in tags for item in sublist]
         return flat_list
 
-    def most_frequent(self, tags):
-        '''Returns dict of the 10 most frequently occuring tags and their frequencies'''
+    def most_frequent_quote_types(self, tags):
+        '''Returns dict of the 10 most frequently quote categories and their frequencies'''
         most_common = Counter(tags).most_common(10)
         return {k:v for (k,v) in most_common}
+
+    def quotes_dict(self, tags):    #TODO finish this function
+        '''Returns a dictionary of quotes by author'''
+        pass
 
 if __name__ == '__main__':
     scraper = SoupScraper('http://quotes.toscrape.com/')
     scraper.scrape(10)
     #print(scraper.soup)
-    tags_list = scraper.get_tags()
-    #print(tags_list)
-    most_frequent = scraper.most_frequent(tags_list)
+    parser = SoupParser(scraper)
+
+    # Get 10 most frequent quote categories and their frequencies
+    tags_list = parser.get_contents_of_tag_type('a')
+    most_frequent = parser.most_frequent_quote_types(tags_list)
     print(most_frequent)
+
+    # TODO Get all quotes by author
