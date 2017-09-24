@@ -4,7 +4,8 @@ body {
 /* 	font-family: 'Varela Round', sans-serif; */
 	font-family: 'Montserrat', sans-serif;
 	width: 100%;
-   margin: auto;
+    margin: auto;
+	background-color: #eeeeee;
 }
 
 .Banner {
@@ -41,7 +42,7 @@ main h1 {
 main > div {
 	height: 40em;
 	width: 40em;
-	background: url(https://static.pexels.com/photos/75897/pexels-photo-75897.jpeg) center no-repeat;
+	background: url(myphoto.jpg) center no-repeat;
 	background-size: cover;
 	border-radius: 50%;
 	position: relative;
@@ -65,7 +66,7 @@ img {
 svg {
 	z-index: 0;
 	position: absolute;
-	transform: translate(5%, 50%);
+	transform: translate(10%, 50%);
 	height: 50px;
 
 }
@@ -79,7 +80,7 @@ svg {
 /*}*/
 
 svg:hover {
-	filter: opacity(25%)
+	filter: opacity(25%);
 }
 
 main div div {
@@ -88,7 +89,7 @@ main div div {
 	top: 50%;
 	height: initial;
     width: initial;
-	transform: translate(-50%, -50%);
+	transform: translate(-100%, -50%);
 }
 
 a div {
