@@ -41,14 +41,16 @@ a {
 
 main {
 	display: flex;
-	justify-content: center;
-	width: 60%;
+	justify-content: space-around;
+	align-items: center;
+	width: 85%;
 	margin: auto;
+	/*TODO background: "addgreatimage.jpg";*/
 }
 
 main > div {
-	height: 40em;
-	width: 40em;
+	height: 35em;
+	width: 35em;
 	background: url('myphoto.jpg') center no-repeat;
 	margin: auto;
 	background-size: cover;
@@ -134,6 +136,88 @@ div {
 	width:30em;
 }
 
+aside {
+	height: auto;
+	width: 20vw;
+}
+
+section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.Project1 {
+	width: 80%;
+	background: url('bee.jpg');
+	background-size: cover;
+	background-position: 0% 60%;
+	position: relative;
+	z-index: 1;
+}
+
+.Project1:hover {
+	width: 80%;
+	background: linear-gradient(
+			rgba(255, 255, 255, 0.7),
+			rgba(255, 255, 255, 0.7)
+	),
+	url('bee.jpg');
+	background-size: cover;
+	background-position: 0% 60%;
+	z-index: 1;
+}
+
+.Project1:hover .P1text {
+	display: inline-block;
+	width: 100%;
+	font-size: 2em;
+	position: absolute;
+	text-align: center;
+	top: 25%;
+	z-index: 2;
+}
+
+.P1text {
+	display: none;
+	text-align: center;
+}
+
+.Project2 {
+	width: 80%;
+	background: url('Rick-Astley.jpg');
+	background-size: cover;
+	position: relative;
+	background-position: 0% 0%;
+	z-index: 1;
+}
+
+.Project2:hover {
+	width: 80%;
+	background: linear-gradient(
+			rgba(255, 255, 255, 0.7),
+			rgba(255, 255, 255, 0.7)
+	),
+	url('Rick-Astley.jpg');
+	background-size: cover;
+	background-position: 0% 0%;
+	z-index: 1;
+}
+
+.Project2:hover .P2text {
+	display: inline-block;
+	width: 100%;
+	font-size: 2em;
+	position: absolute;
+	text-align: center;
+	top: 25%;
+	z-index: 2;
+}
+
+.P2text {
+	display: none;
+	text-align: center;
+}
 /*li {*/
 	/*list-style:none;*/
 /*}*/
