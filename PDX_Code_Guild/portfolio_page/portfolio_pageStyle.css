@@ -117,7 +117,7 @@ svg:hover {
 	justify-content: flex-end;
 }
 
-section span:nth-child(2) {
+section span:nth-child(1) {
 	display: flex;
 	width: 100%;
 	background: linear-gradient(
@@ -127,7 +127,7 @@ section span:nth-child(2) {
 	justify-content: center;
 }
 
-section span:nth-child(3) {
+section span:nth-child(2) {
 	display: flex;
 	width: 100%;
 	background: linear-gradient(
@@ -145,6 +145,12 @@ div {
 aside {
 	height: 33vh;
 	width: 33vw;
+}
+
+.ProjectsContainer {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
 }
 
 section {
@@ -253,90 +259,9 @@ section {
 	top: 50%;
 }
 
-/*li {*/
-	/*list-style:none;*/
-/*}*/
-
-/*ul {*/
-	/*padding:0;*/
-	/*display:flex;*/
-	/*flex-wrap:wrap;*/
-	/*text-align:center;*/
-	/*justify-content: center;*/
-/*!* 	justify-content: space-between; *!*/
-/*}*/
-
-/*section, footer {*/
-	/*text-align: center;*/
-/*}*/
-/*footer li {*/
-	/*margin: 10px;*/
-	/*white-space:nowrap;*/
-/*}*/
-
-/*footer li:first-child::before {*/
-	/*font-size: 1.5em;*/
-	/*content: "✉";*/
-	/*position:absolute;*/
-	/*top:-50%;*/
-	/*left:50%;*/
-	/*transform:translate(-50%, -50%);*/
-/*}*/
-
-/*footer li:last-child::before  {*/
-	/*content: "☎";*/
-	/*position:absolute;*/
-	/*top:-50%;*/
-	/*left:50%;*/
-	/*transform:translate(-50%, -50%);*/
-/*}*/
-
-/*footer li:nth-child(2)::before {*/
-	 /*content: "";*/
-    /*width: 10px;*/
-    /*height: 10px;*/
-    /*box-shadow: 12px 0px 0 #7bc96f, -12px 0px 0 #239a3b;*/
-    /*background: #196127;*/
-    /*position: absolute;*/
-    /*top: -50%;*/
-    /*left: 50%;*/
-    /*transform: translate(-50%, -50%);*/
-/*}*/
-
-/*footer li {*/
-	/*position:relative;*/
-	/*flex:1;*/
-	/*margin-top:50px;*/
-	/*margin: 50px;*/
-/*}*/
-
-/*footer ul {*/
-	/*width: 80%;*/
-	/*margin: auto;*/
-/*}*/
-
-/*@media screen and (max-width: 780px) {*/
-	/*div {*/
-	 /*height: 10em;*/
-    /*width: 10em;*/
-	/*}*/
-/*}*/
-
-/*@media screen and (max-width: 930px) {*/
-	/*main > div {*/
-		/*height: 15em;*/
-		/*width: 15em;*/
-		/*margin-top: 10em;*/
-		/*box-shadow: inset 0px 0pt 0pt 18px rgba(234, 234, 234, 0.61), inset 0px 0pt 20pt 30em rgba(234, 234, 234, 0.61);*/
-	/*}*/
-	/*main div div {*/
-		/*top:50%;*/
-		/*left:50%;*/
-		/*text-align:center;*/
-		/*width:100%;*/
-	/*}*/
-/*}*/
-
-/* https://visualhunt.com/photos/m/1/animals-pet-rodents.jpg */
-/* https://visualhunt.com/photos/m/1/dog-falling-asleep-on-floor.jpg */
-/* https://visualhunt.com/photos/m/7/animal-kitty-kitten.jpg */
+footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	background-color: rgb(222, 222, 222);
+}
