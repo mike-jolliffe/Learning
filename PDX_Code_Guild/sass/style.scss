@@ -1,0 +1,60 @@
+@import "vars";
+
+@mixin border-mixin($border-dashed) {
+  @if $border-dashed == true {
+    border: dashed 15px red;
+  }
+  @else {
+    border: solid 15px green;
+  }
+}
+
+@for $i from 1 through length($stringlist) {
+  $currenttext: nth($stringlist, $i);
+  .photos li:nth-child(#{$i}) {
+    border: $standardborder;
+    &:before {
+      content: '#{$currenttext}';
+    }
+  }
+}
+
+@each $color in map_keys($colormap) {
+  .aside-#{$color} {
+    border: solid;
+    height: 100px;
+    width: 100px;
+    background: map_get($colormap, $color);
+  }
+}
+
+@while $int > 0 {
+  .while-#{$int} {
+    width: $inwidth + $int;
+    $int: $int - 1;
+  }
+}
+
+div {
+  background: lightblue;
+  section {
+    border: solid;
+    h2 {
+      color: cadetblue;
+    }
+  }
+}
+
+header {
+  @include border-mixin(true);
+  color: gray;
+  background: #333;
+  border: solid darkgray;
+}
+
+aside {
+  @include border-mixin(false);
+  @extend header;
+  text-align: center;
+  border: dashed green;
+}
