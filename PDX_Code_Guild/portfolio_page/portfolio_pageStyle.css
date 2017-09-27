@@ -2,8 +2,8 @@
 
 body {
 	font-family: 'Montserrat', sans-serif;
-	width: 100%;
-    margin: auto;
+	width: 100vw;
+    margin: 0;
 	background-color: #ffffff;
 }
 
@@ -88,7 +88,6 @@ main div div {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	text-wrap: wrap;
 }
 
 main h1 {
@@ -115,20 +114,24 @@ svg:hover {
 .ProjectsContainer {
 	display: flex;
     flex-direction: row;
-	width: 100%;
+	width: 96vw;
+    margin:auto;
     padding: 0.5vw 1vw;
 	justify-content: space-around;
 }
 
 .AboutMe {
 	width: 20vw;
-    height: 60vh;
+    height: 40vh;
     display: flex;
     flex-direction: column;
 	justify-content: center;
 }
 
-.ProjectsContainer div div div {
+.ProjectsContainer div {
+    flex: 1;
+}
+.ProjectsContainer div div {
 	flex-direction: row;
     display: flex;
     flex-wrap: wrap;
@@ -137,11 +140,12 @@ svg:hover {
 }
 
 .Project1 {
-    width: 35vw;
-    height: 60vh;
-	background: url('bee.jpg');
-	background-size: cover;
-	background-position: 0% 60%;
+    width: 32vw;
+    height: 40vh;
+	background: url('bee.svg');
+	background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 	position: relative;
 	z-index: 1;
 }
@@ -151,9 +155,10 @@ svg:hover {
 			rgba(255, 255, 255, 0.75),
 			rgba(255, 255, 255, 0.75)
 	),
-	url('bee.jpg');
+	url('bee.svg');
 	background-size: cover;
 	background-position: 0% 60%;
+    left: 0%;
 	z-index: 1;
 }
 
@@ -192,12 +197,13 @@ svg:hover {
 }
 
 .Project2 {
-    width: 35vw;
-    height: 60vh;
-	background: url('Rick-Astley.jpg');
-	background-size: cover;
+    width: 32vw;
+    height: 40vh;
+	background: url('phone-receiver.svg');
+	background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 	position: relative;
-	background-position: 30% 60%;
 	z-index: 1;
 }
 
@@ -206,9 +212,10 @@ svg:hover {
 			rgba(255, 255, 255, 0.7),
 			rgba(255, 255, 255, 0.7)
 	),
-	url('Rick-Astley.jpg');
+	url('phone-receiver.svg');
 	background-size: cover;
-	background-position: 30% 60%;
+	background-position: 0% 50%;
+    left: 0%;
 	z-index: 1;
 }
 
