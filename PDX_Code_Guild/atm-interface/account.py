@@ -1,13 +1,4 @@
 '''
-
-Write a program that functions as a simple ATM for two accounts:
-
-1. Checking account
-1. Savings account
-
-Implement a user interface in a module `main` that lets a user pick each of those actions for a given account and updates
-the account. After each action it will print the balance.
-
 Adds some advanced features to the account class.
 
 *   Add a function called `get_standing()` have it return a bool with whether the account has less than $1000 in it.

@@ -6,11 +6,7 @@ class ATM:
         '''Takes an Account object on instantiation'''
         self.accounts = accounts
         self.account = None
-        self.actions = OrderedDict([
-                        ('Check Balance', self.account.get_funds),
-                        ('Deposit Funds', self.account.deposit),
-                        ('Withdraw Funds', self.account.withdraw)
-        ])
+        self.actions = ['Check Balance', 'Deposit Funds', 'Withdraw Funds']
 
     def get_account(self, account_num):
         '''Sets the account number of user's account'''
@@ -23,23 +19,29 @@ class ATM:
             print(f"{i+1} -- {action}")
 
     def act(self, *action):
+        act_dict = OrderedDict([
+            (self.actions[0], self.account.get_funds),
+            (self.actions[1], self.account.deposit),
+            (self.actions[2], self.account.withdraw)
+        ])
+
         if action[0] == 1:
-            return self.actions['Check Balance']()
+            return act_dict['Check Balance']()
         elif action[0] == 2:
-            return self.actions['Deposit Funds'](action[1])
+            return act_dict['Deposit Funds'](action[1])
         elif action[0] == 3:
-            return self.actions['Withdraw Funds'](action[1])
+            return act_dict['Withdraw Funds'](action[1])
 
 if __name__=='__main__':
     account1 = Account()
     account2 = Account()
     account3 = Account()
-    print(account2.get_account_number())
-    exit()
     atm = ATM([account1, account2, account3])
 
     while True:
         print()
+        account = int(input("Account Number: "))
+        atm.get_account(account)
         atm.menu()
         print()
         action = int(input("Pick a number: "))
