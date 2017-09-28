@@ -8,8 +8,6 @@ Adds some advanced features to the account class.
 *   Save the account balance to a file after each operation.
     Read that balance on startup so the balance persists across program starts.
 
-*   Add to each account class an account ID number.
-
 *   Allow the user to open more than one account.
     Let them perform all of the above operations by account number.'''
 
