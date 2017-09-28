@@ -21,6 +21,7 @@ body {
 }
 
 .ContactMe {
+			flex: 1 1;
 			height: 8vh;
 			width: 20vw;
 			margin: auto;
@@ -31,14 +32,17 @@ body {
 
 .ContactMe a {
 			color: #000000;
+			white-space: nowrap;
 }
 
-.ContactMe:hover {
+.ContactMe span:hover {
+	display: inline-block;
 	filter: opacity(25%);
 	transform: translate(0.3vw, 0.3vh);
 }
 
 .IconLinks {
+			flex: 1 1;
 			display: flex;
 			padding: 0 0 0 2vh;
 			flex-direction: row;
@@ -51,6 +55,7 @@ body {
 .IconLinks div {
 			height: 10vh;
 			width: 9vw;
+			margin: 5px;
 
 }
 
@@ -123,10 +128,15 @@ svg:hover {
 	justify-content: space-around;
 }
 
+.AboutMeShort {
+	display: none;
+}
+
 .AboutMe {
 	width: 20vw;
     height: 40vh;
     display: flex;
+	flex: 1 1;
     flex-direction: column;
 	justify-content: center;
 }
@@ -145,6 +155,8 @@ svg:hover {
 .Project1 {
     width: 32vw;
     height: 40vh;
+	flex: 1 1;
+	margin: 10px;
 	background: url('bee.svg');
 	background-size: contain;
     background-repeat: no-repeat;
@@ -202,6 +214,8 @@ svg:hover {
 .Project2 {
     width: 32vw;
     height: 40vh;
+	flex: 1 1;
+	margin: 10px;
 	background: url('phone-receiver.svg');
 	background-size: contain;
     background-repeat: no-repeat;
@@ -254,4 +268,48 @@ footer {
 	flex-direction: row;
 	justify-content: space-between;
 	background-color: rgb(222, 222, 222);
+}
+
+@media screen and (max-width: 900px) {
+	.Project1:hover .Small {
+		display: none;
+	}
+
+	.Project2:hover .Small {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.Project1:hover .Small {
+		display: none;
+	}
+
+	.Project2:hover .Small {
+		display: none;
+	}
+
+	.ProjectsContainer {
+		flex-direction: column;
+	}
+
+	.AboutMe {
+		height: unset;
+		width: unset;
+		text-align: center;
+	}
+
+	.Project1 {
+		height: 20vh;
+		margin: auto;
+	}
+
+	.Project2 {
+		height: 20vh;
+		margin: auto;
+	}
+
+	.IconLinks {
+		display: none;
+	}
 }
