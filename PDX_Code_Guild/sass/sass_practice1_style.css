@@ -1,0 +1,87 @@
+body {
+  margin: 0;
+  color: #333; }
+
+@keyframes ColorWheel {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
+li {
+  list-style: none; }
+
+header, footer {
+  height: 95vh;
+  color: #fff;
+  background: linear-gradient(270deg, #2196f3, #9932CC);
+  background-size: 300% 300%;
+  animation: ColorWheel 6s infinite;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.project-list li:nth-child(1) {
+  background: url("https://visualhunt.com/photos/xl/7/flower-bouquet-bunch-daisys.jpg") center;
+  background-size: cover;
+  width: 10em;
+  height: 7em; }
+
+.project-list li:nth-child(2) {
+  background: url("https://visualhunt.com/photos/l/7/sky-silhouette-star.jpg") center;
+  background-size: cover;
+  width: 10em;
+  height: 7em; }
+
+.project-list li:nth-child(3) {
+  background: url("https://visualhunt.com/photos/l/7/animal-kitten-pet.jpg") center;
+  background-size: cover;
+  width: 10em;
+  height: 7em; }
+
+.project-list {
+  width: 75%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3em; }
+  .project-list div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #eeeeee;
+    border-radius: 2%;
+    margin: 20px;
+    padding: 10px;
+    margin: 0;
+    width: 100%; }
+    .project-list div ul {
+      display: flex;
+      justify-content: space-around;
+      padding: 0;
+      width: 100%; }
+      .project-list div ul li {
+        border: solid; }
+
+.articles {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 0; }
+  .articles article, .articles div {
+    width: 75%;
+    background: #eeeeee;
+    border-radius: 2%;
+    margin: 20px;
+    padding: 10px; }
+
+footer {
+  height: 70vh; }
+
+/*# sourceMappingURL=sass_practice1_style.css.map */

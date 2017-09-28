@@ -1,0 +1,95 @@
+$photos:
+  'https://visualhunt.com/photos/xl/7/flower-bouquet-bunch-daisys.jpg',
+	'https://visualhunt.com/photos/l/7/sky-silhouette-star.jpg',
+	'https://visualhunt.com/photos/l/7/animal-kitten-pet.jpg';
+
+body {
+  margin: 0;
+  color: #333;
+}
+
+@keyframes ColorWheel {
+  0% {background-position: 0% 50%}
+  50% {background-position: 100% 50%}
+  100% {background-position: 0% 50%}
+}
+
+@mixin bg-gradient($color1, $color2){
+  background: linear-gradient(270deg, $color1, $color2);
+  background-size: 300% 300%;
+  animation: ColorWheel 6s infinite;
+}
+
+@mixin centerit {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+li {
+  list-style: none;
+}
+
+header {
+  height: 95vh;
+  color: #fff;
+  @include bg-gradient(#2196f3, #9932CC);
+  @include centerit;
+}
+
+@mixin gray-box {
+  background: #eeeeee;
+  border-radius: 2%;
+  margin: 20px;
+  padding: 10px;
+}
+
+@for $i from 1 through length($photos){
+  .project-list li:nth-child(#{$i}){
+    background: url(nth($photos, $i))
+      center;
+    background-size: cover;
+    width: 10em;
+    height: 7em;
+  }
+}
+
+.project-list {
+  width: 75%;
+  margin: auto;
+  @include centerit;
+  margin-top: 3em;
+  div {
+    @include centerit;
+    @include gray-box;
+    margin: 0;
+    width: 100%;
+    ul {
+      display: flex;
+      justify-content: space-around;
+      padding: 0;
+      width: 100%;
+      li {
+        border: solid;
+      }
+    }
+  }
+}
+
+.articles {
+  @include centerit;
+  margin: 50px 0;
+  article {
+    width: 75%;
+    @include gray-box;
+  }
+  div {
+    @extend article;
+  }
+}
+
+footer {
+  @extend header;
+  height: 70vh;
+}
