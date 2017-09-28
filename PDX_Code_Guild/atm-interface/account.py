@@ -5,9 +5,8 @@ Write a program that functions as a simple ATM for two accounts:
 1. Checking account
 1. Savings account
 
-Implement a user interface in a module `main` that lets a user pick each of those actions for a given account and updates the account.
-After each action it will print the balance.
-
+Implement a user interface in a module `main` that lets a user pick each of those actions for a given account and updates
+the account. After each action it will print the balance.
 
 Adds some advanced features to the account class.
 
@@ -24,9 +23,19 @@ Adds some advanced features to the account class.
     Let them perform all of the above operations by account number.'''
 
 class Account:
+
+    account_number = 1
+
     def __init__(self):
+        self.account_number = Account.account_number
         self.__balance = 0
         self.__interest = 0.001
+
+        Account.account_number += 1
+
+    def get_account_number(self):
+        '''Returns the account number'''
+        return self.account_number
 
     def get_funds(self):
         '''Returns account balance'''
@@ -35,6 +44,7 @@ class Account:
     def deposit(self, amount):
         '''Updates balance by adding amount'''
         self.__balance += amount
+        return self.__balance
 
     def check_withdrawal(self, amount):
         '''Returns True if balance greater than or equal to amount'''
@@ -44,8 +54,9 @@ class Account:
         '''Withdraws an allowed amount, ValueError if insufficient balance'''
         if self.__balance >= amount:
             self.__balance -= amount
+            return self.__balance
         else:
-            raise ValueError(f"Insufficient funds available. Currently ${self.__balance} in account")
+            return ValueError(f"Insufficient funds available. Currently ${self.__balance} in account")
 
     def calc_interest(self):
         '''Calculates and returns total interest on loan balance'''
