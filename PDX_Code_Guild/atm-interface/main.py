@@ -1,12 +1,14 @@
 from account import Account
 from collections import OrderedDict
+import json
 
 class ATM:
     def __init__(self, accounts):
         '''Takes an Account object on instantiation'''
         self.accounts = accounts
         self.account = None
-        self.actions = ['Check Balance', 'Deposit Funds', 'Withdraw Funds']
+        self.actions = ['Check Balance', 'Deposit Funds', 'Withdraw Funds', 'Exit']
+        #TODO create accounts_dict that gets updated for writing to file
 
     def get_account(self, account_num):
         '''Sets the account number of user's account'''
@@ -31,12 +33,25 @@ class ATM:
             return act_dict['Deposit Funds'](action[1])
         elif action[0] == 3:
             return act_dict['Withdraw Funds'](action[1])
+        elif action[0] == 4:
+            with open('accounts.json', 'w') as fp:
+                json.dump(self.accounts_dict)
+
+    def to_dict(self):
+        #TODO replace account in accounts with modified self.account
+        #TODO put each account into a dictionary for conversion to json
 
 if __name__=='__main__':
-    account1 = Account()
-    account2 = Account()
-    account3 = Account()
-    atm = ATM([account1, account2, account3])
+    try:
+        with open('accounts.json', 'r') as fp:
+            accounts = json.load(fp)
+        # Grab just the account objects
+        atm = ATM([value for key, value in accounts.items()])
+    except:
+        account1 = Account()
+        account2 = Account()
+        account3 = Account()
+        atm = ATM([account1, account2, account3])
 
     while True:
         print()
