@@ -1,6 +1,6 @@
 from account import Account
 from collections import OrderedDict
-import json
+import pickle
 
 class ATM:
     def __init__(self, accounts):
@@ -35,9 +35,7 @@ class ATM:
             return act_dict['Withdraw Funds'](action[1])
         elif action[0] == 4:
             self.update_accounts()
-            self.to_dict()
-            with open('accounts.json', 'w') as fp:
-                json.dump(self.accounts_dict, fp)
+            self.pickler()
             exit("Have a nice day!")
 
     def update_accounts(self):
@@ -46,18 +44,19 @@ class ATM:
             if unmodified.account_number == self.account.account_number:
                 unmodified = self.account
 
-    def to_dict(self):
-        '''Returns a json-serialization-ready dictionary where values are account objects'''
-        for i, j in enumerate(self.accounts):
-            #TODO implement pickle rather than saving as JSON file
-            self.accounts_dict[i] = j.__dict__
+    def pickler(self):
+        '''Pickles an object'''
+        output = open('accounts_pickle', 'wb')
+        pickle.dump(self.accounts, output)
+        output.close()
 
 if __name__ == '__main__':
     try:
-        with open('accounts.json', 'r') as fp:
-            accounts = json.load(fp)
+        with open('accounts_pickle', 'rb') as fp:
+            accounts = pickle.load(fp)
+
         # Grab just the account objects
-        atm = ATM([value for key, value in accounts.items()])
+        atm = ATM(accounts)
 
     except:
         account1 = Account()
