@@ -1,6 +1,7 @@
 from math import radians, cos, sin, asin, sqrt
 from point import Point
 
+
 class Haversine(Point):
 
     def distance_to(self, other):
@@ -17,6 +18,7 @@ class Haversine(Point):
         r = 3956  # Radius of earth in miles
         distance = c * r
         return distance
+
 
 if __name__ == '__main__':
     loc1 = tuple(map(float, input(f'Point one lat/long (e.g., 45.25 -117.77: ').split()))

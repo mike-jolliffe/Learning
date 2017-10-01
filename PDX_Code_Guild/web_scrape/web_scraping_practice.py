@@ -30,11 +30,11 @@ class SoupParser:
 
     def most_frequent_quote_types(self, tags):
         '''Returns dict of the 10 most frequently quote categories and their frequencies'''
-        tags = [tag[0] for tag in tags] # Indexing to eliminate single-element lists
+        tags = [tag[0] for tag in tags]  # Indexing to eliminate single-element lists
         most_common = Counter(tags).most_common(10)
-        return {k:v for (k,v) in most_common} # Indexing to eliminate single element lists again
+        return {k:v for (k,v) in most_common}  # Indexing to eliminate single element lists again
 
-    def quotes_dict(self, quotes, authors):    #TODO finish this function
+    def quotes_dict(self, quotes, authors):
         '''Returns a dictionary of quotes by author'''
         # Zip author/quote lists together as list of tuples
         zipped = []

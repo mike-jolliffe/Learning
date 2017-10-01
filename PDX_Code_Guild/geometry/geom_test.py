@@ -4,7 +4,6 @@ from rectangle import Rectangle
 from distance_on_sphere import Haversine
 
 
-
 class TestPoints(unittest.TestCase):
     def setUp(self):
         self.point1 = Point(0,0)
