@@ -12,7 +12,7 @@
     <body>
 
        <fieldset>
-                <label for="getChar">Character</label>
+                <label for="getChar">Pick a Letter</label><br>
                 <input type="text" name="getChar" id="getChar"><br>
                 <input type="submit" name="Submit" id="formSubmit" value="Submit"><br>
        </fieldset>
@@ -22,7 +22,7 @@
             document.getElementById('formSubmit').addEventListener('click', function()
             {
                 event.preventDefault();
-                var userLetter = document.getElementById('getChar').value;
+                var userLetter = document.getElementById('getChar').value.toLowerCase();
 
                 if (vowelsList.indexOf(userLetter) === -1) {
                     alert('Consonant!')
