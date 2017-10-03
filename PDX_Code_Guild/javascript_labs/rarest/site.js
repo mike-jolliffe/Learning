@@ -38,5 +38,12 @@ function findRarestKeys(rarest_age) {
     }
 }
 
+// Just testing lodash
+var thing = _.filter([1, 2, 3, 4, 5, 6], function (num) {
+    return num % 2 === 0;
+});
+
+console.log(thing);
+
 var min_age = findRarestValue(ages);
 findRarestKeys(min_age);
