@@ -22,7 +22,8 @@ function transform(input) {
 
     // Return minimum number of coins for user
     var result = String(numQ + numD + numN + numP);
-    printResult(result);
+    printResult(result + " coins: " + numQ + " quarters, " + numD + " dimes, "
+                + numN + " nickles, and " + numP + " pennies");
   }
   else {
     printError('Enter a value');
