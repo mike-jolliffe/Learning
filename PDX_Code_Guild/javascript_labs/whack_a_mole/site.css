@@ -1,0 +1,27 @@
+main {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+header {
+        display: flex;
+        justify-content: center;
+}
+
+.row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        border: 1px solid black;
+        width: 60%;
+        height: 16vh;
+}
+
+.row div {
+        border: 1px solid black;
+        background: transparent url('hole.jpg') repeat 0px 11px;
+        background-size: cover;
+        min-width: 10px;
+        flex: 1 1;
+}
