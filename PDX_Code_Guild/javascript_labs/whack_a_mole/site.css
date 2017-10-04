@@ -1,5 +1,6 @@
 body {
         display: flex;
+        background-color: #a6c871;
         flex-direction: column;
         align-items: center;
 }
@@ -7,11 +8,8 @@ body {
 main {
         display: flex;
         margin: auto;
-        min-width: 400px;
-        max-width: 600px;
-        justify-content: center;
+        width: 515px;
         flex-wrap: wrap;
-        flex: 1 1;
 }
 
 header {

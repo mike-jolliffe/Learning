@@ -1,3 +1,7 @@
+var timer;
+var interval = 2000;
+var clicks = 0;
+
 function showHoles() {
     // Find the available holes
     var holes = [];
@@ -13,20 +17,29 @@ function showHoles() {
 function selectHole() {
     // Select an available hole randomly
     var holesList = showHoles();
+    if (holesList.length === 0) {
+        alert("You Lose!!");
+    }
     return holesList[Math.floor(Math.random() * holesList.length)];
 }
 
 function addMole() {
     var hole_for_mole = selectHole();
+    console.log(hole_for_mole);
     $('main').children().eq(hole_for_mole).html('<img src="mole.jpg">');
 }
 
-function makeMoles() {
-    return setInterval(function(){
-        addMole()}, 1000);
-}
+$('#start').click(function () {
+    timer = setInterval(addMole, interval);
+});
 
-$('#start').click(makeMoles());
-$('span').click(this.html('<img src="hole.jpg">'));
-
-
+$('span').click(function() {
+    $(this).html('<img src="hole.jpg">');
+    clicks++;
+    if (clicks === 10) {
+        clicks = 0;
+        clearInterval(timer);
+        interval -= 500;
+        timer = setInterval(addMole, interval);
+    }
+})
