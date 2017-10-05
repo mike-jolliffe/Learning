@@ -1,6 +1,7 @@
 var timer;
 var interval = 2000;
 var clicks = 0;
+var score = 0;
 
 function showHoles() {
     // Find the available holes
@@ -19,8 +20,14 @@ function selectHole() {
     var holesList = showHoles();
     if (holesList.length === 0) {
         alert("You Lose!!");
+        clearInterval(timer);
+        for (var i = 0; i < $('span').length; i++) {
+            $('main').children().eq(i).html('<img src="hole.jpg">')
+            $('#score').html(0);
+        }
+    } else {
+        return holesList[Math.floor(Math.random() * holesList.length)];
     }
-    return holesList[Math.floor(Math.random() * holesList.length)];
 }
 
 function addMole() {
@@ -34,12 +41,18 @@ $('#start').click(function () {
 });
 
 $('span').click(function() {
-    $(this).html('<img src="hole.jpg">');
-    clicks++;
+    if ($(this).html() == '<img src="mole.jpg">') {
+        $(this).html('<img src="hole.jpg">');
+        clicks++;
+        score += 100;
+    }
+
+    $('#score').html(score);
     if (clicks === 10) {
         clicks = 0;
         clearInterval(timer);
-        interval -= 500;
+        interval *= 0.67;
         timer = setInterval(addMole, interval);
     }
 })
+

@@ -10,14 +10,28 @@ main {
         margin: auto;
         width: 515px;
         flex-wrap: wrap;
+        cursor: hand;
 }
 
 header {
         display: flex;
+        flex-direction: column;
         justify-content: center;
+        align-items: center;
 }
 
 img {
         height: 100%;
 
+}
+
+#start {
+        font-size: 2em;
+        box-shadow: #444444 3px 5px;
+        border-radius: 10%;
+        background-color: #3affff;
+}
+
+h1 {
+        text-decoration: underline;
 }
