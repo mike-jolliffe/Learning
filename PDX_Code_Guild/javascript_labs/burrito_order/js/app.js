@@ -23,8 +23,10 @@ function getHTML() {
     return cleaned;
 }
 
-function priceExtras() {
+function priceIt() {
     var count = 0;
+    var del_cost;
+    // Get price of all extra ingredients
     for (var item of ingredList) {
         if ($(item).find('input').prop('checked') == true) {
             if ($(item).find('input').attr('name') == 'extra-ingredients') {
@@ -32,7 +34,14 @@ function priceExtras() {
             }
         }
     }
-    return 0.50 * count;
+    if ($('input[value="delivery"]').prop('checked') == true) {
+        del_cost = 5;
+    } else {
+        del_cost = 0;
+    }
+        // Get price of delivery, if any
+    total = 6 + (0.50 * count) + del_cost;
+    return parseFloat(total).toFixed(2);
 }
 $('.ui.checkbox').checkbox();
 console.log(getChecked());
@@ -73,7 +82,9 @@ $('form').click(function () {
     for (var item of for_posting) {
         $('.ui.relaxed.list').append('<li class="item">' + item + '</li>');
     }
-    console.log(priceExtras());
+    console.log($('#total_cost').html());
+    $('#total_cost').html('<strong>Total:</strong>' + ' $' + priceIt());
+    console.log(priceIt());
 });
 
 // Keep everything above "Your Details" out of ingred list
