@@ -1,6 +1,8 @@
 //TODO get default checked fields
 
 var ingredList;
+var cleaned;
+var total;
 
 function getChecked() {
     ingredList = $('form').find('.checkbox');
@@ -9,7 +11,7 @@ function getChecked() {
 }
 
 function getHTML() {
-    var cleaned = [];
+    cleaned = [];
     for (var item of ingredList) {
         if ($(item).find('input').attr('name') == 'delivery') {
             // Skip this element
@@ -20,8 +22,21 @@ function getHTML() {
     }
     return cleaned;
 }
+
+function priceExtras() {
+    var count = 0;
+    for (var item of ingredList) {
+        if ($(item).find('input').prop('checked') == true) {
+            if ($(item).find('input').attr('name') == 'extra-ingredients') {
+                count += 1;
+            }
+        }
+    }
+    return 0.50 * count;
+}
 $('.ui.checkbox').checkbox();
 console.log(getChecked());
+
 
 
 // Grab the type of tortilla on click
@@ -58,6 +73,7 @@ $('form').click(function () {
     for (var item of for_posting) {
         $('.ui.relaxed.list').append('<li class="item">' + item + '</li>');
     }
+    console.log(priceExtras());
 });
 
 // Keep everything above "Your Details" out of ingred list
