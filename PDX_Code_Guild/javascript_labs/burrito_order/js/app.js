@@ -1,19 +1,22 @@
-//TODO get default checked fields
-
 var ingredList;
 var cleaned;
 var total;
 
+$('.ui.checkbox').checkbox();
+
 function getChecked() {
+    // Returns the HTML labels associated with all checked boxes
     ingredList = $('form').find('.checkbox');
     var just_html = getHTML();
     return just_html;
 }
 
 function getHTML() {
+    // Generates a list of only food checkboxes
     cleaned = [];
     for (var item of ingredList) {
-        if ($(item).find('input').attr('name') == 'delivery') {
+        if (($(item).find('input').attr('name') == 'delivery') ||
+           ($(item).find('input').attr('name') == 'terms')) {
             // Skip this element
         }
         else if ($(item).find('input').prop('checked') == true) {
@@ -24,6 +27,7 @@ function getHTML() {
 }
 
 function priceIt() {
+    // Calculates the total price of the order, including delivery
     var count = 0;
     var del_cost;
     // Get price of all extra ingredients
@@ -39,42 +43,46 @@ function priceIt() {
     } else {
         del_cost = 0;
     }
-        // Get price of delivery, if any
+
+    // Get price of delivery, if any
     total = 6 + (0.50 * count) + del_cost;
     return parseFloat(total).toFixed(2);
 }
-$('.ui.checkbox').checkbox();
-console.log(getChecked());
 
+function validateName() {
+    // Ensures name field is completed
+    var name = $('input[name="name"]').val();
+    if (name.split(' ').length === 2) {
+        return true;
+    }
+}
 
+function validateCredit() {
+    var credit = $('input[name="credit-card"]').val().split(' ');
+    for (var sub of credit) {
+        if ((credit.length == 4) && $.isNumeric(sub)) {
+            // Don't do anything
+        }
+        else {
+            return false
+        }
+    }
+    return true
+}
 
-// Grab the type of tortilla on click
-// $('.fields:has(label[for="tortilla"]) .ui.radio').change(function () {
-//     if ($(this).find('input').prop('checked') == true) {
-//         var ingred = $(this).find('label').html();
-//         ingredList[0] = ingred;
-//         console.log(ingredList);
-//         // Put the tortilla type into the aside
-//         //$('.ingredients.ui.relaxed.list').unshift(ingredList);
-//         //console.log($('#ingredients .ui.relaxed.list').html(ingredList));
-//     }
-// });
+function validateCVV() {
+    var cvv = $('input[name="cvv"]').val();
+    if ((cvv.length == 3) && $.isNumeric(cvv)) {
+        return true
+    }
+}
 
-// Grab type of meat and additionals
-// $('.fields:has(label[for="meat"]) .ui.checkbox').change(function() {
-//     if ($(this).find('input').prop('checked') == true) {
-//        // It is not checked, show your div...
-//        ingredList.push($(this).find('label').html());
-//    } else if ($(this).find('input').prop('checked') == false) {
-//        var ingred = $(this).find('label').html();
-//        var remove_ix = ingredList.indexOf(ingred);
-//        console.log(remove_ix);
-//        if (remove_ix > -1) {
-//            ingredList.splice(remove_ix, 1);
-//        }
-//    }
-//    console.log(ingredList);
-// });
+function validateZIP() {
+    var zip = $('input[name="zip"]').val();
+    if ((zip.length == 5) && $.isNumeric(zip)) {
+        return true
+    }
+}
 
 $('form').click(function () {
     var for_posting = getChecked();
@@ -82,14 +90,16 @@ $('form').click(function () {
     for (var item of for_posting) {
         $('.ui.relaxed.list').append('<li class="item">' + item + '</li>');
     }
-    console.log($('#total_cost').html());
+
     $('#total_cost').html('<strong>Total:</strong>' + ' $' + priceIt());
-    console.log(priceIt());
+    //console.log(validateCredit());
+    //console.log(validateCVV());
+    console.log(validateZIP());
 });
 
-// Keep everything above "Your Details" out of ingred list
-// Count number of extra ingredients
-// Add to the cost
+// On submit
+
+
 
 
 
