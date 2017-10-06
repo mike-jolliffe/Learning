@@ -2,7 +2,7 @@ $(function () {
 
     function getUserInfo () {
         // Parse the document URI to get user's order details
-        var uri = document.documentURI;
+        var uri = decodeURIComponent(document.documentURI);
         var params = uri.split('?')[1];
         params = params.split('&');
         var order_arr = [];

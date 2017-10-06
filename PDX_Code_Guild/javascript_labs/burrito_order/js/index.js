@@ -45,8 +45,8 @@ function priceIt() {
     }
 
     // Get price of delivery, if any
-    total = 6 + (0.50 * count) + del_cost;
-    return parseFloat(total).toFixed(2);
+    total = parseFloat(6 + (0.50 * count) + del_cost).toFixed(2);
+    return total;
 }
 
 function validateName() {
@@ -118,12 +118,13 @@ $('form').click(function () {
 
 // On submit, check validate inputs
 $('.form').submit(function () {
-    if (validateCredit() &&
+    if (validateName() &&
+        validateCredit() &&
         validateCVV() &&
         validateZIP() &&
         validateTerms()) {
         // Allow page load
-        $('.form').append('<input name="total" type="hidden" value=' + total + '>');
+        $('.form').append('<input name="total" type="hidden" value=' + "$" + total + '>');
         return true;
     } else {
         return false
