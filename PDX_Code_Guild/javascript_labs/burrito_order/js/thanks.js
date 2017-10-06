@@ -50,7 +50,7 @@ $(function () {
         $('#order-details').empty();
         for (var item in order) {
             if (!(hidden.includes(item))) {
-                $('#order-details').append('<h5>' + item + ': ' + order[item] + '</h5>')
+                $('#order-details').append('<span class="userorder"><h4>' + item + ': ' + '</h4>' + '<span>' + order[item] + '</span></span>')
             }
         }
     }

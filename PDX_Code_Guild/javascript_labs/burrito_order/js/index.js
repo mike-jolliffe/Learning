@@ -117,14 +117,16 @@ $('form').click(function () {
 });
 
 // On submit, check validate inputs
-$('button').click(function () {
+$('.form').submit(function () {
     if (validateCredit() &&
         validateCVV() &&
         validateZIP() &&
         validateTerms()) {
         // Allow page load
+        $('.form').append('<input name="total" type="hidden" value=' + total + '>');
+        return true;
     } else {
-        event.preventDefault()
+        return false
     }
 });
 
