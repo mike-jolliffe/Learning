@@ -54,16 +54,21 @@ function validateName() {
     var name = $('input[name="name"]').val();
     if (name.split(' ').length === 2) {
         return true;
+    } else {
+        alert("Please put in your full name")
     }
+
 }
 
 function validateCredit() {
+    // Validate the user's credit card number
     var credit = $('input[name="credit-card"]').val().split(' ');
     for (var sub of credit) {
         if ((credit.length == 4) && $.isNumeric(sub)) {
             // Don't do anything
         }
         else {
+            alert("Please enter digits in four groups of four");
             return false
         }
     }
@@ -71,16 +76,24 @@ function validateCredit() {
 }
 
 function validateCVV() {
+    // Validate the CVV number
     var cvv = $('input[name="cvv"]').val();
     if ((cvv.length == 3) && $.isNumeric(cvv)) {
         return true
+    } else {
+        alert("Please input a three-digit number");
+        return false
     }
 }
 
 function validateZIP() {
+    // Validate the zipcode
     var zip = $('input[name="zip"]').val();
     if ((zip.length == 5) && $.isNumeric(zip)) {
         return true
+    } else {
+        alert("Please enter a valid 5-digit zipcode");
+        return false
     }
 }
 
@@ -92,12 +105,21 @@ $('form').click(function () {
     }
 
     $('#total_cost').html('<strong>Total:</strong>' + ' $' + priceIt());
-    //console.log(validateCredit());
-    //console.log(validateCVV());
-    console.log(validateZIP());
+
 });
 
-// On submit
+// On submit, check validate inputs
+$('button').click(function () {
+    if (validateCredit() &&
+        validateCVV() &&
+        validateZIP()) {
+
+    } else {
+        event.preventDefault()
+    }
+});
+// TODO On submit get the URI, display it on the results page
+// TODO add validation for "Agree to terms"
 
 
 
