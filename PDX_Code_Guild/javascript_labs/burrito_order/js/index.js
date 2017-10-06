@@ -122,16 +122,11 @@ $('button').click(function () {
         validateCVV() &&
         validateZIP() &&
         validateTerms()) {
-
+        // Allow page load
     } else {
         event.preventDefault()
     }
 });
-// TODO On submit get the URI, display it on the results page
-// TODO add validation for "Agree to terms"
-
-
-
 
 
 

@@ -1,0 +1,44 @@
+$(function () {
+
+    function getUserInfo () {
+        // Parse the document URI to get user's order details
+        var uri = document.documentURI;
+        var params = uri.split('?')[1];
+        params = params.split('&');
+        var order_arr = [];
+        for (var key_val of params) {
+            key_val = key_val.replace(/\+/g, " ");
+            key_val = key_val.split('=');
+            order_arr.push(key_val)
+        }
+        return order_arr
+    }
+
+    function infoToDict () {
+        var order = getUserInfo();
+        order_obj = {};
+        for (var item of order) {
+            if (order_obj.hasOwnProperty(item[0])) {
+                order_obj[item[0]].push(item[1]);
+            } else {
+                order_obj[item[0]] = [item[1]];
+            }
+        }
+        return order_obj
+    }
+
+    function toScreen () {
+        // Put order details in the browser
+        var hidden = ['name', 'credit-card', 'cvv', 'zip', 'terms'];
+        var order = infoToDict();
+        $('#order-details').empty();
+        for (var item in order) {
+            if (!(hidden.includes(item))) {
+                $('#order-details').append('<h5>' + item + ': ' + order[item] + '</h5>')
+            }
+        }
+    }
+
+    toScreen();
+});
+
