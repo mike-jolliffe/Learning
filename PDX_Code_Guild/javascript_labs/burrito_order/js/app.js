@@ -97,6 +97,14 @@ function validateZIP() {
     }
 }
 
+function validateTerms() {
+    if ($('input[name="terms"]').prop('checked')) {
+        return true
+    } else {
+        alert("Please agree to the Terms by checking the box")
+    }
+}
+
 $('form').click(function () {
     var for_posting = getChecked();
     $('.ui.relaxed.list').empty();
@@ -112,7 +120,8 @@ $('form').click(function () {
 $('button').click(function () {
     if (validateCredit() &&
         validateCVV() &&
-        validateZIP()) {
+        validateZIP() &&
+        validateTerms()) {
 
     } else {
         event.preventDefault()
