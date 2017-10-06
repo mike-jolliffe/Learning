@@ -15,6 +15,7 @@ $(function () {
     }
 
     function infoToDict () {
+        // Make user order into a dictionary
         var order = getUserInfo();
         order_obj = {};
         for (var item of order) {
@@ -27,10 +28,25 @@ $(function () {
         return order_obj
     }
 
+    function makeHTML () {
+        order_dict = infoToDict();
+        console.log(order_dict)
+        new_dict = {};
+        for (var prop in order_dict) {
+            var new_val = [];
+            for(var val of order_dict[prop]) {
+                val = (" ").concat(val);
+                new_val.push(val);
+            }
+            new_dict[prop] = new_val;
+        }
+        return new_dict
+    }
+
     function toScreen () {
         // Put order details in the browser
         var hidden = ['name', 'credit-card', 'cvv', 'zip', 'terms'];
-        var order = infoToDict();
+        var order = makeHTML();
         $('#order-details').empty();
         for (var item in order) {
             if (!(hidden.includes(item))) {
@@ -38,7 +54,7 @@ $(function () {
             }
         }
     }
-
+    //  makeHTML()
     toScreen();
 });
 
