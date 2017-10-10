@@ -8,7 +8,17 @@
 <body>
     <div id="report_container">
         <h2>Current Weather</h2>
-        <div id="report"></div>
+        <div id="report">
+            <div id="temp" class="weather"></div>
+            <div id="humidity" class="weather"></div>
+            <div id="wind" class="weather"></div>
+        </div>
+        <div id="city_container">
+            <div id="city">
+                <input type="text" name="formCity" id="formCity" placeholder="City Search">
+                <input type="submit" name="Submit" id="formSubmit" value="Submit">
+            </div>
+        </div>
     </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="main.js"></script>
