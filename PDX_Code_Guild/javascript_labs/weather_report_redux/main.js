@@ -94,8 +94,13 @@ function geoSuccess(pos) {
             units: 'imperial'
         },
         success: function (result) {
-            console.log(result);
             var resp = parseResponse(result);
+            $('#location').html(resp.name);
+            $('#description').html(resp.description);
+            $('#temp').html(resp.temp + ' degrees');
+            $('#humidity').html(resp.humidity + ' %');
+            $('#clouds').html(resp.clouds + ' %');
+            $('#wind').html(resp.wind_spd);
             changeBackground(resp.condition_code)
         }
     });
@@ -126,10 +131,34 @@ function parseResponse(resp_data) {
 function changeBackground(code) {
     // Given a weather conditions code, changes background to match current weather
     var img_path = 'img/' + weather_conditions_obj[code][1] + '.jpg';
-    console.log(img_path);
-    $('body').css({'background-image': "url(" + img_path + ")",
-                  'background-size': 'cover'})
+    $('body').css({
+                    'background-image': "url(" + img_path + ")",
+                    'background-size': 'cover'
+    })
 }
+
+$('#formSubmit').click(function () {
+    var city = $('#formCity').val();
+    $.ajax({
+        type: "GET",
+        url: "http://api.openweathermap.org/data/2.5/weather" ,
+        data: {
+            APPID: '0a782a90c9c00349d94ab5ca05d3679c',
+            q: city,
+            units: 'imperial'
+        },
+        success: function (result) {
+            var resp = parseResponse(result);
+            $('#location').html(resp.name);
+            $('#description').html(resp.description);
+            $('#temp').html(resp.temp + ' degrees');
+            $('#humidity').html(resp.humidity + ' %');
+            $('#clouds').html(resp.clouds + ' %');
+            $('#wind').html(resp.wind_spd);
+            changeBackground(resp.condition_code)
+        }
+    });
+});
 
 // Create function that sends an ajax POST request to open weather using city, state
 // Grab google images for different conditions

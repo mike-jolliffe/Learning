@@ -7,16 +7,26 @@
 </head>
 <body>
     <div id="report_container">
-        <h2>Current Weather</h2>
+        <h2 id="location">Current Weather</h2>
+        <div id="description" class="weather"></div>
         <div id="report">
-            <div id="temp" class="weather"></div>
-            <div id="humidity" class="weather"></div>
-            <div id="wind" class="weather"></div>
+            <div>
+                <div id="temp" class="weather"></div>
+            </div>
+            <div>
+                <div id="humidity" class="weather"></div>
+            </div>
+            <div>
+                <div id="clouds" class="weather"></div>
+            </div>
+            <div>
+                <div id="wind" class="weather"></div>
+            </div>
         </div>
         <div id="city_container">
             <div id="city">
                 <input type="text" name="formCity" id="formCity" placeholder="City Search">
-                <input type="submit" name="Submit" id="formSubmit" value="Submit">
+                <input type="button" name="Submit" id="formSubmit" value="Submit">
             </div>
         </div>
     </div>
