@@ -2,6 +2,8 @@
 
 ![Website Snapshot](UI_screenshot.png)
 
+![Changed background](UI_screenshot2.png)
+
 
 ## Functionality
 
