@@ -98,7 +98,7 @@ function geoSuccess(pos) {
             resp = parseResponse(result);
             $('#location').html(resp.name);
             $('#description').html("Currently: " + resp.description);
-            $('#temp').html(resp.temp + ' &#176;');
+            $('#temp').html(parseInt(resp.temp) + ' &#176;');
             $('#humidity').html(resp.humidity + ' %');
             $('#clouds').html(resp.clouds + ' %');
             changeBackground(resp.condition_code);
@@ -151,7 +151,7 @@ $('#formSubmit').click(function () {
             resp = parseResponse(result);
             $('#location').html(resp.name);
             $('#description').html("Currently: " + resp.description);
-            $('#temp').html(resp.temp + ' &#176;');
+            $('#temp').html(parseInt(resp.temp) + ' &#176;');
             $('#humidity').html(resp.humidity + ' %');
             $('#clouds').html(resp.clouds + ' %');
             changeBackground(resp.condition_code);
@@ -166,10 +166,10 @@ function tempToggle (response) {
 
 $('.switch-input').change(function () {
         if ($('.switch-input').prop('checked') == true) {
-            var degC = ((resp.temp - 32) * (5 / 9)).toFixed(1);
+            var degC = parseInt((resp.temp - 32) * (5 / 9));
             $('#temp').html(degC + ' &#176;');
         } else {
-            var degF = (parseFloat($('#temp').html().split(" ")[0]) * (9/5) + 32).toFixed(1);
+            var degF = parseInt($('#temp').html().split(" ")[0] * (9/5) + 32);
             $('#temp').html(degF + ' &#176;')
         }
 });
