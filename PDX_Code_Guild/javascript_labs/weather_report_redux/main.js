@@ -1,3 +1,4 @@
+var key;
 var resp;
 var weather_conditions_obj = {
             '200': ['thunderstorm with light rain', 'thunder'],
@@ -82,6 +83,7 @@ var options = {
   maximumAge: 0
 };
 
+// Make ajax request after getting current position
 function geoSuccess(pos) {
     var crd = pos.coords;
 
@@ -89,7 +91,7 @@ function geoSuccess(pos) {
         type: "GET",
         url: "http://api.openweathermap.org/data/2.5/weather",
         data: {
-            APPID: '0a782a90c9c00349d94ab5ca05d3679c',
+            APPID: key,
             lat: crd.latitude,
             lon: crd.longitude,
             units: 'imperial'
@@ -112,6 +114,7 @@ function geoError(err) {
 
 navigator.geolocation.getCurrentPosition(geoSuccess, geoError, options);
 
+// Parse the ajax response into an object
 function parseResponse(resp_data) {
     var resp_obj = {
                     'name':resp_data.name,
@@ -128,6 +131,7 @@ function parseResponse(resp_data) {
     return resp_obj
 }
 
+// Change the website background based on current weather conditions
 function changeBackground(code) {
     // Given a weather conditions code, changes background to match current weather
     var img_path = 'img/' + weather_conditions_obj[code][1] + '.jpg';
@@ -137,13 +141,14 @@ function changeBackground(code) {
     })
 }
 
+// Make ajax request based on city entered by user instead of current location
 $('#formSubmit').click(function () {
     var city = $('#formCity').val();
     $.ajax({
         type: "GET",
         url: "http://api.openweathermap.org/data/2.5/weather" ,
         data: {
-            APPID: '0a782a90c9c00349d94ab5ca05d3679c',
+            APPID: key,
             q: city,
             units: 'imperial'
         },
@@ -159,11 +164,20 @@ $('#formSubmit').click(function () {
     });
 });
 
-// TODO connect toggle button to display of temperature based on .prop('checked')
-function tempToggle (response) {
-
+// Hide API key
+function getKey() {
+    $.ajax({
+        type: "GET",
+        url: "key.txt",
+        success: function(result) {
+            key = result;
+        }
+    })
 }
 
+getKey();
+
+// Track the toggle for C/F conversion, and convert temperature based on status
 $('.switch-input').change(function () {
         if ($('.switch-input').prop('checked') == true) {
             var degC = parseInt((resp.temp - 32) * (5 / 9));
