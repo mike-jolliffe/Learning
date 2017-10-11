@@ -1,5 +1,6 @@
 var key;
 var resp;
+
 var weather_conditions_obj = {
             '200': ['thunderstorm with light rain', 'thunder'],
             '201': ['thunderstorm with rain', 'thunder'],
@@ -76,12 +77,35 @@ var weather_conditions_obj = {
             '962': ['hurricane', 'storm']
 };
 
+// Hide API key
+function getKey() {
+    $.ajax({
+        type: "GET",
+        url: "key.txt",
+        success: function(result) {
+            key = result;
+        }
+    })
+}
+
+getKey();
+
 // Gets current lat/long coords
 var options = {
   enableHighAccuracy: false,
   timeout: 5000,
   maximumAge: 0
 };
+
+function displayWeather(result) {
+    resp = parseResponse(result);
+            $('#location').html(resp.name);
+            $('#description').html("Currently: " + resp.description);
+            $('#temp').html(parseInt(resp.temp) + ' &#176;');
+            $('#humidity').html(resp.humidity + ' %');
+            $('#clouds').html(resp.clouds + ' %');
+            changeBackground(resp.condition_code);
+}
 
 // Make ajax request after getting current position
 function geoSuccess(pos) {
@@ -96,23 +120,13 @@ function geoSuccess(pos) {
             lon: crd.longitude,
             units: 'imperial'
         },
-        success: function (result) {
-            resp = parseResponse(result);
-            $('#location').html(resp.name);
-            $('#description').html("Currently: " + resp.description);
-            $('#temp').html(parseInt(resp.temp) + ' &#176;');
-            $('#humidity').html(resp.humidity + ' %');
-            $('#clouds').html(resp.clouds + ' %');
-            changeBackground(resp.condition_code);
-        }
+        success: displayWeather
     });
 }
 
 function geoError(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
 }
-
-navigator.geolocation.getCurrentPosition(geoSuccess, geoError, options);
 
 // Parse the ajax response into an object
 function parseResponse(resp_data) {
@@ -133,7 +147,6 @@ function parseResponse(resp_data) {
 
 // Change the website background based on current weather conditions
 function changeBackground(code) {
-    // Given a weather conditions code, changes background to match current weather
     var img_path = 'img/' + weather_conditions_obj[code][1] + '.jpg';
     $('body').css({
                     'background-image': "url(" + img_path + ")",
@@ -152,30 +165,12 @@ $('#formSubmit').click(function () {
             q: city,
             units: 'imperial'
         },
-        success: function (result) {
-            resp = parseResponse(result);
-            $('#location').html(resp.name);
-            $('#description').html("Currently: " + resp.description);
-            $('#temp').html(parseInt(resp.temp) + ' &#176;');
-            $('#humidity').html(resp.humidity + ' %');
-            $('#clouds').html(resp.clouds + ' %');
-            changeBackground(resp.condition_code);
-        }
+        success: displayWeather
     });
 });
 
-// Hide API key
-function getKey() {
-    $.ajax({
-        type: "GET",
-        url: "key.txt",
-        success: function(result) {
-            key = result;
-        }
-    })
-}
-
-getKey();
+// Get current location and run app
+navigator.geolocation.getCurrentPosition(geoSuccess, geoError, options);
 
 // Track the toggle for C/F conversion, and convert temperature based on status
 $('.switch-input').change(function () {
