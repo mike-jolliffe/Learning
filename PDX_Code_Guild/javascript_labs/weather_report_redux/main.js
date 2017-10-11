@@ -1,3 +1,4 @@
+var resp;
 var weather_conditions_obj = {
             '200': ['thunderstorm with light rain', 'thunder'],
             '201': ['thunderstorm with rain', 'thunder'],
@@ -94,7 +95,7 @@ function geoSuccess(pos) {
             units: 'imperial'
         },
         success: function (result) {
-            var resp = parseResponse(result);
+            resp = parseResponse(result);
             $('#location').html(resp.name);
             $('#description').html(resp.description);
             $('#temp').html(resp.temp + ' degrees');
@@ -148,19 +149,28 @@ $('#formSubmit').click(function () {
             units: 'imperial'
         },
         success: function (result) {
-            var resp = parseResponse(result);
+            resp = parseResponse(result);
             $('#location').html(resp.name);
             $('#description').html(resp.description);
             $('#temp').html(resp.temp + ' degrees');
             $('#humidity').html(resp.humidity + ' %');
             $('#clouds').html(resp.clouds + ' %');
-            $('#wind').html(resp.wind_spd);
-            changeBackground(resp.condition_code)
+            changeBackground(resp.condition_code);
         }
     });
 });
 
-// Create function that sends an ajax POST request to open weather using city, state
-// Grab google images for different conditions
-// Parse AJAX response
-// Put parsed data into HTML
+// TODO connect toggle button to display of temperature based on .prop('checked')
+function tempToggle (response) {
+
+}
+
+$('.switch-input').change(function () {
+        if ($('.switch-input').prop('checked') == true) {
+            var degC = ((resp.temp - 32) * (5 / 9)).toFixed(1);
+            $('#temp').html(degC + ' degrees');
+        } else {
+            var degF = (parseFloat($('#temp').html().split(" ")[0]) * (9/5) + 32).toFixed(1);
+            $('#temp').html(degF + ' degrees')
+        }
+});
