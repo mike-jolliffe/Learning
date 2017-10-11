@@ -97,12 +97,11 @@ function geoSuccess(pos) {
         success: function (result) {
             resp = parseResponse(result);
             $('#location').html(resp.name);
-            $('#description').html(resp.description);
-            $('#temp').html(resp.temp + ' degrees');
+            $('#description').html("Currently: " + resp.description);
+            $('#temp').html(resp.temp + ' &#176;');
             $('#humidity').html(resp.humidity + ' %');
             $('#clouds').html(resp.clouds + ' %');
-            $('#wind').html(resp.wind_spd);
-            changeBackground(resp.condition_code)
+            changeBackground(resp.condition_code);
         }
     });
 }
@@ -151,8 +150,8 @@ $('#formSubmit').click(function () {
         success: function (result) {
             resp = parseResponse(result);
             $('#location').html(resp.name);
-            $('#description').html(resp.description);
-            $('#temp').html(resp.temp + ' degrees');
+            $('#description').html("Currently: " + resp.description);
+            $('#temp').html(resp.temp + ' &#176;');
             $('#humidity').html(resp.humidity + ' %');
             $('#clouds').html(resp.clouds + ' %');
             changeBackground(resp.condition_code);
@@ -168,9 +167,9 @@ function tempToggle (response) {
 $('.switch-input').change(function () {
         if ($('.switch-input').prop('checked') == true) {
             var degC = ((resp.temp - 32) * (5 / 9)).toFixed(1);
-            $('#temp').html(degC + ' degrees');
+            $('#temp').html(degC + ' &#176;');
         } else {
             var degF = (parseFloat($('#temp').html().split(" ")[0]) * (9/5) + 32).toFixed(1);
-            $('#temp').html(degF + ' degrees')
+            $('#temp').html(degF + ' &#176;')
         }
 });
