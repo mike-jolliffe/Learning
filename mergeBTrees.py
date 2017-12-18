@@ -4,23 +4,23 @@ class TreeNode(object):
         self.val = x
         self.left = None
         self.right = None
-        # self.hasChildren = self.hasChildren()
+        self.hasChildren = self.hasChildren()
 
     def __str__(self):
         return str(self.val)
 
-    # def hasChildren(self):
-    #     """
-    #     :type node: TreeNode
-    #     :rtype: boolean
-    #     """
-    #     # Check if t1 and t2 have children
-    #     if self.left == None and self.right == None:
-    #         print("no children for this node")
-    #         return False
-    #     else:
-    #         print("node found")
-    #         return True
+    def hasChildren(self):
+        """
+        :type node: TreeNode
+        :rtype: boolean
+        """
+        # Check if t1 and t2 have children
+        if self.left == None and self.right == None:
+            print("no children for this node")
+            return False
+        else:
+            print("node found")
+            return True
 
 
 class Solution(object):
@@ -30,24 +30,27 @@ class Solution(object):
         :type t2: TreeNode
         :rtype: TreeNode
         """
+        node_vals = []
 
-        # Recursive base case, no children
-        if t1 == None and t2 == None:
-            print("None")
+        if t1 == t2 == None:
             return None
-
         elif t1 == None:
-            print(t2.val)
+            if t1.hasChildren == t2.hasChildren == False:
+            node_vals.append(t1.val + t2.val)
+            return ("Bottom of this branch!")
+
+        elif t1.hasChildren == False:
+            node_vals.append(t1.val + t2.val)
             return self.mergeTrees(None, t2.left), self.mergeTrees(None, t2.right)
 
-        elif t2 == None:
-            print(t1.val)
+        elif t2.hasChildren == False:
+            node_vals.append(t1.val)
             return self.mergeTrees(t1.left, None), self.mergeTrees(t1.right, None)
 
-        # Traverse to next level
         else:
-            print(t1.val, t2.val)
+            node_vals.append(t1.val + t2.val)
             return self.mergeTrees(t1.left, t2.left), self.mergeTrees(t1.right, t2.right)
+
 
     # def addNodes(self, t1, t2):
     #     """
