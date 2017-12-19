@@ -4,7 +4,6 @@ class TreeNode(object):
         self.val = x
         self.left = None
         self.right = None
-        # self.hasChildren = self.hasChildren()
 
     def __str__(self):
         return str(self.val)
@@ -14,6 +13,18 @@ class Solution(object):
 
     def __init__(self):
         self.node_vals = []
+
+    def build_tree(self, array):
+        """
+        :type array: list of ints
+        :rtype: root TreeNode
+        """
+
+        while len(array) > 0:
+            node_val = array.pop(0)
+            node = self.TreeNode(node_val)
+            
+
 
     def mergeTrees(self, t1, t2):
         """
