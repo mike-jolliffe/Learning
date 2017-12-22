@@ -8,10 +8,28 @@ class Solution:
         """
 
         # Create candy counter
+        unique_candies = 0
 
-        # Calculat half of total candies
+        counter = 0
+        # Calculate half of total candies
+        num_candies = len(candies) / 2
+        print(num_candies)
 
         # Get set candies
+        unique_set = set(candies)
 
         # While candy counter less than half all candies
-            # For candy in set, candy counter += 1
+        while counter < num_candies:
+            # If unique candy still in set, candy counter += 1
+            if len(unique_set) > 0:
+                unique_set.pop()
+                unique_candies += 1
+                counter += 1
+            # No more unique candy
+            else:
+                counter += 1
+        return unique_candies
+
+if __name__ == '__main__':
+    sol = Solution()
+    print(sol.distributeCandies([1,1,2,2,3,3]))
