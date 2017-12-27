@@ -7,10 +7,9 @@ class TreeNode:
 
 class Solution:
 
-    # Create level counter
-    current_level = 1
     # Create dictionary w/key as level, vals as vals
-    level_dict = {}
+    def __init__(self):
+        self.level_dict = {}
 
     def averageOfLevels(self, root):
         """
@@ -20,6 +19,7 @@ class Solution:
         """
         # Build dict for tracking level values
         self.build_leveldict(root, 1)
+        print(self.level_dict)
 
         # Create list for holding level avgs
         level_avgs = []
@@ -51,5 +51,11 @@ if __name__ == '__main__':
     node1.left = TreeNode(9)
     node1.right.left = TreeNode(15)
     node1.right.right = TreeNode(7)
+
+    node2 = TreeNode(5)
+    node2.left = TreeNode(2)
+    node2.right = TreeNode(-3)
     sol = Solution()
     print(sol.averageOfLevels(node1))
+    sol2 = Solution()
+    print(sol2.averageOfLevels(node2))
