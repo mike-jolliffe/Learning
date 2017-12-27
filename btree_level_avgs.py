@@ -18,12 +18,31 @@ class Solution:
         :type root: TreeNode
         :rtype: List[float]
         """
+        # Build dict for tracking level values
+        self.build_leveldict(root)
+
+        # Create list for holding level avgs
+        level_avgs = []
+
+        for level in self.level_dict.values():
+            # Calculate the average for each level's values
+            total = sum(level)
+            level_avgs.append(total / float(len(level)))
+
+        return level_avgs
+
+    def build_leveldict(self, root):
+        """
+        Return dictionary of values by btree level
+        :type root: TreeNode
+        :rtype: Dict[int]
+        """
 
         # if self.val is None, you are at a leaf node
         if root == None:
-            return self.level_dict
+            return None
         else:
-            self.level_dict.setdefault(self.current_level,[]).append(root.val)
+            self.level_dict.setdefault(self.current_level // 2, []).append(root.val)
             self.current_level += 1
             return self.averageOfLevels(root.left), self.averageOfLevels(root.right)
 
