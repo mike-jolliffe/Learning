@@ -19,7 +19,7 @@ class Solution:
         :rtype: List[float]
         """
         # Build dict for tracking level values
-        self.build_leveldict(root)
+        self.build_leveldict(root, 1)
 
         # Create list for holding level avgs
         level_avgs = []
@@ -31,7 +31,7 @@ class Solution:
 
         return level_avgs
 
-    def build_leveldict(self, root):
+    def build_leveldict(self, root, level):
         """
         Return dictionary of values by btree level
         :type root: TreeNode
@@ -42,9 +42,8 @@ class Solution:
         if root == None:
             return None
         else:
-            self.level_dict.setdefault(self.current_level // 2, []).append(root.val)
-            self.current_level += 1
-            return self.averageOfLevels(root.left), self.averageOfLevels(root.right)
+            self.level_dict.setdefault(level, []).append(root.val)
+            return self.build_leveldict(root.left, level+1), self.build_leveldict(root.right, level+1)
 
 if __name__ == '__main__':
     node1 = TreeNode(3)
