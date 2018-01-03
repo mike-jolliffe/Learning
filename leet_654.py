@@ -4,8 +4,14 @@ class TreeNode:
         self.left = None
         self.right = None
 
+    def __str__(self):
+        return str(self.val)
+
 
 class Solution:
+    def __init__(self):
+        self.node_vals = []
+
     def constructMaximumBinaryTree(self, nums):
         """ Build binary tree splitting by array max as root
         :type nums: List[int]
@@ -16,6 +22,7 @@ class Solution:
         root_dict = self.splitOnMax(nums)
         if root_dict:
             root = root_dict['Max']
+            self.node_vals.append(root.val)
 
             if root_dict['Left'] == root_dict['Right'] == []:
                 return root
@@ -26,6 +33,12 @@ class Solution:
             else:
                 root.left = self.constructMaximumBinaryTree(root_dict['Left'])
                 root.right = self.constructMaximumBinaryTree(root_dict['Right'])
+            return root
+        else:
+            self.node_vals.append('null')
+
+    def toConsole(self):
+        return self.node_vals
 
     def splitOnMax(self, array):
         """Return two subarrays split on index of max val in array
@@ -47,5 +60,5 @@ class Solution:
 
 if __name__ == '__main__':
     sol = Solution()
-    btree = sol.constructMaximumBinaryTree([3,2,1,6,0,5])
-    print(btree.val)
+    sol.constructMaximumBinaryTree([3,2,1,6,0,5])
+    print(sol.toConsole())  # [6,3,5,null,2,0,null,null,1]
