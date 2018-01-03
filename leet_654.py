@@ -26,7 +26,7 @@ class Solution:
             if root_dict['Left'] == root_dict['Right'] == []:
                 return root
             elif root_dict['Right'] == []:
-                root.left = self.constructMaximumBinaryTree(root_dict['Right'])
+                root.left = self.constructMaximumBinaryTree(root_dict['Left'])
             elif root_dict['Left'] == []:
                 root.right = self.constructMaximumBinaryTree(root_dict['Right'])
             else:
@@ -43,8 +43,9 @@ class Solution:
         for val in nodes:
             if not val == None:
                 self.node_vals.append(val.val)
-                new_nodes.append(val.left)
-                new_nodes.append(val.right)
+                if not (val.left == None and val.right == None):
+                    new_nodes.append(val.left)
+                    new_nodes.append(val.right)
             else:
                 self.node_vals.append('null')
         if len(new_nodes) > 0:
@@ -59,7 +60,7 @@ class Solution:
         """
         array_dict = {}
         # Get location of max val in list
-        if len(array) > 0:
+        if len(array) > 1:
             max_index = array.index(max(array))
             # Store the max val
             array_dict['Max'] = TreeNode(max(array))
@@ -67,7 +68,13 @@ class Solution:
             array_dict['Left'] = array[0:max_index]
             # Store the right subarray
             array_dict['Right'] = array[max_index + 1 :]
+        elif len(array) > 0:
+            array_dict['Max'] = TreeNode(array[0])
+            array_dict['Left'] = []
+            array_dict['Right'] = []
 
+        print("Left array: {} -- Right array: {}".format(array_dict['Left'],
+                                                         array_dict['Right']))
         return array_dict
 
 if __name__ == '__main__':
