@@ -22,23 +22,35 @@ class Solution:
         root_dict = self.splitOnMax(nums)
         if root_dict:
             root = root_dict['Max']
-            self.node_vals.append(root.val)
 
             if root_dict['Left'] == root_dict['Right'] == []:
                 return root
-            elif root_dict['Left'] == []:
-                root.right = self.constructMaximumBinaryTree(root_dict['Right'])
             elif root_dict['Right'] == []:
                 root.left = self.constructMaximumBinaryTree(root_dict['Right'])
+            elif root_dict['Left'] == []:
+                root.right = self.constructMaximumBinaryTree(root_dict['Right'])
             else:
                 root.left = self.constructMaximumBinaryTree(root_dict['Left'])
                 root.right = self.constructMaximumBinaryTree(root_dict['Right'])
             return root
-        else:
-            self.node_vals.append('null')
 
-    def toConsole(self):
-        return self.node_vals
+    def toConsole(self, nodes):
+        """
+        :type nodes: List[TreeNode]
+        :rtype: List
+        """
+        new_nodes = []
+        for val in nodes:
+            if not val == None:
+                self.node_vals.append(val.val)
+                new_nodes.append(val.left)
+                new_nodes.append(val.right)
+            else:
+                self.node_vals.append('null')
+        if len(new_nodes) > 0:
+            return self.toConsole(new_nodes)
+        else:
+            return self.node_vals
 
     def splitOnMax(self, array):
         """Return two subarrays split on index of max val in array
@@ -60,5 +72,6 @@ class Solution:
 
 if __name__ == '__main__':
     sol = Solution()
-    sol.constructMaximumBinaryTree([3,2,1,6,0,5])
-    print(sol.toConsole())  # [6,3,5,null,2,0,null,null,1]
+    root = sol.constructMaximumBinaryTree([3,2,1,6,0,5])
+    # print([root.val, root.left.val, root.right.val, root.left.left, root.left.right.val])
+    print(sol.toConsole([root]))  # [6,3,5,null,2,0,null,null,1]
