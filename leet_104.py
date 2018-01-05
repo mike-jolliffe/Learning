@@ -7,26 +7,22 @@ class TreeNode:
 
 class Solution:
 
-    def __init__(self):
-        self.max_depth = 0
-        self.curr_depth = 0
-
-    def maxDepth(self, root):
+    def maxDepth(self, root, depth=0):
         """Return max depth of btree in number of nodes
         :type root: TreeNode
         :rtype: int
         """
 
-        # If you hit a terminal node, return depth
-        if root == None:
-            if self.curr_depth > self.max_depth:
-                self.max_depth = self.curr_depth
-                self.curr_depth = 0
-                return self.max_depth
-            else:
-                self.curr_depth = 0
-                return self.max_depth
-        # Otherwise traverse deeper
-        else:
-            self.curr_depth += 1
-            return maxDepth(root.left), maxDepth(root.right)
+        if root is None:
+            return depth
+        return max(self.maxDepth(root.left, depth+1),
+                   self.maxDepth(root.right, depth+1))
+
+if __name__ == '__main__':
+    sol = Solution()
+    node1 = TreeNode(5)
+    node1.left = TreeNode(4)
+    node1.right = TreeNode(2)
+    node1.left.left = TreeNode(3)
+    node1.left.left.right = TreeNode(2)
+    print(sol.maxDepth(node1))
