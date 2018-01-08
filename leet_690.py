@@ -22,7 +22,7 @@ class Solution:
         # Create a dictionary of employees
         emp_dict = {e.id: e for e in employees}
         def dfs(eid):
-            """Returns total importance for all employees using depth-first search
+            """Returns total importance for all employees from root eid using depth-first search
             :type eid: int
             :rtype: int
             """
