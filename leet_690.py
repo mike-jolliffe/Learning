@@ -13,24 +13,23 @@ class Employee:
         return str(self.id)
 
 class Solution:
-    def getImportance(self, employees, id):
-        """Returns sum of importance for given employee and all subordinates
+    def getImportance(self, employees, root_id):
+        """Returns sum of importance for given root employee and all subordinates
         :type employees: Employee
         :type id: int
         :rtype: int
         """
-        subs_array = []
-        emp_importance = None
-        # Find starting node
-        for employee in employees:
-            if employee.id == id:
-                for sub in employees:
-                    if sub.id in employee.subordinates:
-                        subs_array.append(sub)
-                emp_importance = employee.importance
-                employees.remove(employee)
-                break
-        return "Employee importance: {} -- Subs: {}".format(emp_importance, subs_array)
+        # Create a dictionary of employees
+        emp_dict = {e.id: e for e in employees}
+        def dfs(eid):
+            """Returns total importance for all employees using depth-first search
+            :type eid: int
+            :rtype: int
+            """
+            employee = emp_dict[eid]
+            return (employee.importance +
+                    sum(dfs(eid) for eid in employee.subordinates))
+        return dfs(root_id)
 
 if __name__ == '__main__':
     boss = Employee(1, 10, [2,3])
