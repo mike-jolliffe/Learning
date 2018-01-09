@@ -6,24 +6,16 @@ class Solution:
         :rtype: List[int]
         """
 
-        # Sort nums and chop all vals >= target
-        nums2 = sorted(nums)
-        # Assign start as smallest number
-        for i in range(len(nums2) - 1):
-            print(i)
-            # Assign end as largest number
-            for j in range(len(nums2) - 1, i, -1):
-                print("i: {}, j: {}, sum: {}".format(i, j, nums2[i]+nums2[j]))
+        for i in range(len(nums) - 1):
+            for j in range(i + 1, len(nums)):
+                print("i: {}, j: {}, sum: {}".format(i, j, nums[i]+nums[j]))
                 # Move end toward start, calculating sum
-                if nums2[i] + nums2[j] > target:
+                if not nums[i] + nums[j] == target:
                     # If sum greater than target, throw out end
-                    nums2.pop()
+                    pass
                 # If you hit the sum, return [start, end] values
-                elif nums2[i] + nums2[j] == target:
-                    first = nums.index(nums2[i])
-                    nums.pop(nums.index(nums2[i]))
-                    second = nums.index(nums2[j])
-                    return [first, second]
+                else:
+                    return [i, j]
         return []
 
 if __name__ == '__main__':
