@@ -6,40 +6,37 @@ class Solution:
         :rtype: int
         """
 
-        num_substrings = 0
-        substrings = []
+        num_strings = 0
+        lengths = self.countTilSwitch(s[0], s)
+        for i in range(len(lengths) - 1):
+            for j in range(i + 1, len(lengths)):
+                num_strings += min([lengths[i], lengths[j]])
+                break
+        return num_strings
 
-        for ix, val in enumerate(s):
-            length, index = self.countTilSwitch(val, ix, s)
-            next_digit = str(1 - int(val))
-            length2, index2 = self.countTilSwitch(next_digit, index, s)
-            if length2 >= length:
-                num_substrings += 1
-                substrings.append(s[ix:index2])
 
-        print(substrings)
-        return num_substrings
-
-    def countTilSwitch(self, start, start_ix, substring):
-        """Returns the length of string before digits switch, and index of switch
+    def countTilSwitch(self, start, string):
+        """Returns list of lengths between digit switches
         :type start: str
-        :type substring: str
-        :rtype: tuple(str, int)
+        :type string: str
+        :rtype: List[int]
         """
-
+        lengths = []
         count = 0
-        for ix, val in enumerate(substring[start_ix:]):
+        for val in string:
             # If digit stays same, increment
             if val == start:
                 count += 1
             # If digit switches, return count and index of switch
             else:
-                print("Digit switches at {}".format(ix + start_ix))
-                return (count, ix + start_ix)
-        return (count, ix + start_ix - 1)
-
+                lengths.append(count)
+                count = 1
+                start = str(1 - int(start))
+        lengths.append(count)
+        return lengths
 
 if __name__ == '__main__':
     sol = Solution()
+    #print(sol.countTilSwitch("0", "00110011"))  # [2,2,2,2]
     print(sol.countBinarySubstrings("00110011"))  # 6
-    #print(sol.countTilSwitch("1", "11001"))  # (2, 2)
+    print(sol.countBinarySubstrings("10101"))  # 4
