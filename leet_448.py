@@ -5,12 +5,10 @@ class Solution:
         :rtype: List[int]
         """
 
-        missing = []
-        reference = [i for i in range(min(nums), max(nums) + 1)]
-        for i in reference:
-            if not i in set(nums):
-                missing.append(i)
-        return missing
+        reference = range(1, len(nums) + 1)
+        if len(nums) != 0:
+            return list(set(reference) - set(nums))
+        return []
 
 if __name__ == '__main__':
     sol = Solution()
