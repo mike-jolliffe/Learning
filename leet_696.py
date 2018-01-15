@@ -10,17 +10,17 @@ class Solution:
         substrings = []
 
         for ix, val in enumerate(s):
-            length, index = self.countTilSwitch(val, s[ix: ])
+            length, index = self.countTilSwitch(val, ix, s)
             next_digit = str(1 - int(val))
-            length2, index2 = self.countTilSwitch(next_digit, s[index: ])
+            length2, index2 = self.countTilSwitch(next_digit, index, s)
             if length2 >= length:
                 num_substrings += 1
-                substrings.append(s[ix:(index+index2)])
+                substrings.append(s[ix:index2])
 
         print(substrings)
         return num_substrings
 
-    def countTilSwitch(self, start, substring):
+    def countTilSwitch(self, start, start_ix, substring):
         """Returns the length of string before digits switch, and index of switch
         :type start: str
         :type substring: str
@@ -28,15 +28,15 @@ class Solution:
         """
 
         count = 0
-        for ix, val in enumerate(substring):
+        for ix, val in enumerate(substring[start_ix:]):
             # If digit stays same, increment
             if val == start:
                 count += 1
             # If digit switches, return count and index of switch
             else:
-                print("Digit switches at {}".format(ix))
-                return (count, ix)
-        return (count, ix)
+                print("Digit switches at {}".format(ix + start_ix))
+                return (count, ix + start_ix)
+        return (count, ix + start_ix - 1)
 
 
 if __name__ == '__main__':
