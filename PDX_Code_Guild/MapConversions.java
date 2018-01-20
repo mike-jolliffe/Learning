@@ -2,7 +2,7 @@ package lab3;
 import java.util.*;
 
 public class MapConversions {
-	// Declare a dictionary of dictionaries to store from, to, conversion value
+	// Create two dictionaries: one for conversion from starting units to meters, another for conversion from meters to final units
 	HashMap<String, Double> toVal = new HashMap<String, Double>();
 	HashMap<String, Double> fromVal = new HashMap<String, Double>();
 	
