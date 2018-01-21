@@ -28,7 +28,7 @@ class Solution:
         # Put all values in a dict keyed by x, y
         for row_ix in range(len(image)):
              for col_ix in range(len(image[row_ix])):
-                 self.locationsDict[(col_ix, row_ix)] = image[row_ix][col_ix]
+                 self.locationsDict[(col_ix + 1, row_ix + 1)] = image[row_ix][col_ix]
         # Get the color of the starting location
         self.oldColor = self.locationsDict[(sc, sr)]
         return None
@@ -44,16 +44,19 @@ class Solution:
         # If start location in bounds
         try:
             start_loc = (sc, sr)
+            print(start_loc)
+            print(self.locationsDict)
 
             # Base case, if connected
             if self.locationsDict[start_loc] == self.oldColor:
+                print("Same color")
                 self.locationsDict[start_loc] = newColor
-                # Look up
-                return self.floodConnected(sr - 1, sc, newColor) + \
-                        self.floodConnected(sr, sc + 1, newColor) + \
-                        self.floodConnected(sr + 1, sc, newColor) + \
-                        self.floodConnected(sr, sc - 1, newColor)
+                return (self.floodConnected(sr - 1, sc, newColor),
+                        self.floodConnected(sr, sc + 1, newColor),
+                        self.floodConnected(sr + 1, sc, newColor),
+                        self.floodConnected(sr, sc - 1, newColor))
         except:
+            print("Outta bounds")
             return None
     # Modify the color of those pixels
 
