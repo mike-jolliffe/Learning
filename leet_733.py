@@ -12,10 +12,14 @@ class Solution:
         :rtype: List[List[int]]
         """
 
+        # Convert 2D array to dict with x, y as keys
         self.makeLocationsDict(image, sr, sc)
+        # Change pixel value of all four-directionally connected pixels
         self.floodConnected(sr, sc, newColor)
+        # Convert the dictionary of modified pixel vals back to 2D array
+        filled = self.toList(image)
 
-        print(self.locationsDict)
+        return filled
 
     def makeLocationsDict(self, image, sr, sc):
         """Create dictionary of all four-direction pixels from starting point
@@ -44,23 +48,42 @@ class Solution:
         # If start location in bounds
         try:
             start_loc = (sc, sr)
-            print(start_loc)
-            print(self.locationsDict)
 
             # Base case, if connected
             if self.locationsDict[start_loc] == self.oldColor:
-                print("Same color")
                 self.locationsDict[start_loc] = newColor
                 return (self.floodConnected(sr - 1, sc, newColor),
                         self.floodConnected(sr, sc + 1, newColor),
                         self.floodConnected(sr + 1, sc, newColor),
                         self.floodConnected(sr, sc - 1, newColor))
         except:
-            print("Outta bounds")
             return None
-    # Modify the color of those pixels
 
-    # Repack into 2D array
+    def toList(self, image):
+        """Converts locations dictionary back to a 2D array
+        :type locationsDict: dictionary
+        :rtype: List[List[int]]
+        """
+
+        locationList = []
+        colVals = []
+        y_pos = 1
+        x_pos = 1
+
+        while x_pos < (len(image) + 1):
+            while y_pos < (len(image[0]) + 1):
+                for key in self.locationsDict:
+                    if key == (y_pos, x_pos):
+                        colVals.append(self.locationsDict[key])
+                        y_pos += 1
+                        break
+            locationList.append(colVals)
+            colVals = []
+            y_pos = 1
+            x_pos += 1
+
+        return locationList
+
 if __name__ == '__main__':
     sol = Solution()
-    sol.floodFill(image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, newColor = 2)
+    print(sol.floodFill(image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, newColor = 2))
