@@ -9,10 +9,13 @@ class Solution:
         :rtype: List[int]
         """
 
-        start = area ** 0.5
+        start = int(area ** 0.5)
 
-        # TODO pull in makeRectangles
-        
+        # Make list of eligible arrays
+        self.makeRectangles(start, start, area)
+
+        return [val for val in self.dims_list if val[2] == min([ix[2] for ix in self.dims_list])][0]
+
 
     def makeRectangles(self, height, width, area):
         """Recursively makes height, width pairs approaching the desired area
@@ -24,8 +27,8 @@ class Solution:
         if width == 1 or height >= area:
             return None
         elif width * height == area:
-            if not [height, width] in self.dims_list:
-                self.dims_list.append([height, width])
+            if not [height, width, height-width] in self.dims_list:
+                self.dims_list.append([height, width, height-width])
             return (self.makeRectangles(height+1, width, area),
                     self.makeRectangles(height, width-1, area))
         else:
@@ -34,8 +37,7 @@ class Solution:
 
 if __name__ == '__main__':
     sol = Solution()
-    sol.makeRectangles(5, 5, 32)
-    print(sol.dims_list)
+    print(sol.constructRectangle(32))
 
 # Use sqrt as the ceiling for width and the floor for height, only save pairs
 # that result in an area exactly equal to goal area
