@@ -19,7 +19,7 @@ var saveNotes = (notes) => {
   fs.writeFileSync('notes.json', JSON.stringify(notes));
 }
 
-// Create an array containing a note object, write to file
+// Add a new note to file
 var addNote = (title, body) => {
   var notes = fetchNotes();
   // Note object
@@ -42,16 +42,35 @@ var getAll = () => {
 };
 
 var getNote = (title) => {
-  console.log('Getting note', title)
+  // Fetch all notes
+  var notes = fetchNotes();
+  // Filter to only note with matching title
+  var matchNote = notes.filter((note) => note.title === title)
+  // Return the note or undefined
+  return matchNote[0];
 };
 
 var removeNote = (title) => {
-  console.log('Removing note', title)
+  // Fetch all notes
+  var notes = fetchNotes();
+  // Keep notes not matching in title
+  var keptNotes = notes.filter((note) => note.title !== title);
+  // Write kept notes back to file
+  saveNotes(keptNotes);
+  // If a note was removed, return true
+  return keptNotes.length !== notes.length
+};
+
+var logNote = (note) => {
+  console.log(`Title: ${note.title}`);
+  console.log('------');
+  console.log(`Body: ${note.body}`);
 };
 
 module.exports = {
   addNote,
   getAll,
   getNote,
-  removeNote
+  removeNote,
+  logNote
 }

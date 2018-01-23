@@ -12,16 +12,24 @@ var command = argv._[0];
 if (command === 'add') {
   var note = notes.addNote(argv.title, argv.body);
   if (note) {
-    console.log(`Created the note:\n${note.title} -- ${note.body}`);
+    notes.logNote(note);
   } else {
     console.log('There was a problem creating the note!!');
   }
 } else if (command === 'list') {
   notes.getAll();
 } else if (command === 'read') {
-  notes.getNote(argv.title);
+  var note = notes.getNote(argv.title);
+  if (note) {
+    notes.logNote(note);
+  } else {
+    console.log(`Note with title ${argv.title} not found`);
+  }
 } else if (command === 'remove') {
-  notes.removeNote(argv.title);
+  var removed = notes.removeNote(argv.title);
+  var message = removed ? `Removed note titled ${argv.title}.` :
+                          `Unable to remove note titled ${argv.title}.`;
+  console.log(message);
 } else {
   console.log('command not recognized')
 }
