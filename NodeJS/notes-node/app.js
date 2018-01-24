@@ -1,5 +1,3 @@
-console.log('Starting app...');
-
 const fs = require('fs');
 const _ = require('lodash');
 const yargs = require('yargs');
@@ -17,7 +15,9 @@ if (command === 'add') {
     console.log('There was a problem creating the note!!');
   }
 } else if (command === 'list') {
-  notes.getAll();
+  var allNotes = notes.getAll();
+  console.log(`Getting ${allNotes.length} note(s).`);
+  allNotes.forEach((note) => notes.logNote(note));
 } else if (command === 'read') {
   var note = notes.getNote(argv.title);
   if (note) {
