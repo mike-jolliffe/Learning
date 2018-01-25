@@ -24,7 +24,8 @@ class Solution:
         # Initialize the final linked list by setting root value
         self.finalLinked = ListNode(self.sortedArray.pop(0))
         # Append nodes to linked list recursively
-        return self.toLinked(self.sortedArray, self.finalLinked)
+        self.toLinked(self.sortedArray, self.finalLinked)
+        return self.finalLinked
 
     def toArray(self, l1, l2):
         """Returns sorted array of node values
