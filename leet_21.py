@@ -19,17 +19,19 @@ class Solution:
         :type l2: ListNode
         :rtype: ListNode
         """
-
         # Make an array of both linked lists
         self.toArray(l1, l2)
-
+        # Initialize the final linked list by setting root value
         self.finalLinked = ListNode(self.sortedArray.pop(0))
+        # Append nodes to linked list recursively
         return self.toLinked(self.sortedArray, self.finalLinked)
 
-
-
     def toArray(self, l1, l2):
-        """Returns sorted array of node values"""
+        """Returns sorted array of node values
+        :type l1: List[int]
+        :type l2: List[int]
+        :rtype: None
+        """
         if not l1 is None and not l2 is None:
             self.sortedArray.append(min([l1.val, l2.val]))
             self.sortedArray.append(max([l1.val, l2.val]))
@@ -44,7 +46,11 @@ class Solution:
             return None
 
     def toLinked(self, array, linked):
-        """Converts an array into a ListNode object"""
+        """Converts an array into a ListNode object
+        :type array: List[int]
+        :type linked: ListNode
+        :rtype: None
+        """
         if array:
             linked.next = ListNode(array.pop(0))
             return self.toLinked(array, linked.next)
