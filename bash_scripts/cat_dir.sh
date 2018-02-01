@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Print directory if exists
+# Print file contents if file exists
 cat /etc/shadow
 if [ "$?" -eq "0" ]
 then
