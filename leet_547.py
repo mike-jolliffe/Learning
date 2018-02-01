@@ -9,10 +9,10 @@ class Solution:
 
         # Get direct connections for each member
         membership = self.getMembershipDirect(M)
-        print(membership)
+        #print(membership)
         # Get all direct/indirect connections
         indirect = self.getMembershipIndirect(membership)
-        print(indirect)
+        #print(indirect)
         # Count num of distinct groups (i.e., unique relationship sets)
         count = 0
         for i in set(indirect):
