@@ -7,7 +7,7 @@ class TreeNode:
 
 class Solution:
     def __init__(self):
-        self.distances = {}
+        self.ans = 1
 
     def diameterOfBinaryTree(self, root):
         """Return max number of edges to get from any node to another
@@ -15,39 +15,23 @@ class Solution:
         :rtype: int
         """
 
-    def traverseTree(self, root):
-        """Move through the binary tree, getting distance to leaves from each node
-        :type root: TreeNode
-        :rtype: None
-        """
+        self.depth(root)
+        return self.ans - 1
 
-        if root:
-            self.getBranchDistances(root.val, root.left, 1)
-            self.getBranchDistances(root.val, root.right, 1)
-            return (self.traverseTree(root.left),
-                    self.traverseTree(root.right))
-
-    def getBranchDistances(self, parent, root, distance):
-        """Calculate the distance between a given root and all same-branch leaves
-        :type parent: TreeNode.val
-        :type root: TreeNode
-        :type distance: int
-        :rtype: None
-        """
-
-        if root:
-            self.distances[(parent, root.val)] = distance
-            return (self.getBranchDistances(parent, root.left, distance + 1),
-                    self.getBranchDistances(parent, root.right, distance + 1))
-
-    def getMaxDistance(self):
-        """Calculates the maximum travel distance in the tree
+    def depth(self, node):
+        """Returns the max possible path-length from a given node
+        :type node: TreeNode
         :rtype: int
         """
-        pass
 
-    # Calculate max distance by combining longest paths that contain a same
-        # starting node
+        if not node:
+            return 0
+        depth_left = self.depth(node.left)
+        depth_right = self.depth(node.right)
+        self.ans = max(self.ans, depth_left + depth_right + 1)
+        return max(depth_left, depth_right) + 1
+
+
 if __name__ == '__main__':
     node = TreeNode(1)
     node.left = TreeNode(2)
@@ -56,5 +40,4 @@ if __name__ == '__main__':
     node.left.right = TreeNode(5)
 
     sol = Solution()
-    sol.traverseTree(node)
-    print(sol.getMaxDistance())  # 3
+    print(sol.diameterOfBinaryTree(node))  # 3
