@@ -12,7 +12,7 @@ class Solution:
         for i in range(len(split_sentence)):
             # If a root is part of that word
             for root in dictionary:
-                if root in split_sentence[i]:
+                if split_sentence[i].startswith(root):
                     # Replace that word
                     split_sentence[i] = root
         return ' '.join(split_sentence)
