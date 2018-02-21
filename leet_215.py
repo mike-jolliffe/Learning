@@ -6,7 +6,8 @@ class Solution:
         :rtype: int
         """
         # Return value with a place that matches k - 1 (0-indexed) from the sorted, reversed list 
-        return [value for place, value in enumerate(reversed(sorted(nums))) if place == k - 1][0]
+        new=sorted(nums, reverse=True)
+        return new[k-1]
 
 
 if __name__ == '__main__':
