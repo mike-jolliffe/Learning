@@ -10,10 +10,18 @@ class Solution:
         ref_list = sorted(nums)
         # Compare against reference
         diffs = []
+        # Enumerate the unsorted array, zip to reference list for pairwise compare
         for i,j in zip(enumerate(nums), ref_list):
+            # if the value in nums doesn't match ref list
             if not i[1] == j:
+                # Store its index
                 diffs.append(i[0])
-        return max(diffs) - min(diffs) + 1
+        # If the list isn't already sorted (i.e., if diffs is non-empty)
+        if diffs:
+            # Return the length between first and last non-match, inclusive (i.e., +1)
+            return max(diffs) - min(diffs) + 1
+        else:
+            return 0
 
 
 if __name__ == '__main__':
