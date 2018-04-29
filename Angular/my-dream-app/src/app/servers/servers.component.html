@@ -12,16 +12,7 @@
   class="btn btn-primary"
   [disabled]="!allowNewServer"
   (click)="onCreateServer()">Add Server</button>
-<p>{{ serverCreationStatus }}</p>
-<label>User Name</label>
-<input
-  type="text"
-  class="form-control"
-  [(ngModel)]="userName">
-<p>{{ userName }}</p>
-<button
-  class="btn btn-primary"
-  [disabled]="!userName"
-  (click)="userName = ''">Create User</button>
+<p *ngIf="serverCreated">{{ serverCreationStatus }}</p>
+
 <app-server></app-server>
 <app-server></app-server>
