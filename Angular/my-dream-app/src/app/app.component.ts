@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   name = '';
+  displayText = false;
+  log = [];
+
+  onToggleDetails() {
+    this.displayText = !this.displayText;
+    this.log.push(this.log.length + 1);
+  }
 }

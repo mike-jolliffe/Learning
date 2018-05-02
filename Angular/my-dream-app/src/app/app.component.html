@@ -9,6 +9,20 @@
       <div class="app-servers"></div> <!--class-->
       <warning-alert></warning-alert>
       <success-alert></success-alert>
+      <!-- <button
+        class="btn btn-primary"
+        (click)="displayText = !displayText">Display details</button>
+      <p *ngIf="displayText">This is the toggle-text that gives details</p> -->
+
+      <button
+        class="btn btn-primary"
+        (click)="onToggleDetails()">Display details</button>
+      <p *ngIf="displayText">This is the toggle-text that gives details</p>
+      <div
+        *ngFor="let item of log"
+        [ngStyle]="{backgroundColor: item >= 5 ? 'blue': 'transparent'}"
+        [ngClass]="{'white-text': item >= 5}"
+      >{{ item }}</div>
     </div>
   </div>
 </div>
