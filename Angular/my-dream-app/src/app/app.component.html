@@ -19,9 +19,9 @@
         (click)="onToggleDetails()">Display details</button>
       <p *ngIf="displayText">This is the toggle-text that gives details</p>
       <div
-        *ngFor="let item of log"
-        [ngStyle]="{backgroundColor: item >= 5 ? 'blue': 'transparent'}"
-        [ngClass]="{'white-text': item >= 5}"
+        *ngFor="let item of log; let i = index"
+        [ngStyle]="{backgroundColor: i >= 4 ? 'blue': 'transparent'}"
+        [ngClass]="{'white-text': i >= 4}"
       >{{ item }}</div>
     </div>
   </div>
