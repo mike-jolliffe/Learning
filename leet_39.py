@@ -39,3 +39,4 @@ if __name__ == '__main__':
     sol = Solution()
     print(sol.combinationSum([2,3,6,7], 7))  # [[7], [3,2,2]]
     print(sol.combinationSum([2,3,5], 8))  # [[5,3],[3,3,2],[2,2,2,2]]
+    print(sol.combinationSum([1,2], 4))  # [[5,3],[3,3,2],[2,2,2,2]]

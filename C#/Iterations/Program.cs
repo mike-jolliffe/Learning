@@ -34,6 +34,29 @@ namespace Iterations
             {
                 Console.WriteLine(number);
             }
+
+            int j = 1;
+            while (j <= 10)
+            {
+                if (j % 2 == 0)
+                {
+                    Console.WriteLine(j);
+                }
+
+                j++;
+            }
+
+            while (true)
+            {
+                Console.Write("Type your name: ");
+                var name2 = Console.ReadLine();
+                if (String.IsNullOrWhiteSpace(name2))
+                {
+                    break;
+                }
+
+                Console.WriteLine("@Echo " + name2);
+            }
         }
     }
 }
