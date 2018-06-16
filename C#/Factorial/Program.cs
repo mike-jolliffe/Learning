@@ -14,10 +14,8 @@ namespace Factorial
             {
                 total = total * i;
             }
-            Console.WriteLine(fact + "! is " + total);
 
-            var simple_fact = Factorial(fact);
-            Console.WriteLine(simple_fact);
+            Console.WriteLine(fact + "! is " + total);
         }
     }
 }
