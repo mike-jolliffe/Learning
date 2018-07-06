@@ -3,20 +3,23 @@ namespace AccessModifiers
 {
     public class Person
     {
-        private DateTime _birthdate;
+        public string Name { get; set; }
+        public DateTime Birthdate { get; private set; }
 
-        public Person()
+        public Person(DateTime birthdate)
         {
+            Birthdate = birthdate;
         }
 
-        public void SetBirthdate(DateTime birthdate)
+        public int Age
         {
-            _birthdate = birthdate;
-        }
+            get 
+            { 
+                var timeSpan = DateTime.Today - Birthdate;
+                var years = timeSpan.Days / 365;
 
-        public DateTime GetBirthdate()
-        {
-            return _birthdate;
+                return years;
+            }
         }
     }
 }
