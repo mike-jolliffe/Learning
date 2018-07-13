@@ -6,7 +6,11 @@ namespace AbstractClasses
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var circle = new Circle();
+            circle.Draw();
+
+            var rect = new Rectangle();
+            rect.Draw();
         }
     }
 }
