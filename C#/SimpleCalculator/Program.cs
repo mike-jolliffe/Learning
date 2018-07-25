@@ -8,28 +8,21 @@ namespace SimpleCalculator
         {
             try
             {
-                // Get inputs
-                var input = new Input("Number1: ");
-                var num1 = input.GetInput("num");
+                var input = new Input();
+                var calculator = new Calculator();
 
-                var input2 = new Input("Number2: ");
-                var num2 = input2.GetInput("num");
+                double firstNumber = input.ConvertToNumeric(Console.ReadLine());
+                double secondNumber = input.ConvertToNumeric(Console.ReadLine());
+                string operation = Console.ReadLine();
 
-                var input3 = new Input("Operation: ");
-                var op = input3.GetInput("op");
+                double result = calculator.Calculate(operation, firstNumber, secondNumber);
 
-                Console.WriteLine("{0} {2} {1}", num1, num2, op);
+                Console.WriteLine(result);
 
-                // Check inputs valid
-                var checker = new Checker(num1, num2, op);
-                if (checker.Check())
-                {
-                    checker.Execute();    
-                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine(ex.Message);
             }
         }
     }
