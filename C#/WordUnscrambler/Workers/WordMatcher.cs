@@ -31,7 +31,7 @@ namespace WordUnscrambler.Workers
 
                         if (sortedScrambledWord.Equals(sortedWord, StringComparison.OrdinalIgnoreCase))
                         {
-                            
+                            matchedWords.Add(BuildMatchedWord(scrambledWord, word));    
                         }
                     }
                 }
